@@ -59,16 +59,12 @@ const Blog = () => {
   }, [locale, brandSettings.brandName, articles]);
 
   return (
-    <div className="bg-gradient-to-b from-white via-cyan-50/30 to-orange-50/30 py-16 md:py-24">
+    <div className="py-16 md:py-20">
       <div className="section-shell">
         <div className="mb-16 text-center">
-          <h1 className="mb-6 text-5xl font-bold text-slate-900 md:text-6xl font-['Playfair_Display',serif] tracking-tight relative inline-block">
-            <span className="relative z-10">
-              <FormattedMessage id="blog.title" defaultMessage="Blog" />
-            </span>
-            <span className="absolute inset-x-0 -bottom-2 h-3 bg-teal-500/20 rounded-full blur-sm"></span>
-          </h1>
-          <p className="mx-auto max-w-2xl text-lg md:text-xl text-slate-600 font-['Poppins',sans-serif] leading-relaxed mt-4">
+          <p className="site-eyebrow mb-4">Field notes from the coast</p>
+          <h1 className="mb-5 text-5xl font-bold text-[#061d2b] md:text-6xl"><FormattedMessage id="blog.title" defaultMessage="Blog" /></h1>
+          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-[#214250] md:text-xl">
             <FormattedMessage id="blog.description" values={{ brand: brandSettings.brandName }} />
           </p>
         </div>
@@ -77,7 +73,7 @@ const Blog = () => {
           <div className="grid min-h-[40vh] place-items-center">
             <div className="flex flex-col items-center gap-4">
               <div className="h-12 w-12 animate-spin rounded-full border-4 border-teal-500 border-t-transparent"></div>
-              <div className="text-slate-600 font-medium font-['Poppins',sans-serif]">Loading blog articles...</div>
+              <div className="font-medium text-[#214250]">Loading stories from the coast…</div>
             </div>
           </div>
         ) : error ? (
@@ -103,15 +99,15 @@ const Blog = () => {
             <p className="mt-4 text-xs text-slate-400">If blog should have content, verify VITE_JSONBIN_BLOG_EN and VITE_JSONBIN_BLOG_ES environment variables are set.</p>
           </div>
         ) : (
-          <div className="grid gap-12 max-w-4xl mx-auto">
+          <div className="grid max-w-4xl gap-9 mx-auto">
             {articles.map((article) => (
               <article
                 key={article.id}
                 id={article.slug}
-                className="glass-card rounded-[2rem] p-6 md:p-12 transition-all duration-500 hover:scale-[1.01]"
+                className="glass-card rounded-[1.6rem] p-6 md:p-10 transition-all duration-500 hover:scale-[1.01]"
               >
                 <header className="mb-8 border-b border-slate-200/50 pb-6">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 font-['Playfair_Display',serif] tracking-tight leading-tight mb-5">
+                  <h2 className="mb-5 text-3xl font-bold leading-tight text-[#061d2b] md:text-4xl lg:text-5xl">
                     {article.title}
                   </h2>
                   <div className="flex flex-wrap items-center gap-4 text-sm font-['Poppins',sans-serif]">

@@ -66,10 +66,10 @@ const fetchLocalJson = async (filename, requestUrl) => {
 };
 
 const saveToKV = async (env, key, payload) => {
-  const dataKV = env.DATA_KV_M;
+  const dataKV = env.KV_LOBSTER || env.DATA_KV_M;
   if (!dataKV || typeof dataKV.put !== "function") {
     throw new Error(
-      "DATA_KV_M namespace binding is not configured. Please bind a Cloudflare KV namespace to DATA_KV_M.",
+      "KV_LOBSTER namespace binding is not configured. Please bind a Cloudflare KV namespace to KV_LOBSTER.",
     );
   }
   await dataKV.put(key, JSON.stringify(payload));
@@ -98,10 +98,10 @@ export async function onRequest(context: {
     return createErrorResponse("Invalid initialization secret.", 401);
   }
 
-  const dataKV = env.DATA_KV_M;
+  const dataKV = env.KV_LOBSTER || env.DATA_KV_M;
   if (!dataKV || typeof dataKV.put !== "function") {
     return createErrorResponse(
-      "DATA_KV_M namespace binding is not configured. This initializer requires a Cloudflare KV namespace bound to DATA_KV_M.",
+      "KV_LOBSTER namespace binding is not configured. This initializer requires a Cloudflare KV namespace bound to KV_LOBSTER.",
       500,
     );
   }

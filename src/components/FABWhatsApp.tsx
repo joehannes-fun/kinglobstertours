@@ -22,11 +22,11 @@ const FABWhatsApp: React.FC<FABWhatsAppProps> = ({
   return (
     <button
       onClick={handleClick}
-      className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-16 h-16 rounded-full bg-green-500 text-white shadow-lg hover:bg-green-600 hover:shadow-xl transition-all duration-300 hover:scale-110 animate-pulse"
+      className="whatsapp-fab fixed bottom-5 right-5 z-50 flex items-center justify-center text-sm font-bold text-white transition-all duration-300 hover:scale-105"
       aria-label="Contact via WhatsApp"
       title="Chat with us on WhatsApp"
     >
-      <FaWhatsapp className="w-8 h-8" />
+      <FaWhatsapp className="h-6 w-6" /><span>WhatsApp us</span>
     </button>
   );
 };

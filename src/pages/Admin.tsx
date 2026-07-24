@@ -12,7 +12,7 @@ const Admin: React.FC = () => {
   const { locale } = useI18n();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [brandSettings, setBrandSettings] = useState<BrandSettings>({
-    brandName: 'Tours',
+    brandName: 'King Lobster Tours',
     phoneNumber: '+1 (809) 555-0123',
     paypalMeLink: 'https://www.paypal.com/paypalme/tours',
     verifoneLink: '',

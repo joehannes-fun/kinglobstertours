@@ -109,18 +109,22 @@ const TourCard: React.FC<TourCardProps> = ({
   };
 
   return (
-    <article className="flex-col justify-between h-full glass-card overflow-hidden rounded-3xl transition duration-300 hover:-translate-y-2">
+    <article className="lobster-card glass-card flex h-full flex-col justify-between transition duration-300">
       <div className="relative">
         <Link to={detailsPath} className="block overflow-hidden" aria-label={title}>
-          <img src={image} alt={title} className="h-56 w-full object-cover transition duration-500 hover:scale-105" />
+          <img src={image} alt={title} className="card-image w-full object-cover transition duration-700 hover:scale-105" />
         </Link>
+        <div className="absolute left-4 top-4 rounded-full bg-[#061d2b]/80 px-3 py-1.5 text-[.68rem] font-bold uppercase tracking-[.12em] text-white backdrop-blur-md">Curated escape</div>
       </div>
 
-      <div className="space-y-5 p-6">
+      <div className="flex h-full flex-col space-y-5 p-6">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-2xl font-bold text-slate-900">{title}</h3>
+          <div>
+            <p className="card-kicker mb-2">Island day, your way</p>
+            <h3 className="text-2xl font-bold text-[#061d2b]">{title}</h3>
+          </div>
           {showDetailsLink && (
-            <Link to={detailsPath} className="text-sm font-semibold text-teal-700 hover:text-teal-900">
+            <Link to={detailsPath} className="shrink-0 text-sm font-semibold text-[#0a7280] underline decoration-[#0a7280]/30 underline-offset-4 hover:decoration-[#0a7280]">
               <FormattedMessage id="details.view" defaultMessage="View details" />
             </Link>
           )}
@@ -132,7 +136,7 @@ const TourCard: React.FC<TourCardProps> = ({
             {resolvedPricingOptions.map((option) => (
               <span
                 key={`${title}-${option.tier}`}
-                className="rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-700"
+                className="rounded-full bg-[#e9f4ef] px-3 py-1 text-sm font-semibold text-[#174957]"
               >
                 {option.tier}: {option.price}
               </span>
@@ -144,32 +148,32 @@ const TourCard: React.FC<TourCardProps> = ({
           <>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {resolvedPricingOptions.map((option) => (
-                <label key={option.tier} className="space-y-2 rounded-2xl border border-slate-200 bg-slate-50 p-3">
-                  <span className="block text-sm font-semibold text-slate-700">{option.tier}</span>
+                <label key={option.tier} className="space-y-2 rounded-2xl border border-[#061d2b]/10 bg-[#f7f7f2] p-3">
+                  <span className="block text-sm font-semibold text-[#214250]">{option.tier}</span>
                   <input
                     type="number"
                     min="0"
                     value={quantities[option.tier] ?? 0}
                     onChange={(event) => handleQuantityChange(option.tier, event.target.value)}
-                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 outline-none focus:border-teal-500"
+                    className="lobster-input w-full px-3 py-2 text-[#061d2b] outline-none"
                   />
                 </label>
               ))}
             </div>
 
             <label className="block space-y-2 text-left">
-              <span className="text-sm font-medium text-slate-700">
+              <span className="text-sm font-medium text-[#214250]">
                 <FormattedMessage id="tours.dateLabel" defaultMessage="Select your preferred date" />
               </span>
               <input
                 type="date"
                 value={selectedDate}
                 onChange={(event) => setSelectedDate(event.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-700 shadow-sm outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-200"
+                className="lobster-input w-full px-4 py-3 text-[#061d2b] shadow-sm outline-none"
               />
             </label>
 
-            <div className="rounded-2xl bg-teal-50 px-4 py-3 text-sm font-semibold text-teal-900">
+            <div className="rounded-2xl bg-[#061d2b] px-4 py-3 text-sm font-semibold text-white">
               <FormattedMessage id="payment.total" defaultMessage="Payment total" />: {totalAmount > 0 ? `$${totalAmount}` : price}
             </div>
 

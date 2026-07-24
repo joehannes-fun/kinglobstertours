@@ -90,7 +90,7 @@ const Home: React.FC = () => {
       )}
 
       {/* Story Narrative Sections */}
-      <div className="space-y-0 min-h-[50vh]">
+      <div id="arrival" className="space-y-0 min-h-[50vh]">
         {!storyData ? (
           <section className="home-section shore-section py-32 flex justify-center items-center">
             <div className="flex flex-col items-center gap-6 animate-pulse">
@@ -193,11 +193,11 @@ const Home: React.FC = () => {
       ) : (
         <section className="home-section sunset-section px-4 py-20 text-white sm:py-24 md:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="mb-6 text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
-              Ready for Your Perfect Day in Paradise?
+              <h2 className="mb-6 text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
+                A better island day starts here.
             </h2>
             <p className="mx-auto mb-8 max-w-2xl text-lg leading-8 text-white/90 sm:text-xl">
-              Your adventure is just one click away. Contact us on WhatsApp or choose your adventure below.
+              Tell us your date and mood. We’ll help shape the rest, simply and quickly.
             </p>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
               <button
@@ -281,10 +281,10 @@ const Home: React.FC = () => {
 
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <h2 className="mb-6 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl md:text-5xl">
-            Your Caribbean Day Awaits
+            The coast is calling. Make it yours.
           </h2>
           <p className="mx-auto mb-8 max-w-2xl text-lg leading-8 text-slate-700 sm:text-xl">
-            Step into warm water, fresh air, local flavor, and a day that stays with you.
+            Fresh sea air, a good crew, and the kind of day you’ll keep retelling.
           </p>
           <button
             onClick={() =>
@@ -298,7 +298,7 @@ const Home: React.FC = () => {
             }
             className="px-10 py-4 bg-gradient-to-r from-pink-500 to-orange-500 text-white font-bold text-lg rounded-lg hover:shadow-2xl transition-all hover:scale-105 inline-block"
           >
-            Book Your Adventure Now
+            Start planning on WhatsApp
           </button>
         </div>
       </section>

@@ -1,7 +1,7 @@
 [
   {
     "id": "saona-island-paradise",
-    "title": "El Día Que Encontré el Paraíso: Mi Aventura en Isla Saona",
+    "title": "Saona sin filtro: un día entero a ritmo de isla",
     "tour": "Isla Saona: El Paraíso Caribeño",
     "slug": "isla-saona-paraiso-caribeno",
     "date": "2026-05-15",
@@ -9,7 +9,7 @@
   },
   {
     "id": "saona-lobster-feast",
-    "title": "Langosta, Ron y Estrellas de Mar: El Día VIP Definitivo en Saona",
+    "title": "El día de langosta en Saona: brisa salada y grandes sabores",
     "tour": "Saona Exclusive: Banquete de Langosta",
     "slug": "saona-banquete-langosta-vip",
     "date": "2026-05-14",
@@ -17,7 +17,7 @@
   },
   {
     "id": "catalina-snorkel-reef",
-    "title": "Buceando en Colores: Un Día de Snorkel en Isla Catalina",
+    "title": "Catalina bajo el agua: un día de arrecife a todo color",
     "tour": "Catalina Exclusive: El Paraíso del Snorkel",
     "slug": "catalina-paraiso-snorkel",
     "date": "2026-05-10",
@@ -25,7 +25,7 @@
   },
   {
     "id": "bavaro-party-boat",
-    "title": "Bailando sobre las Olas: La Experiencia del Party Boat en Bávaro",
+    "title": "Bávaro después del muelle: diario de un party boat",
     "tour": "Party Boat: Fiesta en el Mar",
     "slug": "party-boat-fiesta-mar",
     "date": "2026-05-08",
@@ -33,7 +33,7 @@
   },
   {
     "id": "montana-redonda-views",
-    "title": "Columpiándose Sobre el Mundo: Mi Mañana en Montaña Redonda",
+    "title": "Una mañana de horizonte abierto en Montaña Redonda",
     "tour": "Montaña Redonda: Vistas de Ensueño",
     "slug": "montana-redonda-vistas-ensueno",
     "date": "2026-05-05",
@@ -41,7 +41,7 @@
   },
   {
     "id": "buggies-off-road",
-    "title": "Lodo, Cuevas y Macao: Mi Aventura Todo Terreno en Buggy",
+    "title": "Macao en buggy: barro, cuevas y aire de mar",
     "tour": "Buggies: Aventura Todo Terreno",
     "slug": "buggies-aventura-todo-terreno",
     "date": "2026-05-01",
@@ -49,7 +49,7 @@
   },
   {
     "id": "santo-domingo-history",
-    "title": "Caminando por Cinco Siglos: Un Día en Santo Domingo",
+    "title": "Santo Domingo sin prisa: cinco siglos en una caminata",
     "tour": "Santo Domingo: Primada de América",
     "slug": "santo-domingo-primada-america",
     "date": "2026-04-28",
@@ -57,7 +57,7 @@
   },
   {
     "id": "cultural-safari-4x4",
-    "title": "Más Allá del Resort: Un Safari 4x4 por la Verdadera República Dominicana",
+    "title": "Más allá del resort: un día 4x4 por el campo dominicano",
     "tour": "Safari Cultural: La Vida Local en 4x4",
     "slug": "safari-cultural-vida-local-4x4",
     "date": "2026-04-25",
@@ -65,7 +65,7 @@
   },
   {
     "id": "speed-boat-snorkel",
-    "title": "Capitán de Mi Propia Aventura: Lancha Rápida y Snorkel en Bávaro",
+    "title": "Acelerar, hacer snorkel, repetir: un día en lancha por Bávaro",
     "tour": "Speed Boat: Sea su Propio Capitán",
     "slug": "speed-boat-sea-su-propio-capitan",
     "date": "2026-04-22",
@@ -73,7 +73,7 @@
   },
   {
     "id": "parasailing-sky-high",
-    "title": "Veinticinco Minutos Sobre el Paraíso: Mi Vuelo en Parasailing",
+    "title": "Otro horizonte: parasailing sobre Punta Cana",
     "tour": "Parasailing: Vuelo Sobre el Caribe",
     "slug": "parasailing-vuelo-sobre-el-caribe",
     "date": "2026-04-20",
@@ -81,7 +81,7 @@
   },
   {
     "id": "coco-bongo-party",
-    "title": "Confeti, Acróbatas y Puro Caos: Mi Noche en Coco Bongo",
+    "title": "Coco Bongo de noche: luces, acrobacias y todo lo demás",
     "tour": "Coco Bongo: El Mejor Show del Mundo",
     "slug": "coco-bongo-mejor-show-del-mundo",
     "date": "2026-04-18",
@@ -89,7 +89,7 @@
   },
   {
     "id": "imagine-cave-party",
-    "title": "Ritmos Subterráneos: Bailando Dentro de una Cueva en Imagine",
+    "title": "Imagine Cave Club: una noche bajo tierra",
     "tour": "Imagine: Fiesta en una Cueva",
     "slug": "imagine-fiesta-en-una-cueva",
     "date": "2026-04-15",
@@ -97,7 +97,7 @@
   },
   {
     "id": "monkeyland-encounter",
-    "title": "Manos Pequeñas, Corazones Grandes: Mi Mañana en Monkeyland",
+    "title": "Mañana en Monkeyland: pequeños encuentros, grandes sonrisas",
     "tour": "Monkeyland: Encuentro con Monos",
     "slug": "monkeyland-encuentro-con-monos",
     "date": "2026-04-12",
@@ -105,7 +105,7 @@
   },
   {
     "id": "scape-park-adventure",
-    "title": "Desde las Copas de los Árboles hasta el Abismo Azul: Un Día en Scape Park",
+    "title": "De la copa al cenote: mi día en Scape Park",
     "tour": "Scape Park: Aventura Natural",
     "slug": "scape-park-aventura-natural",
     "date": "2026-04-09",
@@ -113,7 +113,7 @@
   },
   {
     "id": "zipline-canopy-thrill",
-    "title": "Doce Líneas, Dieciocho Plataformas, Una Increíble Emoción: Tirolesa en Anamuya",
+    "title": "Doce líneas por Anamuya: un día de tirolesa para recordar",
     "tour": "Zipline: Adrenalina en la Selva",
     "slug": "zipline-adrenalina-en-la-selva",
     "date": "2026-04-06",
@@ -121,7 +121,7 @@
   },
   {
     "id": "dolphin-encounter-swim",
-    "title": "El Abrazo que Cambió mi Perspectiva: Nadando con Delfines",
+    "title": "Un encuentro cercano en Dolphin Discovery",
     "tour": "Dolphin: Nadar con Delfines",
     "slug": "dolphin-nadar-con-delfines",
     "date": "2026-04-03",
@@ -129,7 +129,7 @@
   },
   {
     "id": "honeymoon-couple-saona",
-    "title": "Nuestra Luna de Miel en el Paraíso: El Día de Ensueño de una Pareja en Punta Cana",
+    "title": "Un día de luna de miel en Punta Cana, a nuestra manera",
     "tour": "Saona Exclusive: Banquete de Langosta",
     "slug": "luna-de-miel-pareja-saona",
     "date": "2026-06-01",
@@ -137,7 +137,7 @@
   },
   {
     "id": "family-safari-day",
-    "title": "El Mejor Día en Familia: Aventuras que Encantan a Niños y Padres",
+    "title": "Un día en familia que todos disfrutaron de verdad",
     "tour": "Safari Cultural: La Vida Local en 4x4",
     "slug": "dia-familiar-safari-cultural",
     "date": "2026-06-05",
@@ -145,7 +145,7 @@
   },
   {
     "id": "solo-zipline-journey",
-    "title": "Guía del Viajero Solitario: Encontrándote a Ti Mismo en una Tirolesa en Anamuya",
+    "title": "A solas en Anamuya: historia de un día en tirolesa",
     "tour": "Zipline: Adrenalina en la Selva",
     "slug": "viajero-solitario-tirolesa-anamuya",
     "date": "2026-06-08",
@@ -153,7 +153,7 @@
   },
   {
     "id": "boys-trip-imagine",
-    "title": "Viaje de Chicos Hecho Correctamente: Un Fin de Semana Inolvidable en Punta Cana",
+    "title": "Un fin de semana en Punta Cana para repetir",
     "tour": "Imagine: Fiesta en una Cueva",
     "slug": "viaje-chicos-fin-semana-punta-cana",
     "date": "2026-06-12",
@@ -161,7 +161,7 @@
   },
   {
     "id": "1",
-    "title": "Guía Completa de Punta Cana: Las Mejores Excursiones y Tesoros Escondidos",
+    "title": "Punta Cana más allá de la piscina: guía para tu primera vez",
     "tour": "Isla Saona",
     "post": "Punta Cana es mucho más que playas vírgenes y resorts todo incluido. Es la puerta de entrada a algunas de las maravillas naturales más impresionantes del Caribe.\n\nYa sea que visites por primera vez o seas un viajero experimentado, siempre hay algo nuevo por descubrir. Desde las aguas cristalinas de la Isla Saona hasta los verdes paisajes de la jungla interior, Punta Cana ofrece una variedad de experiencias para todo tipo de aventurero.\n\nEn esta guía, te llevaremos a través de las atracciones imperdibles, tesoros escondidos y consejos de expertos para aprovechar al máximo tus vacaciones en República Dominicana. Cubriremos desde el mejor momento para visitar cada excursión, qué empacar y cómo evitar las trampas turísticas.\n\nUna de las excursiones más populares es el tour a la Isla Saona, donde puedes navegar por aguas turquesas, relajarte en playas de arena blanca y disfrutar de un almuerzo tradicional dominicano. La isla es parte del Parque Nacional del Este y ofrece algunos de los entornos naturales más vírgenes del país.\n\nPara los que buscan aventura, el tour en buggy por la jungla tropical es imperdible. Navegarás por senderos embarrados, cruzarás ríos y descubrirás cenotes escondidos donde podrás refrescarte con un baño.\n\nNingún viaje a Punta Cana está completo sin experimentar la vibrante vida nocturna. Coco Bongo ofrece un espectáculo inolvidable con música en vivo, acrobacias y entretenimiento sin parar que te dejará asombrado.\n\n¡Esperamos que esta guía te ayude a planificar un viaje inolvidable al paraíso!",
     "date": "2025-12-15",
@@ -170,7 +170,7 @@
   },
   {
     "id": "2",
-    "title": "Por Qué la Isla Saona Debe Estar en Tu Lista de Deseos",
+    "title": "Por qué Saona sigue mereciendo un lugar en tu viaje",
     "tour": "Isla Saona",
     "post": "Imagina llegar a una isla de postal con arena blanca y fina, palmeras meciéndose y agua tan clara que puedes ver tus pies. Bienvenido a la Isla Saona.\n\nUbicada frente a la costa sureste de República Dominicana, la Isla Saona es parte del Parque Nacional Cotubanamá. Este paraíso protegido solo es accesible en barco, lo que significa que dejarás las multitudes atrás mientras navegas por el Mar Caribe.\n\nEl viaje en sí mismo es una aventura. Viajarás en catamarán, disfrutando de música, bebidas y la cálida brisa del océano. ¡Mantén un ojo atento para ver delfines y tortugas marinas en el camino!\n\nUna vez en la isla, tendrás horas para explorar, nadar y relajarte. Una excursión típica incluye un delicioso almuerzo de pescado fresco, arroz, habichuelas y plátanos, todo preparado con sabores tradicionales dominicanos.\n\nNo olvides explorar las piscinas naturales, donde el agua es poco profunda y cristalina, perfecta para hacer snorkel entre peces tropicales. Las piscinas naturales son un fenómeno único donde los bancos de arena crean áreas poco profundas en medio del océano.\n\nYa sea que viajes con familia, amigos o solo, la Isla Saona ofrece una experiencia que recordarás para siempre.",
     "date": "2026-01-10",
@@ -179,7 +179,7 @@
   },
   {
     "id": "3",
-    "title": "Aventura en Buggy: Explorando la Jungla Dominicana",
+    "title": "Cómo se siente de verdad un día de buggy dominicano",
     "tour": "Aventura en Buggy",
     "post": "Si buscas una descarga de adrenalina durante tus vacaciones en Punta Cana, una aventura en buggy por la jungla dominicana es exactamente lo que necesitas.\n\nSúbete a un potente buggy y prepárate para enfrentar senderos embarrados, salpicar a través de ríos y explorar áreas remotas inaccesibles para vehículos regulares. El tour te lleva profundamente al paisaje tropical, donde descubrirás cuevas escondidas, cenotes y plantaciones locales.\n\nUno de los puntos destacados es visitar una granja tradicional dominicana donde puedes probar café fresco, cacao y frutas tropicales. Es una oportunidad única para aprender sobre la cultura y agricultura local de primera mano.\n\nEl baño en el cenote es otro punto destacado. Después de un emocionante paseo por la jungla, llegarás a un sumidero natural lleno de agua fresca y cristalina. ¡Es la manera perfecta de refrescarse y lavarse el barro!\n\nLa seguridad es una prioridad, con guías experimentados liderando el camino y dando instrucciones antes de comenzar el paseo. Los buggies están bien mantenidos y equipados con todas las características de seguridad necesarias.\n\nYa sea que viajes con amigos o familia, este tour ofrece una mezcla inolvidable de aventura, naturaleza y cultura. ¡No olvides traer tu GoPro para capturar la acción!",
     "date": "2026-02-20",
@@ -188,7 +188,7 @@
   },
   {
     "id": "4",
-    "title": "Coco Bongo Punta Cana: La Experiencia Nocturna Definitiva",
+    "title": "Dentro de Coco Bongo Punta Cana: qué esperar",
     "tour": "Coco Bongo",
     "post": "Cuando el sol se pone en Punta Cana, la fiesta se enciende en Coco Bongo. Este icónico lugar de vida nocturna ofrece un espectáculo como ningún otro, combinando música en vivo, acrobacias, comedia y entretenimiento sin parar.\n\nCoco Bongo es famoso por sus shows temáticos que rinden homenaje a artistas y bandas legendarias. Las actuaciones son de clase mundial, con increíbles disfraces, visuales impresionantes y coreografías de alta energía.\n\nEl lugar en sí mismo es un espectáculo, con sistemas de sonido e iluminación de última generación que crean una experiencia inmersiva. El ambiente de fiesta es contagioso.\n\nLo que hace único a Coco Bongo es que no es solo una discoteca — es un show de entretenimiento completo que te mantiene involucrado de principio a fin.\n\nYa sea que estés celebrando una ocasión especial o simplemente buscando una noche memorable, Coco Bongo ofrece una experiencia que no olvidarás.\n\nConsejo: Reserva tus boletos con anticipación ya que los shows suelen agotarse, especialmente en temporada alta.",
     "date": "2026-03-05",
@@ -197,7 +197,7 @@
   },
   {
     "id": "5",
-    "title": "10 Consejos Esenciales para Visitantes Primerizos a República Dominicana",
+    "title": "Diez notas útiles antes de tu primer viaje a República Dominicana",
     "tour": "Consejos Generales",
     "post": "¿Planeando tu primer viaje a República Dominicana? Aquí tienes 10 consejos esenciales.\n\n1. Empaca para los trópicos: Ropa ligera, trajes de baño, protector solar y repelente de insectos.\n\n2. Aprende español básico: Unas cuantas frases en español te ayudarán a conectar con la gente.\n\n3. Usa moneda local: El Peso Dominicano obtendrás mejores tasas usando moneda local.\n\n4. Reserva excursiones con anticipación: Tours populares se agotan rápido en temporada alta.\n\n5. Mantente hidratado: El clima tropical puede ser intenso. Bebe mucha agua.\n\n6. Respeta las costumbres locales: Los dominicanos son personas cálidas y acogedoras.\n\n7. Prueba la cocina local: Desde mariscos frescos hasta mofongo y sancocho.\n\n8. Planifica tu transporte: Traslados al aeropuerto deben organizarse con anticipación.\n\n9. Lleva efectivo: En mercados locales, el efectivo es el rey.\n\n10. Relájate y disfruta: RD opera en \"hora isleña.\" Disfruta el ritmo caribeño.\n\n¡Con estos consejos, estás listo para unas vacaciones increíbles!",
     "date": "2026-03-20",
@@ -215,7 +215,7 @@
   },
   {
     "id": "8",
-    "title": "Guía del Viajero Solitario: Encontrándote a Ti Mismo en Punta Cana",
+    "title": "Punta Cana para viajeros solos: cómo hacerlo fácil",
     "tour": "Consejos Generales",
     "slug": "viajero-solitario-punta-cana",
     "date": "2026-06-08",
@@ -224,7 +224,7 @@
   },
   {
     "id": "itinerario-perfecto-punta-cana",
-    "title": "Itinerario Perfecto en Punta Cana: Cultura, Aventura y Relax",
+    "title": "Un itinerario por Punta Cana con espacio para respirar",
     "tour": "Safari Cultural: La Vida Local en 4x4",
     "slug": "itinerario-perfecto-punta-cana",
     "date": "2026-06-18",
@@ -232,7 +232,7 @@
   },
   {
     "id": "empaca-como-un-profesional-para-punta-cana",
-    "title": "Empaca como un profesional para los tours de Punta Cana",
+    "title": "Qué llevar para disfrutar mejor tu día de tour en Punta Cana",
     "tour": "Speed Boat: Sea su Propio Capitán",
     "slug": "empaca-como-un-profesional-para-punta-cana",
     "date": "2026-06-20",
@@ -240,7 +240,7 @@
   },
   {
     "id": "como-elegir-entre-saona-y-catalina",
-    "title": "Cómo elegir entre Isla Saona e Isla Catalina",
+    "title": "¿Saona o Catalina? Elige la isla que va con tu día",
     "tour": "Isla Saona: El Paraíso Caribeño",
     "slug": "como-elegir-entre-saona-y-catalina",
     "date": "2026-06-22",

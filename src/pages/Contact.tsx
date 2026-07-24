@@ -7,19 +7,21 @@ const Contact = () => {
   const { brandSettings } = useBrand();
 
   return (
-    <div className="py-16">
+    <div className="py-12 md:py-16">
       <div className="section-shell">
         <div className="mb-10 text-center">
-          <h1 className="mb-4 text-5xl font-bold text-slate-900"><FormattedMessage id="contact.title" /></h1>
-          <p className="mx-auto max-w-2xl text-lg text-slate-600"><FormattedMessage id="contact.description" /></p>
+          <p className="site-eyebrow mb-4">One message away</p>
+          <h1 className="mb-4 text-5xl font-bold text-[#061d2b]"><FormattedMessage id="contact.title" /></h1>
+          <p className="mx-auto max-w-2xl text-lg text-[#214250]"><FormattedMessage id="contact.description" /></p>
         </div>
 
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
           <ContactForm />
-          <div className="glass-card rounded-3xl p-8">
-            <h2 className="mb-5 text-3xl font-bold text-slate-900"><FormattedMessage id="contact.getInTouch" /></h2>
-            <p className="mb-2 text-slate-700"><FormattedMessage id="contact.addressLabel" />: Bávaro, Punta Cana</p>
-            <p className="mb-6 text-slate-700"><FormattedMessage id="contact.phoneLabel" />: {brandSettings.phoneNumber}</p>
+          <div className="glass-card rounded-[1.6rem] p-8">
+            <p className="site-eyebrow mb-3">Meet the crew</p>
+            <h2 className="mb-5 text-3xl font-bold text-[#061d2b]"><FormattedMessage id="contact.getInTouch" /></h2>
+            <p className="mb-2 text-[#214250]"><FormattedMessage id="contact.addressLabel" />: Bávaro, Punta Cana</p>
+            <p className="mb-6 text-[#214250]"><FormattedMessage id="contact.phoneLabel" />: {brandSettings.phoneNumber}</p>
             <div className="flex flex-col gap-3 sm:flex-row">
               {brandSettings.paypalMeLink && (
                 <a href={brandSettings.paypalMeLink} target="_blank" rel="noreferrer" className="tropical-button w-full sm:w-auto">

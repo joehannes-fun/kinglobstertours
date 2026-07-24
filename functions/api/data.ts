@@ -57,8 +57,9 @@ const loadStoredData = async (
   env: Record<string, any>,
   requestUrl?: string,
 ) => {
-  // Use the DATA_KV_M binding
-  const dataKV = env.DATA_KV_M;
+  // KV_LOBSTER is the new King Lobster namespace. DATA_KV_M remains a
+  // read-compatible fallback until the new Cloudflare binding is live.
+  const dataKV = env.KV_LOBSTER || env.DATA_KV_M;
   if (dataKV && typeof dataKV.get === "function") {
     try {
       const stored = await dataKV.get(key, { type: "json" });
@@ -84,8 +85,7 @@ const saveStoredData = async (
   payload: unknown,
   env: Record<string, any>,
 ) => {
-  // Use the DATA_KV_M binding
-  const dataKV = env.DATA_KV_M;
+  const dataKV = env.KV_LOBSTER || env.DATA_KV_M;
   if (dataKV && typeof dataKV.put === "function") {
     try {
       await dataKV.put(key, JSON.stringify(payload));
@@ -134,7 +134,7 @@ export async function onRequest(context: {
 
     if (request.method === "PUT") {
       const adminPassword =
-        env.ADMIN_PASSWORD || env.VITE_ADMIN_PASSWORD || "mariotours";
+        env.ADMIN_PASSWORD || env.VITE_ADMIN_PASSWORD || "laclave";
       const providedPassword = request.headers.get("X-Admin-Password") || "";
       if (providedPassword !== adminPassword) {
         return createErrorResponse(

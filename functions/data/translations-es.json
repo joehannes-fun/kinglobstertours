@@ -7,31 +7,31 @@
     "contact": "Contacto"
   },
   "hero": {
-    "title": "Descubre {brand}",
-    "subtitle": "Excursiones cálidas y sin esfuerzo para días hermosos en Bávaro, Punta Cana y la costa Dominicana.",
-    "cta": "Ver Excursiones"
+    "title": "Haz espacio para un gran día con {brand}",
+    "subtitle": "Días de isla sin complicaciones, organizados con cuidado desde Bávaro hasta Saona y la costa dominicana.",
+    "cta": "Explorar experiencias"
   },
   "features": {
-    "title": "Por qué los viajeros nos eligen",
+    "title": "Los detalles hacen el día",
     "safety": {
       "title": "Seguridad Primero",
-      "description": "Guías experimentados, operadores certificados y logística segura en cada recorrido."
+      "description": "Planes claros, operadores de confianza y conocimiento local para que solo disfrutes."
     },
     "experiences": {
-      "title": "Días planificados con belleza",
-      "description": "Actividades seleccionadas con el equilibrio correcto entre comodidad, cultura, naturaleza y aventura relajada."
+      "title": "Experiencias con ritmo",
+      "description": "Playa, agua azul, cultura y la dosis justa de aventura, al ritmo que tú prefieras."
     },
     "transportation": {
-      "title": "Transporte sin complicaciones",
-      "description": "Servicios de recogida y regreso confiables en Bávaro y Punta Cana."
+      "title": "Fácil de puerta a costa",
+      "description": "Opciones fiables de recogida y regreso en Bávaro, Punta Cana y más allá."
     }
   },
   "tours": {
-    "title": "Nuestras Excursiones",
+    "title": "Elige tu escape",
     "subtitle": "Explora aventuras premium en Bávaro con {brand}.",
     "bookNow": "Reservar por WhatsApp",
     "dateLabel": "Selecciona tu fecha preferida",
-    "dynamicSubtitle": "Explora aventuras premium en Bávaro con {brand}."
+    "dynamicSubtitle": "Encuentra un día que se sienta tuyo, con {brand} cuidando los detalles."
   },
   "payment": {
     "paypal": "Pagar con PayPal",
@@ -65,19 +65,19 @@
   },
   "blog": {
     "title": "Blog",
-    "description": "Ideas e historias sobre {brand}, tours y consejos de viaje para tu aventura en Punta Cana.",
+    "description": "Notas costeras, consejos prácticos e historias para diseñar tu escapada en Punta Cana.",
     "relatedTourLabel": "Tour relacionado",
     "error": "No se puede cargar el contenido del blog en este momento.",
     "noArticles": "No hay artículos disponibles todavía. Por favor vuelve más tarde."
   },
   "contact": {
-    "title": "Contáctanos",
-    "description": "Dinos tu fecha, tamaño del grupo y excursión preferida. Responderemos rápido.",
+    "title": "Planeemos la mejor parte",
+    "description": "Envíanos tu fecha, grupo y el tipo de día que buscas. Haremos el siguiente paso sencillo.",
     "name": "Nombre",
     "email": "Correo electrónico",
     "phone": "Teléfono",
     "message": "Mensaje",
-    "send": "Enviar mensaje",
+    "send": "Abrir WhatsApp con mi plan",
     "sent": "¡Mensaje enviado!",
     "getInTouch": "Ponte en contacto",
     "addressLabel": "Dirección",
@@ -86,7 +86,7 @@
   },
   "footer": {
     "company": "{brand}",
-    "description": "Tu puerta amigable a playas, islas, cascadas y días tropicales sin preocupaciones en República Dominicana.",
+    "description": "Tiempo de isla organizado con intención: playas, barcos, lugares salvajes y logística fluida en República Dominicana.",
     "quickLinks": "Enlaces rápidos",
     "home": "Inicio",
     "tours": "Tours",
@@ -123,7 +123,7 @@
   },
   "transport": {
     "title": "Traslados al aeropuerto",
-    "subtitle": "Traslados privados desde el Aeropuerto de Punta Cana (PUJ) a cualquier destino. Confiable, cómodo y asequible.",
+    "subtitle": "Traslados privados al aeropuerto diseñados alrededor de tu llegada, tu grupo y tu destino real.",
     "pickupDropoff": "Recogida y entrega",
     "origin": "Lugar de recogida",
     "destination": "Lugar de entrega",

@@ -25,26 +25,27 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="glass-card w-full max-w-2xl rounded-3xl p-8 md:p-10">
-      <h2 className="mb-8 text-4xl font-bold text-slate-900">
+    <div className="glass-card w-full max-w-2xl rounded-[1.6rem] p-7 md:p-10">
+      <p className="site-eyebrow mb-3">Fast, friendly planning</p>
+      <h2 className="mb-8 text-4xl font-bold text-[#061d2b]">
         <FormattedMessage id="contact.title" />
       </h2>
       <form onSubmit={handleSubmit} className="space-y-5">
         <label className="block">
-          <span className="mb-1 inline-flex items-center gap-2 font-medium text-slate-700"><MdPerson /> <FormattedMessage id="contact.name" /></span>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full rounded-xl border border-slate-200 p-3" required />
+          <span className="mb-1 inline-flex items-center gap-2 font-medium text-[#214250]"><MdPerson /> <FormattedMessage id="contact.name" /></span>
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="lobster-input w-full p-3 outline-none" required />
         </label>
         <label className="block">
-          <span className="mb-1 inline-flex items-center gap-2 font-medium text-slate-700"><MdEmail /> <FormattedMessage id="contact.email" /></span>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-xl border border-slate-200 p-3" required />
+          <span className="mb-1 inline-flex items-center gap-2 font-medium text-[#214250]"><MdEmail /> <FormattedMessage id="contact.email" /></span>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="lobster-input w-full p-3 outline-none" required />
         </label>
         <label className="block">
-          <span className="mb-1 inline-flex items-center gap-2 font-medium text-slate-700"><MdPhone /> <FormattedMessage id="contact.phone" /></span>
-          <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full rounded-xl border border-slate-200 p-3" required />
+          <span className="mb-1 inline-flex items-center gap-2 font-medium text-[#214250]"><MdPhone /> <FormattedMessage id="contact.phone" /></span>
+          <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="lobster-input w-full p-3 outline-none" required />
         </label>
         <label className="block">
-          <span className="mb-1 inline-flex items-center gap-2 font-medium text-slate-700"><MdMessage /> <FormattedMessage id="contact.message" /></span>
-          <textarea value={message} onChange={(e) => setMessage(e.target.value)} className="w-full rounded-xl border border-slate-200 p-3" rows={5} required />
+          <span className="mb-1 inline-flex items-center gap-2 font-medium text-[#214250]"><MdMessage /> <FormattedMessage id="contact.message" /></span>
+          <textarea value={message} onChange={(e) => setMessage(e.target.value)} className="lobster-input w-full p-3 outline-none" rows={5} required />
         </label>
 
         <button type="submit" className="tropical-button w-full gap-2">
