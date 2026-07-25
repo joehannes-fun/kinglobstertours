@@ -244,7 +244,7 @@ export const uploadImage = async (file: File): Promise<string> => {
   formData.append('file', file);
   formData.append('folder', 'tours');
 
-  const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD ?? 'mariotours';
+  const adminPassword = import.meta.env.VITE_ADMIN_PASSWORD ?? 'kinglobster';
 
   try {
     const response = await fetch('/api/upload', {

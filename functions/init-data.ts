@@ -49,12 +49,16 @@ const createErrorResponse = (message, status = 400) =>
     headers: { "Content-Type": "application/json" },
   });
 
-const fetchLocalJson = async (filename, requestUrl) => {
+const fetchLocalJson = async (filename, requestUrl, env) => {
   try {
     // Data files in public/data/ are served as static assets at /data/{filename}
     const origin = requestUrl ? new URL(requestUrl).origin : "";
     const url = `${origin}/data/${filename}`;
-    const response = await fetch(url);
+    // On Workers the static assets are reachable only through the ASSETS
+    // binding — fetching our own origin here would recurse into this Worker.
+    const response = env?.ASSETS?.fetch
+      ? await env.ASSETS.fetch(new Request(url))
+      : await fetch(url);
     if (!response.ok) {
       return null;
     }
@@ -111,7 +115,7 @@ export async function onRequest(context: {
   for (const entry of RESOURCE_ENTRIES) {
     try {
       if (entry.filename) {
-        const payload = await fetchLocalJson(entry.filename, request.url);
+        const payload = await fetchLocalJson(entry.filename, request.url, env);
         if (payload === null) {
           throw new Error(`Failed to fetch ${entry.filename}`);
         }
@@ -123,7 +127,7 @@ export async function onRequest(context: {
       for (const locale of entry.locales!) {
         const filename = entry.filenameTemplate!(locale);
         const resourceKey = `${entry.resource}-${locale}`;
-        const payload = await fetchLocalJson(filename, request.url);
+        const payload = await fetchLocalJson(filename, request.url, env);
         if (payload === null) {
           throw new Error(`Failed to fetch ${filename}`);
         }

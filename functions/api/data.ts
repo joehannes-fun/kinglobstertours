@@ -13,13 +13,18 @@ const RESOURCE_WITH_LOCALE = new Set([
 
 const readLocalJson = async (
   key: string,
+  env: Record<string, any>,
   requestUrl?: string,
 ): Promise<unknown | null> => {
   try {
     // Data files in public/data/ are served as static assets at /data/{key}.json
     const origin = requestUrl ? new URL(requestUrl).origin : "";
     const url = `${origin}/data/${key}.json`;
-    const response = await fetch(url);
+    // On Workers the static assets are reachable only through the ASSETS
+    // binding — fetching our own origin here would recurse into this Worker.
+    const response = env.ASSETS?.fetch
+      ? await env.ASSETS.fetch(new Request(url))
+      : await fetch(url);
     if (!response.ok) {
       return null;
     }
@@ -72,7 +77,7 @@ const loadStoredData = async (
   }
 
   // Fallback to local static JSON files in public/data/
-  const localData = await readLocalJson(key, requestUrl);
+  const localData = await readLocalJson(key, env, requestUrl);
   if (localData !== null) {
     return localData;
   }
@@ -134,7 +139,7 @@ export async function onRequest(context: {
 
     if (request.method === "PUT") {
       const adminPassword =
-        env.ADMIN_PASSWORD || env.VITE_ADMIN_PASSWORD || "laclave";
+        env.ADMIN_PASSWORD || env.VITE_ADMIN_PASSWORD || "kinglobster";
       const providedPassword = request.headers.get("X-Admin-Password") || "";
       if (providedPassword !== adminPassword) {
         return createErrorResponse(

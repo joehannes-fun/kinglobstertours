@@ -1,20 +1,35 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "mariotours",
-  "main": "src/index.ts",
+  "name": "kinglobstertours",
+  "main": "worker/index.ts",
   "compatibility_date": "2025-02-04",
   "observability": {
     "enabled": true,
   },
 
-  // Add this to your wrangler.jsonc
+  // Vite build output. Requests that match a file here are served directly;
+  // anything else reaches worker/index.ts, which routes the API paths and
+  // falls back to env.ASSETS for client-side (SPA) routes.
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+  },
+
   "kv_namespaces": [
     {
-      "binding": "KV",
-      "id": "341c4ac0817a40bbb87c94dcb1525114",
-
-      // Optional: preview_id used when running `wrangler dev` for local dev
-      "preview_id": "",
+      "binding": "KV_LOBSTER",
+      "id": "7c817e9b46874439b681fd488628b79c",
     },
   ],
+
+  // Secrets are NOT kept here — set with `wrangler secret put <NAME>`:
+  //   CLOUDINARY_API_SECRET  (signed image uploads)
+  //   INIT_DATA_SECRET       (guards POST /init-data)
+  "vars": {
+    "ADMIN_PASSWORD": "kinglobster",
+    "CLOUDINARY_CLOUD_NAME": "dkxlhxpe4",
+    "CLOUDINARY_API_KEY": "896279918126553",
+    "CLOUDINARY_UPLOAD_PRESET": "",
+  },
 }
