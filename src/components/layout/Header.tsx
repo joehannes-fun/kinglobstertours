@@ -45,12 +45,12 @@ const Header: React.FC = () => {
         <div className="section-shell flex items-center justify-between">
           {/* Brand Logo & Name */}
           <Link to="/#top" className="group flex items-center gap-3.5" onClick={() => setIsMenuOpen(false)}>
-            <div className="relative flex h-11 w-11 items-center justify-center rounded-full bg-[#0A2B3D] text-xl shadow-md border border-amber-500/30 transition-transform duration-300 group-hover:scale-105">
-              {brandSettings.brandicon ? (
-                <img src={brandSettings.brandicon} alt="" className="h-full w-full rounded-full object-cover" />
-              ) : (
-                '🦞'
-              )}
+            <div className="relative flex h-12 w-12 items-center justify-center rounded-full overflow-hidden bg-[#0A2B3D] text-xl shadow-md border border-amber-500/30 transition-transform duration-300 group-hover:scale-105">
+              <img
+                src={brandSettings.brandicon || '/yohantourslogo.jpeg'}
+                alt={brandSettings.brandName}
+                className="h-full w-full object-cover"
+              />
             </div>
             <div>
               <span className="block font-heading text-xl font-bold tracking-tight text-[#04131D] sm:text-2xl">

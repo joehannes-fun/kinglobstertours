@@ -85,7 +85,7 @@ const FRAGMENT_SHADER_SOURCE = `
     finalColor += goldLight * beam * 0.15;
     finalColor += goldLight * particles;
 
-    float alpha = clamp(caustics * 0.18 + beam * 0.12 + 0.05, 0.0, 0.35);
+    float alpha = clamp(caustics * 0.28 + beam * 0.18 + 0.08, 0.0, 0.55);
 
     gl_FragColor = vec4(finalColor, alpha);
   }
@@ -195,7 +195,7 @@ export const OceanShaderCanvas: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 h-full w-full opacity-40 transition-opacity duration-1000"
+      className="fixed inset-0 pointer-events-none z-0 h-full w-full opacity-65 transition-opacity duration-1000"
       aria-hidden="true"
     />
   );

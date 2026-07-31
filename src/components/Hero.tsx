@@ -20,7 +20,7 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
       <div className="absolute inset-0 -z-30 h-full w-full overflow-hidden">
         {backgroundVideo ? (
           <video
-            className="h-full w-full scale-105 object-cover opacity-60 transition-opacity duration-1000"
+            className="h-full w-full object-cover opacity-60 transition-opacity duration-1000"
             src={backgroundVideo}
             autoPlay
             muted
@@ -30,14 +30,15 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             aria-hidden="true"
           />
         ) : (
-          <picture className="h-full w-full">
+          <picture className="block h-full w-full overflow-hidden">
             {backgroundImageMobile && (
               <source media="(max-width: 767px)" srcSet={backgroundImageMobile} type="image/webp" />
             )}
             <img
               src={backgroundImage}
               alt="Punta Cana Excursion"
-              className="h-full w-full object-cover opacity-65"
+              className="h-full w-full object-cover object-center opacity-70 transition-opacity duration-700"
+              style={{ objectFit: 'cover', objectPosition: 'center' }}
             />
           </picture>
         )}
