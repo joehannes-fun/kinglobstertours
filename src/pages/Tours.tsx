@@ -57,7 +57,7 @@ const Tours: React.FC = () => {
           <p className="text-sm font-semibold text-[#214250]">{visibleTours.length} {locale === 'es' ? 'experiencias para explorar' : 'experiences to explore'}</p>
           {query && <button className="text-sm font-bold text-[#0a7280] underline underline-offset-4" onClick={() => setQuery('')}>{locale === 'es' ? 'Limpiar búsqueda' : 'Clear search'}</button>}
         </div>
-        {visibleTours.length ? <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
+        {visibleTours.length ? <div className="grid grid-cols-1 gap-7 items-start sm:grid-cols-2 lg:grid-cols-3">
           {visibleTours.map((tour) => (
             <TourCard
               key={tour.id}
