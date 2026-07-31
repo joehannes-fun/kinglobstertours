@@ -7,10 +7,11 @@ import { useBrand } from '../contexts/BrandContext';
 
 interface HeroProps {
   backgroundImage: string;
+  backgroundImageMobile?: string;
   backgroundVideo?: string;
 }
 
-const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundVideo }) => {
+const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, backgroundVideo }) => {
   const { brandSettings } = useBrand();
 
   return (
@@ -29,11 +30,16 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundVideo }) => {
             aria-hidden="true"
           />
         ) : (
-          <img
-            src={backgroundImage}
-            alt="Punta Cana Excursion"
-            className="h-full w-full object-cover opacity-65"
-          />
+          <picture className="h-full w-full">
+            {backgroundImageMobile && (
+              <source media="(max-width: 767px)" srcSet={backgroundImageMobile} type="image/webp" />
+            )}
+            <img
+              src={backgroundImage}
+              alt="Punta Cana Excursion"
+              className="h-full w-full object-cover opacity-65"
+            />
+          </picture>
         )}
       </div>
 

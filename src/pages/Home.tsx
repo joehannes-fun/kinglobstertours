@@ -15,6 +15,7 @@ import { getFallbackIntroStory, getIntroStoryPreferred, StoryData } from '../ser
 import { useBlog } from '../contexts/BlogContext';
 
 const HERO_BACKGROUND_IMAGE = '/imgs/tours/tour_saona_island_detail_12.jpg';
+const HERO_BACKGROUND_IMAGE_MOBILE = '/imgs/tours/tour_saona_island_detail_12.jpg';
 const HERO_BACKGROUND_VIDEO = '/mariotours.mp4';
 
 const Home: React.FC = () => {
@@ -75,7 +76,11 @@ const Home: React.FC = () => {
       <FABWhatsApp phoneNumber={brandSettings.phoneNumber} />
 
       {/* Hero Section */}
-      <Hero backgroundImage={HERO_BACKGROUND_IMAGE} backgroundVideo={HERO_BACKGROUND_VIDEO} />
+      <Hero
+        backgroundImage={HERO_BACKGROUND_IMAGE}
+        backgroundImageMobile={HERO_BACKGROUND_IMAGE_MOBILE}
+        backgroundVideo={HERO_BACKGROUND_VIDEO}
+      />
 
       {seoArticles.length > 0 && (
         <section aria-hidden="true" style={hiddenBlogStyle}>
