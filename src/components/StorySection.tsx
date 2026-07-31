@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 
 interface StorySectionProps {
   id: string;
@@ -108,13 +109,19 @@ const StorySection: React.FC<StorySectionProps> = ({
     <section
       ref={sectionRef}
       id={id}
-      className={`home-section relative overflow-hidden px-4 py-20 sm:py-28 md:px-8 ${
+      className={`home-section relative overflow-hidden px-4 py-24 sm:py-32 md:px-8 ${
         themeName ? themeName : isAlternate ? 'bg-[#F4EFE6]' : 'bg-[#FAF7F2]'
       }`}
     >
       <div className="section-shell relative z-10">
         {/* Header with editorial kicker */}
-        <div className={`mb-12 max-w-3xl ${isAlternate ? 'md:ml-auto md:text-right' : 'md:mr-auto md:text-left'}`}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className={`mb-12 max-w-3xl ${isAlternate ? 'md:ml-auto md:text-right' : 'md:mr-auto md:text-left'}`}
+        >
           <div className={`mb-4 flex items-center gap-3 ${isAlternate ? 'md:justify-end' : 'md:justify-start'}`}>
             <span className="text-xl">{emoji || '✦'}</span>
             {timeframe && (
@@ -131,7 +138,7 @@ const StorySection: React.FC<StorySectionProps> = ({
           )}
 
           <div className={`mt-4 h-0.5 w-16 bg-teal-600/40 ${isAlternate ? 'md:ml-auto' : ''}`} />
-        </div>
+        </motion.div>
 
         {/* Main content grid */}
         <div className={`grid items-center gap-12 ${imageUrl || vimeoUrl ? 'md:grid-cols-2 lg:gap-16' : 'md:grid-cols-1'}`}>

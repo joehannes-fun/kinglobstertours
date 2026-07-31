@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { HiArrowDown, HiCheck, HiStar, HiShieldCheck } from 'react-icons/hi';
+import { motion } from 'framer-motion';
 import { useBrand } from '../contexts/BrandContext';
 
 interface HeroProps {
@@ -45,7 +46,12 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundVideo }) => {
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
           
           {/* Main Editorial Text & CTA Column */}
-          <div className="lg:col-span-8 xl:col-span-7">
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-8 xl:col-span-7"
+          >
             {/* Location & Trust Kicker */}
             <div className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-teal-500/30 bg-teal-950/40 px-4 py-1.5 backdrop-blur-md">
               <span className="h-2 w-2 rounded-full bg-teal-400 animate-pulse" />
@@ -92,11 +98,16 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundVideo }) => {
                 <span>Private Excursion Guarantee</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Luxury Floating Rating Card Column */}
-          <div className="hidden lg:col-span-4 lg:block xl:col-span-5">
-            <div className="relative mx-auto max-w-sm rounded-3xl border border-white/15 bg-white/10 p-7 shadow-2xl backdrop-blur-2xl">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="hidden lg:col-span-4 lg:block xl:col-span-5"
+          >
+            <div className="relative mx-auto max-w-sm rounded-3xl border border-white/15 bg-white/10 p-7 shadow-2xl backdrop-blur-2xl transition-transform hover:-translate-y-1">
               <div className="mb-4 flex items-center justify-between">
                 <div className="flex items-center gap-1 text-amber-400">
                   {[...Array(5)].map((_, i) => (
@@ -120,7 +131,7 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundVideo }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>
