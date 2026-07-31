@@ -27,7 +27,6 @@ const StorySection: React.FC<StorySectionProps> = ({
   isAlternate = false,
   themeName,
 }) => {
-  const [isMobile, setIsMobile] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -36,11 +35,6 @@ const StorySection: React.FC<StorySectionProps> = ({
   const tiktokVideoId = isTikTok ? vimeoUrl?.match(/video\/(\d+)/)?.[1] || vimeoUrl?.split('/').pop()?.split('?')[0] : '';
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 767px)');
-    const handleChange = () => setIsMobile(mediaQuery.matches);
-    handleChange();
-    mediaQuery.addEventListener?.('change', handleChange);
-
     if (isTikTok && isInView && !document.getElementById('tiktok-embed-script')) {
       const script = document.createElement('script');
       script.id = 'tiktok-embed-script';
@@ -48,8 +42,6 @@ const StorySection: React.FC<StorySectionProps> = ({
       script.async = true;
       document.body.appendChild(script);
     }
-
-    return () => mediaQuery.removeEventListener?.('change', handleChange);
   }, [isTikTok, isInView]);
 
   useEffect(() => {
@@ -73,10 +65,7 @@ const StorySection: React.FC<StorySectionProps> = ({
   }, []);
 
   useEffect(() => {
-    // Attempt to pause/resume the video natively via postMessage when scrolling in/out of view
     if (!hasLoaded || !sectionRef.current) return;
-
-    // The iframe might be native (Vimeo) or injected by TikTok embed.js
     const iframe = sectionRef.current.querySelector('iframe');
     if (!iframe || !iframe.contentWindow) return;
 
@@ -95,23 +84,22 @@ const StorySection: React.FC<StorySectionProps> = ({
         }
       }
     } catch (e) {
-      // Ignore cross-origin errors if any
+      // Ignore cross-origin errors
     }
   }, [isInView, hasLoaded, isTikTok]);
 
   const getVimeoAutoplayUrl = (url: string) => {
     if (!url) return '';
-    if (isTikTok) return url; // TikTok handles its own URLs
+    if (isTikTok) return url;
     
     try {
       const urlObj = new URL(url);
       urlObj.searchParams.set('autoplay', '1');
       urlObj.searchParams.set('loop', '1');
       urlObj.searchParams.set('muted', '1');
-      urlObj.searchParams.set('background', '1'); // specific to vimeo to remove UI
+      urlObj.searchParams.set('background', '1');
       return urlObj.toString();
     } catch (e) {
-      // If it's not a valid URL yet or missing protocol, just return original
       return url;
     }
   };
@@ -120,59 +108,57 @@ const StorySection: React.FC<StorySectionProps> = ({
     <section
       ref={sectionRef}
       id={id}
-      className={`home-section relative overflow-hidden px-4 py-24 sm:py-28 md:px-8 lg:py-32 ${
-        themeName ? themeName : isAlternate ? 'cove-section' : 'shore-section'
+      className={`home-section relative overflow-hidden px-4 py-20 sm:py-28 md:px-8 ${
+        themeName ? themeName : isAlternate ? 'bg-[#F4EFE6]' : 'bg-[#FAF7F2]'
       }`}
     >
-      <div
-        className={`parallax-wash ${isAlternate ? 'parallax-wash-left' : 'parallax-wash-right'}`}
-      />
-
-      <div className="relative z-10 max-w-6xl mx-auto">
-        {/* Header with emoji and title */}
-        <div className={`mb-10 text-center sm:mb-12 ${isAlternate ? 'md:text-right' : 'md:text-left'}`}>
-          {emoji && <div className={`section-icon mb-5 ${isAlternate ? 'md:ml-auto md:mr-0' : 'md:mr-auto md:ml-0'}`}>{emoji}</div>}
-          {title && <h2 className="scribble-title-bg mb-3 text-3xl font-bold leading-tight text-slate-950 sm:text-4xl md:text-5xl">{title}</h2>}
-          {/* Thick stylish underline */}
-          <div className="w-full px-4 md:px-8 mt-5 mb-5">
-            <div className={`w-full h-4 rounded-full bg-gradient-to-r ${
-              isAlternate ? 'from-transparent via-teal-600/20 to-teal-600/50' : 'from-teal-600/50 via-teal-600/20 to-transparent'
-            }`} />
+      <div className="section-shell relative z-10">
+        {/* Header with editorial kicker */}
+        <div className={`mb-12 max-w-3xl ${isAlternate ? 'md:ml-auto md:text-right' : 'md:mr-auto md:text-left'}`}>
+          <div className={`mb-4 flex items-center gap-3 ${isAlternate ? 'md:justify-end' : 'md:justify-start'}`}>
+            <span className="text-xl">{emoji || '✦'}</span>
+            {timeframe && (
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-teal-800">
+                {timeframe}
+              </span>
+            )}
           </div>
-          {timeframe && (
-            <p className="text-base font-semibold italic text-teal-800 sm:text-lg">{timeframe}</p>
+
+          {title && (
+            <h2 className="font-serif text-3xl font-bold leading-tight tracking-tight text-[#04131D] sm:text-4xl lg:text-5xl">
+              {title}
+            </h2>
           )}
+
+          <div className={`mt-4 h-0.5 w-16 bg-teal-600/40 ${isAlternate ? 'md:ml-auto' : ''}`} />
         </div>
 
         {/* Main content grid */}
-        <div className={`grid items-center gap-12 ${imageUrl || vimeoUrl ? 'md:grid-cols-2 lg:gap-20' : 'md:grid-cols-1'}`}>
+        <div className={`grid items-center gap-12 ${imageUrl || vimeoUrl ? 'md:grid-cols-2 lg:gap-16' : 'md:grid-cols-1'}`}>
           {/* Text content */}
           <div className={(imageUrl || vimeoUrl) && isAlternate ? 'md:order-2' : 'md:order-1'}>
-            {/* Description */}
             {description && (
-              <div className="story-copy-card mb-6">
-                <p className="whitespace-pre-wrap text-base leading-8 text-slate-700 sm:text-lg">
+              <div className="story-copy-card mb-6 p-7 sm:p-8">
+                <p className="whitespace-pre-wrap text-base leading-relaxed text-slate-700 sm:text-lg font-light">
                   {description}
                 </p>
               </div>
             )}
 
-            {/* Narrative */}
             {narrative && (
-              <div className="prose prose-lg max-w-none">
-                <p className="text-base italic leading-8 text-slate-600 md:text-lg">
-                  {narrative}
+              <div className="pl-4 border-l-2 border-teal-500/40">
+                <p className="font-serif text-base italic leading-relaxed text-slate-600 sm:text-lg">
+                  “{narrative}”
                 </p>
               </div>
             )}
 
-            {/* Mood badge */}
             {mood && (
-              <div className="mt-8 flex flex-wrap gap-2.5">
+              <div className="mt-8 flex flex-wrap gap-2">
                 {mood.split(', ').filter(Boolean).map((m, idx) => (
                   <span
                     key={idx}
-                    className="rounded-full bg-white/75 px-4 py-2 text-sm font-semibold text-teal-900 shadow-sm ring-1 ring-teal-100 transition-transform hover:-translate-y-0.5"
+                    className="inline-flex items-center rounded-full bg-slate-100 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-teal-800 border border-slate-200"
                   >
                     {m}
                   </span>
@@ -180,13 +166,11 @@ const StorySection: React.FC<StorySectionProps> = ({
               </div>
             )}
 
-            {/* Video (if we also have an image, video goes here below the text) */}
             {vimeoUrl && imageUrl && (
               <div className="mt-8 story-media-frame flex justify-center w-full">
-                <div className="absolute -inset-2 rounded-[20px] bg-gradient-to-r from-teal-300 via-amber-200 to-orange-300 opacity-60 blur-xl transition duration-700 group-hover:opacity-90" />
                 {isTikTok ? (
                   hasLoaded ? (
-                    <div className="relative z-10 w-full overflow-hidden rounded-[18px]">
+                    <div className="relative z-10 w-full overflow-hidden rounded-2xl">
                       <blockquote
                         className="tiktok-embed"
                         cite={vimeoUrl}
@@ -197,12 +181,12 @@ const StorySection: React.FC<StorySectionProps> = ({
                       </blockquote>
                     </div>
                   ) : (
-                    <div className="relative w-full aspect-video rounded-[18px] bg-slate-100 flex items-center justify-center text-slate-400">Loading TikTok...</div>
+                    <div className="relative w-full aspect-video rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400">Loading Video...</div>
                   )
                 ) : (
                   <iframe
                     src={isInView ? getVimeoAutoplayUrl(vimeoUrl) : vimeoUrl}
-                    className="relative w-full aspect-video rounded-[18px] shadow-2xl"
+                    className="relative w-full aspect-video rounded-2xl shadow-xl"
                     frameBorder="0"
                     allowFullScreen
                   />
@@ -211,20 +195,19 @@ const StorySection: React.FC<StorySectionProps> = ({
             )}
           </div>
 
-          {/* Media Column (Image or Video if no image) */}
+          {/* Media Column */}
           {(imageUrl || (!imageUrl && vimeoUrl)) && (
-            <div className={`${isAlternate ? 'md:order-1' : 'md:order-2'} ${id === 'decision' ? 'md:mt-12' : ''}`}>
-              <div className={`story-media-frame group mb-10 md:mb-0 ${id === 'afternoon_post' ? 'mt-12 md:mt-0' : ''}`}>
-                <div className="absolute -inset-2 rounded-[30px] bg-gradient-to-r from-teal-300 via-amber-200 to-orange-300 opacity-60 blur-xl transition duration-700 group-hover:opacity-90 sm:rounded-[34px]" />
+            <div className={`${isAlternate ? 'md:order-1' : 'md:order-2'}`}>
+              <div className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-2 shadow-luxury">
                 {imageUrl ? (
                   <img
                     src={imageUrl}
                     alt={title || 'Story image'}
-                    className="mt-6 relative h-[22rem] w-full rounded-[24px] object-cover shadow-2xl transition-transform duration-500 sm:h-96 sm:rounded-[28px] md:h-[520px]"
+                    className="h-80 w-full rounded-2xl object-cover shadow-sm sm:h-96 md:h-[460px]"
                   />
                 ) : isTikTok ? (
                   hasLoaded ? (
-                    <div className="relative mt-6 z-10 flex justify-center w-full overflow-hidden rounded-[24px]">
+                    <div className="relative z-10 flex justify-center w-full overflow-hidden rounded-2xl">
                       <blockquote
                         className="tiktok-embed"
                         cite={vimeoUrl}
@@ -235,12 +218,12 @@ const StorySection: React.FC<StorySectionProps> = ({
                       </blockquote>
                     </div>
                   ) : (
-                     <div className="mt-6 relative h-[22rem] w-full rounded-[24px] bg-slate-100 flex items-center justify-center text-slate-400 sm:h-96 md:h-[520px]">Loading TikTok...</div>
+                     <div className="h-80 w-full rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 sm:h-96 md:h-[460px]">Loading TikTok...</div>
                   )
                 ) : (
                   <iframe
                     src={isInView ? getVimeoAutoplayUrl(vimeoUrl) : vimeoUrl}
-                    className="mt-6 relative h-[22rem] w-full rounded-[24px] shadow-2xl transition-transform duration-500 sm:h-96 sm:rounded-[28px] md:h-[520px]"
+                    className="h-80 w-full rounded-2xl shadow-sm sm:h-96 md:h-[460px]"
                     frameBorder="0"
                     allowFullScreen
                   />
@@ -249,14 +232,6 @@ const StorySection: React.FC<StorySectionProps> = ({
             </div>
           )}
         </div>
-      </div>
-
-      {/* Elegant Tropical Wave Separator */}
-      <div className="absolute bottom-0 left-0 w-full flex justify-center pb-6 opacity-30 text-teal-900 pointer-events-none">
-        <svg width="120" height="24" viewBox="0 0 120 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 12C30 12 30 0 60 0C90 0 90 12 120 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M0 24C30 24 30 12 60 12C90 12 90 24 120 24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.4"/>
-        </svg>
       </div>
     </section>
   );

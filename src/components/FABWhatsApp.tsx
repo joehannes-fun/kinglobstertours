@@ -10,7 +10,7 @@ interface FABWhatsAppProps {
 
 const FABWhatsApp: React.FC<FABWhatsAppProps> = ({
   phoneNumber,
-  message = 'Hola! Me gustaría información sobre sus tours.'
+  message = 'Hola! Me gustaría información sobre sus tours en Punta Cana.'
 }) => {
   const { brandSettings } = useBrand();
   const effectivePhone = phoneNumber || brandSettings.phoneNumber || '+18095553333';
@@ -22,11 +22,16 @@ const FABWhatsApp: React.FC<FABWhatsAppProps> = ({
   return (
     <button
       onClick={handleClick}
-      className="whatsapp-fab fixed bottom-5 right-5 z-50 flex items-center justify-center text-sm font-bold text-white transition-all duration-300 hover:scale-105"
-      aria-label="Contact via WhatsApp"
-      title="Chat with us on WhatsApp"
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-full border border-emerald-400/30 bg-[#04131D] px-5 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:bg-[#061D2B] hover:shadow-emerald-500/20"
+      aria-label="Contact VIP Concierge via WhatsApp"
+      title="Chat directly with our VIP Concierge"
     >
-      <FaWhatsapp className="h-6 w-6" /><span>WhatsApp us</span>
+      <span className="relative flex h-2.5 w-2.5">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+      </span>
+      <FaWhatsapp className="h-5 w-5 text-emerald-400" />
+      <span className="hidden sm:inline text-[0.7rem] tracking-[0.15em]">VIP Concierge</span>
     </button>
   );
 };

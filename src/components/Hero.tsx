@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { HiArrowDown, HiCheck } from 'react-icons/hi';
+import { HiArrowDown, HiCheck, HiStar, HiShieldCheck } from 'react-icons/hi';
 import { useBrand } from '../contexts/BrandContext';
 
 interface HeroProps {
@@ -13,60 +13,125 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundVideo }) => {
   const { brandSettings } = useBrand();
 
   return (
-    <section
-      className="relative isolate overflow-hidden bg-slate-950 z-20"
-      style={{
-        backgroundImage: `url('${backgroundImage}')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
-      {backgroundVideo && (
-        <video
-          className="absolute inset-0 -z-20 h-full w-full scale-110 object-cover opacity-65"
-          src={backgroundVideo}
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster={backgroundImage}
-          aria-hidden="true"
-        />
-      )}
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(103deg,rgba(3,20,29,.88)_2%,rgba(5,40,52,.65)_48%,rgba(4,27,37,.18)_100%)]" />
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_78%_20%,rgba(255,184,90,.28),transparent_24%),radial-gradient(circle_at_25%_84%,rgba(16,174,174,.25),transparent_34%)]" />
+    <section className="relative isolate overflow-hidden bg-[#04131D] text-white">
+      {/* Background Media */}
+      <div className="absolute inset-0 -z-30 h-full w-full overflow-hidden">
+        {backgroundVideo ? (
+          <video
+            className="h-full w-full scale-105 object-cover opacity-60 transition-opacity duration-1000"
+            src={backgroundVideo}
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={backgroundImage}
+            aria-hidden="true"
+          />
+        ) : (
+          <img
+            src={backgroundImage}
+            alt="Punta Cana Excursion"
+            className="h-full w-full object-cover opacity-65"
+          />
+        )}
+      </div>
 
-      <div className="section-shell flex min-h-[calc(100svh-5rem)] items-center py-16 md:min-h-[49rem] md:py-24">
-        <div className="hero-glass max-w-3xl p-7 md:p-11">
-          <p className="site-eyebrow mb-5 text-[#bde8dc] before:bg-[#ffb85a]">
-            Punta Cana · Saona · Beyond the resort
-          </p>
-          <h1 className="mb-5 text-5xl font-bold leading-[.96] text-white md:text-7xl">
-            <FormattedMessage id="hero.title" values={{ brand: brandSettings.brandName }} />
-          </h1>
-          <p className="mb-8 max-w-2xl text-lg leading-8 text-white/80 md:text-xl">
-            <FormattedMessage id="hero.subtitle" />
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Link to="/tours#top" className="tropical-button">
-              <FormattedMessage id="hero.cta" />
-            </Link>
-            <Link to="/transport#top" className="tropical-button-outline">
-              <FormattedMessage id="nav.transport" defaultMessage="Transport" />
-            </Link>
-            <Link to="/contact#top" className="tropical-button-outline">
-              <FormattedMessage id="contact.title" />
-            </Link>
+      {/* Editorial Luxury Gradient Overlay */}
+      <div className="absolute inset-0 -z-20 bg-gradient-to-t from-[#04131D] via-[#04131D]/60 to-[#04131D]/40" />
+      <div className="absolute inset-0 -z-10 bg-radial-vignette opacity-80" />
+
+      {/* Main Hero Container */}
+      <div className="section-shell relative z-10 flex min-h-[calc(100vh-5rem)] items-center py-20 lg:py-28">
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+          
+          {/* Main Editorial Text & CTA Column */}
+          <div className="lg:col-span-8 xl:col-span-7">
+            {/* Location & Trust Kicker */}
+            <div className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-teal-500/30 bg-teal-950/40 px-4 py-1.5 backdrop-blur-md">
+              <span className="h-2 w-2 rounded-full bg-teal-400 animate-pulse" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-teal-200">
+                Saona Island · Catalina · Bávaro Coast
+              </span>
+            </div>
+
+            {/* Editorial Main Headline */}
+            <h1 className="mb-6 font-serif text-5xl font-bold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
+              <FormattedMessage id="hero.title" values={{ brand: brandSettings.brandName }} />
+            </h1>
+
+            {/* Subtitle */}
+            <p className="mb-10 max-w-2xl text-lg font-light leading-relaxed text-slate-200 sm:text-xl">
+              <FormattedMessage id="hero.subtitle" />
+            </p>
+
+            {/* Primary & Secondary Action CTAs */}
+            <div className="mb-12 flex flex-col sm:flex-row flex-wrap gap-4">
+              <Link to="/tours#top" className="tropical-button">
+                <FormattedMessage id="hero.cta" />
+              </Link>
+              <Link to="/transport#top" className="tropical-button-outline">
+                <FormattedMessage id="nav.transport" defaultMessage="Private Transport" />
+              </Link>
+              <Link to="/contact#top" className="tropical-button-outline border-white/20 hover:border-white/40">
+                <FormattedMessage id="contact.title" defaultMessage="Concierge" />
+              </Link>
+            </div>
+
+            {/* High-Trust Value Signals */}
+            <div className="flex flex-wrap items-center gap-6 text-xs font-medium text-slate-300">
+              <div className="flex items-center gap-2">
+                <HiShieldCheck className="h-5 w-5 text-teal-400" />
+                <span>Verified Licensed Crew</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <HiCheck className="h-5 w-5 text-amber-400" />
+                <span>Instant WhatsApp Booking</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <HiCheck className="h-5 w-5 text-teal-400" />
+                <span>Private Excursion Guarantee</span>
+              </div>
+            </div>
           </div>
-          <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-white/78">
-            {['Simple WhatsApp planning', 'Flexible private options', 'Local island know-how'].map((item) => (
-              <span key={item} className="inline-flex items-center gap-1.5"><HiCheck className="text-[#ffb85a]" />{item}</span>
-            ))}
+
+          {/* Luxury Floating Rating Card Column */}
+          <div className="hidden lg:col-span-4 lg:block xl:col-span-5">
+            <div className="relative mx-auto max-w-sm rounded-3xl border border-white/15 bg-white/10 p-7 shadow-2xl backdrop-blur-2xl">
+              <div className="mb-4 flex items-center justify-between">
+                <div className="flex items-center gap-1 text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <HiStar key={i} className="h-5 w-5 fill-current" />
+                  ))}
+                </div>
+                <span className="rounded-full bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-300 border border-amber-500/30">
+                  4.98 / 5.0 Rating
+                </span>
+              </div>
+              <blockquote className="mb-4 font-serif italic text-sm leading-relaxed text-slate-100">
+                “The highlight of our Dominican holiday. The private boat crew treated us like royalty, and the fresh seafood on Saona was unbeatable.”
+              </blockquote>
+              <div className="flex items-center gap-3">
+                <div className="h-9 w-9 rounded-full bg-teal-600 flex items-center justify-center font-bold text-white text-xs border border-white/20">
+                  ES
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-white">Elena & Marcus S.</div>
+                  <div className="text-[0.7rem] text-slate-300">Honeymoon Trip · Toronto, Canada</div>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
-      <a href="#arrival" className="absolute bottom-5 left-1/2 hidden -translate-x-1/2 items-center gap-2 text-xs font-bold uppercase tracking-[.16em] text-white/70 transition hover:text-white md:flex">
-        Explore the day <HiArrowDown className="animate-bounce" />
+
+      {/* Scroll Down Indicator */}
+      <a
+        href="#arrival"
+        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-white/60 transition hover:text-white md:flex"
+      >
+        <span>Discover The Fleet</span>
+        <HiArrowDown className="h-4 w-4 animate-bounce text-teal-400" />
       </a>
     </section>
   );

@@ -28,26 +28,29 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="relative overflow-hidden border-t border-white/10 bg-[#061d2b] py-14 text-slate-100">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_10%,rgba(255,184,90,.16),transparent_30%),radial-gradient(circle_at_88%_18%,rgba(34,180,177,.14),transparent_34%)]" />
+    <footer className="relative overflow-hidden border-t border-white/10 bg-[#04131D] py-16 text-slate-300">
       <div className="section-shell relative z-10">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-          <div>
-            <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-[#f36e4b] to-[#ffb85a] text-2xl shadow-lg">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+          <div className="lg:col-span-2">
+            <div className="mb-6 flex items-center gap-3.5">
+              <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-[#0A2B3D] text-xl shadow-lg border border-amber-500/30">
                 {brandSettings.brandicon ? (
                   <img src={brandSettings.brandicon} alt="Logo" className="h-full w-full object-cover" />
                 ) : (
                   '🦞'
                 )}
               </div>
-              <h3 className="text-2xl font-bold text-white">{brandSettings.brandName}</h3>
+              <div>
+                <h3 className="font-serif text-2xl font-bold text-white">{brandSettings.brandName}</h3>
+                <span className="block text-[0.625rem] font-bold tracking-[0.2em] text-teal-400 uppercase">
+                  Dominican Republic Excursions
+                </span>
+              </div>
             </div>
-            <p className="max-w-md leading-7 text-slate-200/90">
+            <p className="max-w-md text-sm font-light leading-relaxed text-slate-300">
               <FormattedMessage id="footer.description" />
             </p>
             
-            {/* Social Media Icons */}
             {socialAccounts.length > 0 && (
               <div className="mt-8 flex gap-3">
                 {socialAccounts.map((account) => (
@@ -56,7 +59,7 @@ const Footer = () => {
                     href={account.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white transition hover:scale-110 hover:bg-[#ffb85a] hover:text-[#061d2b] shadow-[0_8px_20px_rgba(0,0,0,.2)]"
+                    className="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition hover:scale-110 hover:bg-teal-600 hover:text-white"
                     title={`Follow on ${account.platform}`}
                   >
                     {platformIcons[account.platform]}
@@ -67,47 +70,51 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="mb-4 text-lg font-semibold text-white">
+            <h4 className="mb-4 font-serif text-lg font-bold text-white">
               <FormattedMessage id="footer.quickLinks" />
             </h4>
-            <ul className="space-y-2 text-slate-100/90">
-              <li><Link to="/#top" className="text-slate-100 hover:text-[#ffb85a]"><FormattedMessage id="footer.home" /></Link></li>
-              <li><Link to="/tours#top" className="text-slate-100 hover:text-[#ffb85a]"><FormattedMessage id="footer.tours" /></Link></li>
-              <li><Link to="/transport#top" className="text-slate-100 hover:text-[#ffb85a]"><FormattedMessage id="footer.transport" defaultMessage="Transport" /></Link></li>
-              <li><Link to="/contact#top" className="text-slate-100 hover:text-[#ffb85a]"><FormattedMessage id="footer.contact" /></Link></li>
+            <ul className="space-y-2.5 text-sm">
               <li>
-                <Link to="/admin" className="inline-flex items-center gap-1 text-slate-100 hover:text-[#ffb85a]">
-                  <MdAdminPanelSettings />
+                <Link to="/#top" className="text-slate-300 transition hover:text-teal-400">
+                  <FormattedMessage id="footer.home" />
+                </Link>
+              </li>
+              <li>
+                <Link to="/tours#top" className="text-slate-300 transition hover:text-teal-400">
+                  <FormattedMessage id="footer.tours" />
+                </Link>
+              </li>
+              <li>
+                <Link to="/transport#top" className="text-slate-300 transition hover:text-teal-400">
+                  <FormattedMessage id="footer.transport" defaultMessage="Transport" />
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact#top" className="text-slate-300 transition hover:text-teal-400">
+                  <FormattedMessage id="footer.contact" />
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin" className="inline-flex items-center gap-1.5 text-slate-400 transition hover:text-amber-400">
+                  <MdAdminPanelSettings className="h-4 w-4" />
                   <FormattedMessage id="footer.admin" />
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Social Media Accounts Info */}
-          {socialAccounts.length > 0 && (
-            <div>
-              <h4 className="mb-4 text-lg font-semibold text-white">Follow Us</h4>
-              <div className="space-y-2 text-sm text-white/[.78]">
-                {socialAccounts.map((account) => (
-                  <div key={account.platform} className="flex items-center gap-2">
-                    <span className="text-[#ffb85a]">{platformIcons[account.platform]}</span>
-                    <a
-                      href={account.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="capitalize transition-colors hover:text-[#ffb85a]"
-                    >
-                      {account.platform} @{account.username}
-                    </a>
-                  </div>
-                ))}
-              </div>
+          <div>
+            <h4 className="mb-4 font-serif text-lg font-bold text-white">Excursion Guarantee</h4>
+            <p className="text-xs leading-relaxed text-slate-400 mb-4">
+              Licensed crew, safety protocols, and personalized VIP service across Saona, Bávaro, and Catalina.
+            </p>
+            <div className="inline-flex items-center gap-2 rounded-full border border-teal-500/20 bg-teal-950/40 px-3.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-teal-300">
+              ✓ Direct WhatsApp Booking
             </div>
-          )}
+          </div>
         </div>
 
-        <div className="mt-10 border-t border-white/15 pt-6 text-sm text-slate-100/80">
+        <div className="mt-12 border-t border-white/10 pt-8 text-center text-xs text-slate-400">
           <FormattedMessage id="footer.copyright" values={{ year: new Date().getFullYear() }} />
         </div>
       </div>
