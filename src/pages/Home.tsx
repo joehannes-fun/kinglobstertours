@@ -14,9 +14,9 @@ import { generateBlogListStructuredData } from '../utils/seoHelpers';
 import { getFallbackIntroStory, getIntroStoryPreferred, StoryData } from '../services/introStoryService';
 import { useBlog } from '../contexts/BlogContext';
 
-const HERO_BACKGROUND_IMAGE = '/imgs/tours/tour_saona_island_detail_12.jpg';
-const HERO_BACKGROUND_IMAGE_MOBILE = '/imgs/tours/tour_saona_island_detail_12.jpg';
-const HERO_BACKGROUND_VIDEO = '/mariotours.mp4';
+const HERO_BACKGROUND_IMAGE = '/hero-desktop.webp';
+const HERO_BACKGROUND_IMAGE_MOBILE = '/hero-mobile.webp';
+const HERO_BACKGROUND_VIDEO = '';
 
 const Home: React.FC = () => {
   const { brandSettings } = useBrand();
