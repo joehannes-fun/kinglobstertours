@@ -48,7 +48,7 @@ export const generateBlogArticleStructuredData = (
   title: string,
   post: string,
   date?: string,
-  author = 'King Lobster Tours',
+  author = 'Dionicio VIP Tours',
   image?: string
 ): void => {
   const scriptElement = document.createElement('script');

@@ -5,8 +5,8 @@ const projectRoot = path.resolve(new URL('..', import.meta.url).pathname);
 const sitemapPath = path.join(projectRoot, 'public', 'sitemap.xml');
 
 const normalizeDomain = (value) => {
-  if (!value) return 'https://kinglobstertours.johannes-neugschwentner.workers.dev';
-  const trimmed = value.trim().replace(/\/$/, '');
+  if (!value) return 'https://dionicio-vip.tours';
+  const trimmed = value.trim().replace(/\/$/, '').replace(/\/\d+(?:\.\d+)?$/, '');
   if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
     return trimmed;
   }
@@ -14,7 +14,7 @@ const normalizeDomain = (value) => {
 };
 
 const siteUrl = normalizeDomain(
-  process.env.SITE_URL || process.env.CLOUDFLARE_PAGES_URL || process.env.CLOUDFLARE_DOMAIN || 'kinglobstertours.johannes-neugschwentner.workers.dev'
+  process.env.SITE_URL || process.env.CLOUDFLARE_PAGES_URL || process.env.CLOUDFLARE_DOMAIN || 'https://dionicio-vip.tours'
 );
 
 const slugify = (value) =>
