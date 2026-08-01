@@ -5,6 +5,7 @@ import { generateWhatsAppMessage } from '../utils/whatsapp';
 import { useBrand } from '../contexts/BrandContext';
 import { PricingOption } from '../services/toursService';
 import PaymentDropdown from './ui/PaymentDropdown';
+import MarkdownRenderer from './ui/MarkdownRenderer';
 
 interface TourCardProps {
   image: string;
