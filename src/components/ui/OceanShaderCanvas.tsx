@@ -2,9 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 const VERTEX_SHADER_SOURCE = `
   attribute vec2 position;
-  varying vec2 vUv;
   void main() {
-    vUv = position * 0.5 + 0.5;
     gl_Position = vec4(position, 0.0, 1.0);
   }
 `;
@@ -15,7 +13,6 @@ const FRAGMENT_SHADER_SOURCE = `
   uniform float uTime;
   uniform vec2 uMouse;
   uniform float uScrollY;
-  varying vec2 vUv;
 
   vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
   vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -45,12 +42,13 @@ const FRAGMENT_SHADER_SOURCE = `
     return 130.0 * dot(m, g);
   }
 
+  // Broad, natural sea-level ocean water caustics wave pattern
   float causticPattern(vec2 uv, float t) {
-    vec2 p = uv * 4.5;
-    float n1 = snoise(p + vec2(t * 0.18, t * 0.12));
-    float n2 = snoise(p * 2.2 - vec2(t * 0.22, t * 0.28));
-    float c = sin(p.x * 6.5 + n1 * 3.2) * cos(p.y * 6.5 + n2 * 3.2);
-    return pow(abs(c), 1.6);
+    vec2 p = uv * 1.5;
+    float n1 = snoise(p + vec2(t * 0.10, t * 0.07));
+    float n2 = snoise(p * 1.3 - vec2(t * 0.12, t * 0.15));
+    float c = sin(p.x * 2.4 + n1 * 1.8) * cos(p.y * 2.4 + n2 * 1.8);
+    return pow(abs(c), 1.4);
   }
 
   void main() {
@@ -60,35 +58,34 @@ const FRAGMENT_SHADER_SOURCE = `
     vec2 aspectSt = st;
     aspectSt.x *= (uResolution.x / uResolution.y);
 
-    vec2 mouseOffset = (uMouse - 0.5) * 0.09;
-    float scrollOffset = uScrollY * 0.00035;
+    vec2 mouseOffset = (uMouse - 0.5) * 0.08;
+    float scrollOffset = uScrollY * 0.0003;
     vec2 uv = aspectSt + mouseOffset + vec2(0.0, scrollOffset);
 
-    float t = uTime * 0.65;
+    float t = uTime * 0.35;
 
     float c1 = causticPattern(uv, t);
-    float c2 = causticPattern(uv * 1.6 + vec2(0.4, 0.2), t * 1.25);
-    float caustics = clamp(c1 * 0.65 + c2 * 0.45, 0.0, 1.0);
+    float c2 = causticPattern(uv * 1.4 + vec2(0.3, 0.15), t * 1.15);
+    float caustics = clamp(c1 * 0.6 + c2 * 0.4, 0.0, 1.0);
 
-    // Intense vibrant Caribbean blue palette
-    vec3 deepOceanBlue = vec3(0.01, 0.12, 0.45);    // Deep intense cobalt blue
-    vec3 electricAzure = vec3(0.0, 0.62, 0.98);     // Glowing azure cyan blue
-    vec3 biolumCyan   = vec3(0.15, 0.88, 1.0);      // Bright sparkling caustics
+    // Deep vibrant Caribbean ocean blue palette
+    vec3 deepOceanBlue = vec3(0.02, 0.14, 0.38);    // Deep ocean blue base
+    vec3 electricAzure = vec3(0.0, 0.58, 0.92);     // Vibrant azure cyan waves
+    vec3 biolumCyan   = vec3(0.12, 0.85, 0.98);     // Sparkling caustics highlights
 
-    float beam = sin(st.x * 3.1415 + st.y * 2.2 + t * 0.45) * 0.5 + 0.5;
-    beam = pow(beam, 2.5) * 0.4;
+    float beam = sin(st.x * 3.1415 + st.y * 1.8 + t * 0.3) * 0.5 + 0.5;
+    beam = pow(beam, 2.2) * 0.35;
 
-    float particleNoise = snoise(aspectSt * 16.0 + vec2(0.0, t * 0.45));
-    float particles = step(0.91, particleNoise) * 0.35;
+    float particleNoise = snoise(aspectSt * 10.0 + vec2(0.0, t * 0.3));
+    float particles = step(0.93, particleNoise) * 0.28;
 
     vec3 finalColor = deepOceanBlue;
     finalColor += electricAzure * caustics * 0.65;
-    finalColor += biolumCyan * beam * 0.5;
+    finalColor += biolumCyan * beam * 0.45;
     finalColor += biolumCyan * particles;
 
-    float alpha = clamp(caustics * 0.55 + beam * 0.35 + 0.35, 0.35, 0.95);
-
-    gl_FragColor = vec4(finalColor, alpha);
+    // Solid 1.0 opacity output to prevent WebGL GPU blending flicker
+    gl_FragColor = vec4(finalColor, 1.0);
   }
 `;
 
@@ -99,7 +96,7 @@ export const OceanShaderCanvas: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const gl = canvas.getContext('webgl', { alpha: true, antialias: false, powerPreference: 'high-performance' });
+    const gl = canvas.getContext('webgl', { alpha: false, antialias: false, powerPreference: 'high-performance' });
     if (!gl) return;
 
     const createShader = (glCtx: WebGLRenderingContext, type: number, source: string) => {
@@ -194,12 +191,17 @@ export const OceanShaderCanvas: React.FC = () => {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none -z-10 h-full w-full opacity-90 transition-opacity duration-1000"
-      style={{ zIndex: -10 }}
-      aria-hidden="true"
-    />
+    <div
+      id="ocean-shader-bg"
+      className="fixed inset-0 pointer-events-none -z-50 overflow-hidden bg-[#04131D]"
+      style={{ zIndex: -50 }}
+    >
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 h-full w-full pointer-events-none opacity-100"
+        aria-hidden="true"
+      />
+    </div>
   );
 };
 

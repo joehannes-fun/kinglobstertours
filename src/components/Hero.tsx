@@ -15,13 +15,13 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
   const { brandSettings } = useBrand();
 
   return (
-    <section className="relative overflow-hidden bg-[#04131D] text-white">
-      {/* Background Media - Solid #04131D backing layer behind picture to guarantee zero canvas flickering */}
+    <section className="relative overflow-hidden bg-[#04131D] text-white isolate z-0">
+      {/* Background Media - Centered completely with solid #04131D backing layer */}
       <div className="absolute inset-0 z-0 h-full w-full overflow-hidden bg-[#04131D]">
         <div className="absolute inset-0 bg-[#04131D]" aria-hidden="true" />
         {backgroundVideo ? (
           <video
-            className="absolute inset-0 h-full w-full object-cover object-bottom opacity-100 pointer-events-none select-none"
+            className="absolute inset-0 h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
             src={backgroundVideo}
             autoPlay
             muted
@@ -29,7 +29,7 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             playsInline
             poster={backgroundImage}
             aria-hidden="true"
-            style={{ objectFit: 'cover', objectPosition: 'bottom center' }}
+            style={{ objectFit: 'cover', objectPosition: 'center center' }}
           />
         ) : (
           <picture className="absolute inset-0 block h-full w-full">
@@ -39,8 +39,8 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             <img
               src={backgroundImage}
               alt="Punta Cana Excursion"
-              className="h-full w-full object-cover object-bottom opacity-100 pointer-events-none select-none"
-              style={{ objectFit: 'cover', objectPosition: 'bottom center' }}
+              className="h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
+              style={{ objectFit: 'cover', objectPosition: 'center center' }}
             />
           </picture>
         )}
