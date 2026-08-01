@@ -16,11 +16,12 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
 
   return (
     <section className="relative overflow-hidden bg-[#04131D] text-white">
-      {/* Background Media - Positive z-0 Layering to prevent WebGL canvas flickering */}
+      {/* Background Media - Solid #04131D backing layer behind picture to guarantee zero canvas flickering */}
       <div className="absolute inset-0 z-0 h-full w-full overflow-hidden bg-[#04131D]">
+        <div className="absolute inset-0 bg-[#04131D]" aria-hidden="true" />
         {backgroundVideo ? (
           <video
-            className="h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
+            className="absolute inset-0 h-full w-full object-cover object-bottom opacity-100 pointer-events-none select-none"
             src={backgroundVideo}
             autoPlay
             muted
@@ -28,16 +29,18 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             playsInline
             poster={backgroundImage}
             aria-hidden="true"
+            style={{ objectFit: 'cover', objectPosition: 'bottom center' }}
           />
         ) : (
-          <picture className="block h-full w-full">
+          <picture className="absolute inset-0 block h-full w-full">
             {backgroundImageMobile && (
               <source media="(max-width: 767px)" srcSet={backgroundImageMobile} type="image/webp" />
             )}
             <img
               src={backgroundImage}
               alt="Punta Cana Excursion"
-              className="h-full w-full object-cover object-center md:object-[center_20%] opacity-100 pointer-events-none select-none"
+              className="h-full w-full object-cover object-bottom opacity-100 pointer-events-none select-none"
+              style={{ objectFit: 'cover', objectPosition: 'bottom center' }}
             />
           </picture>
         )}

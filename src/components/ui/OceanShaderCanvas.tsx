@@ -196,7 +196,8 @@ export const OceanShaderCanvas: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 h-full w-full opacity-90 transition-opacity duration-1000"
+      className="fixed inset-0 pointer-events-none -z-10 h-full w-full opacity-90 transition-opacity duration-1000"
+      style={{ zIndex: -10 }}
       aria-hidden="true"
     />
   );

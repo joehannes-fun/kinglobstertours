@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { setAdminPassword } from '../services/authStore';
 
 interface PasswordModalProps {
@@ -30,13 +31,15 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ onAuthenticate }) => {
     }
   };
 
-  return (
+  const modalContent = (
     <div
-      className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 pointer-events-auto"
+      className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/85 backdrop-blur-lg p-4 pointer-events-auto select-auto"
+      style={{ zIndex: 999999 }}
       onClick={(e) => e.stopPropagation()}
     >
       <div
-        className="w-full max-w-md rounded-2xl bg-white p-8 shadow-2xl border border-slate-200 text-slate-900 pointer-events-auto relative z-[100000]"
+        className="w-full max-w-md rounded-2xl bg-white p-8 shadow-2xl border border-slate-200 text-slate-900 pointer-events-auto relative z-[1000000]"
+        style={{ zIndex: 1000000 }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-6 flex items-center gap-3">
@@ -86,6 +89,8 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ onAuthenticate }) => {
       </div>
     </div>
   );
+
+  return ReactDOM.createPortal(modalContent, document.body);
 };
 
 export default PasswordModal;
