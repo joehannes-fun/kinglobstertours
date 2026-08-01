@@ -13,6 +13,7 @@ import { generateWhatsAppMessage } from '../utils/whatsapp';
 import { generateBlogListStructuredData } from '../utils/seoHelpers';
 import { getFallbackIntroStory, getIntroStoryPreferred, StoryData } from '../services/introStoryService';
 import { useBlog } from '../contexts/BlogContext';
+import SeaWaveDivider from '../components/ui/SeaWaveDivider';
 
 const HERO_BACKGROUND_IMAGE = '/hero-desktop.webp';
 const HERO_BACKGROUND_IMAGE_MOBILE = '/hero-mobile.webp';
@@ -139,6 +140,9 @@ const Home: React.FC = () => {
                       </div>
                     )}
                   </div>
+                  <div className="absolute bottom-0 left-0 right-0 z-10 -mb-1 opacity-50">
+                    <SeaWaveDivider variant="foam" colorClass="text-[#04131D]/20" />
+                  </div>
                 </section>
               );
             }
@@ -234,8 +238,11 @@ const Home: React.FC = () => {
       <TestimonialDisplay locale={locale} />
 
       {/* Why Choose Us Section - Enhanced */}
-      <section className="home-section reef-section px-4 py-20 text-white sm:py-24 md:px-8">
-        <div className="max-w-6xl mx-auto">
+      <section className="home-section reef-section relative px-4 py-20 text-white sm:py-24 md:px-8">
+        <div className="absolute top-0 left-0 right-0 z-10 -mt-1 opacity-40">
+          <SeaWaveDivider variant="swell" colorClass="text-teal-900/30" />
+        </div>
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="mx-auto mb-12 max-w-3xl text-center sm:mb-16">
             <h2 className="mb-4 text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
               <FormattedMessage id="features.title" />

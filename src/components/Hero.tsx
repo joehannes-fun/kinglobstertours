@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { HiArrowDown, HiCheck, HiStar, HiShieldCheck } from 'react-icons/hi';
 import { motion } from 'framer-motion';
 import { useBrand } from '../contexts/BrandContext';
+import SeaWaveDivider from './ui/SeaWaveDivider';
 
 interface HeroProps {
   backgroundImage: string;
@@ -14,10 +15,19 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, backgroundVideo }) => {
   const { brandSettings } = useBrand();
 
+  // Use mobile WebP animated banner for both mobile and desktop per request
+  const heroImageSrc = backgroundImageMobile || backgroundImage || '/hero-mobile.webp';
+
   return (
-    <section className="relative overflow-hidden bg-[#04131D] text-white isolate z-0">
-      {/* Background Media - Centered completely with solid #04131D backing layer */}
-      <div className="absolute inset-0 z-0 h-full w-full overflow-hidden bg-[#04131D]">
+    <section className="relative bg-[#04131D] text-white isolate z-0">
+      {/* Background Media - Overflows vertically 140% into next section with 25px drop shadow & fade to 0% transparency */}
+      <div
+        className="absolute inset-x-0 top-0 z-0 h-[145%] overflow-hidden pointer-events-none select-none drop-shadow-[0_25px_25px_rgba(0,0,0,0.45)]"
+        style={{
+          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 62%, rgba(0,0,0,0) 100%)',
+          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 62%, rgba(0,0,0,0) 100%)',
+        }}
+      >
         <div className="absolute inset-0 bg-[#04131D]" aria-hidden="true" />
         {backgroundVideo ? (
           <video
@@ -27,22 +37,17 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             muted
             loop
             playsInline
-            poster={backgroundImage}
+            poster={heroImageSrc}
             aria-hidden="true"
             style={{ objectFit: 'cover', objectPosition: 'center center' }}
           />
         ) : (
-          <picture className="absolute inset-0 block h-full w-full">
-            {backgroundImageMobile && (
-              <source media="(max-width: 767px)" srcSet={backgroundImageMobile} type="image/webp" />
-            )}
-            <img
-              src={backgroundImage}
-              alt="Punta Cana Excursion"
-              className="h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
-              style={{ objectFit: 'cover', objectPosition: 'center center' }}
-            />
-          </picture>
+          <img
+            src={heroImageSrc}
+            alt="Punta Cana Excursion"
+            className="absolute inset-0 h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
+            style={{ objectFit: 'cover', objectPosition: 'center center' }}
+          />
         )}
       </div>
 
@@ -152,6 +157,11 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
         <span>Discover The Fleet</span>
         <HiArrowDown className="h-4 w-4 animate-bounce text-teal-400" />
       </a>
+
+      {/* Wavy Sea Waves Section Divider at Bottom of Hero */}
+      <div className="relative z-10 -mb-1">
+        <SeaWaveDivider variant="crest" colorClass="text-[#FAF7F2]/40" />
+      </div>
     </section>
   );
 };

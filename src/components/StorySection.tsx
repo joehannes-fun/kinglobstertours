@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 
+import SeaWaveDivider from './ui/SeaWaveDivider';
+
 interface StorySectionProps {
   id: string;
   title: string;
@@ -239,6 +241,13 @@ const StorySection: React.FC<StorySectionProps> = ({
             </div>
           )}
         </div>
+      </div>
+      {/* Wavy Sea Waves Section Divider */}
+      <div className="absolute bottom-0 left-0 right-0 z-10 -mb-1 opacity-60">
+        <SeaWaveDivider
+          variant={isAlternate ? 'swell' : 'tide'}
+          colorClass="text-teal-900/15"
+        />
       </div>
     </section>
   );

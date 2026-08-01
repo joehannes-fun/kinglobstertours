@@ -39,8 +39,8 @@ const Header: React.FC = () => {
       {/* Main Glass Header */}
       <div className={`transition-all duration-300 ${
         isScrolled 
-          ? 'bg-[#FAF7F2]/90 backdrop-blur-xl border-b border-slate-900/10 shadow-md py-3' 
-          : 'bg-[#FAF7F2]/80 backdrop-blur-md border-b border-slate-900/5 py-4'
+          ? 'bg-[#FAF7F2]/65 backdrop-blur-[6px] border-b border-slate-900/10 shadow-md py-3' 
+          : 'bg-[#FAF7F2]/55 backdrop-blur-[6px] border-b border-slate-900/5 py-4'
       }`}>
         <div className="section-shell flex items-center justify-between">
           {/* Brand Logo & Name */}

@@ -5,6 +5,7 @@ import { MdAdminPanelSettings } from 'react-icons/md';
 import { FaInstagram, FaTiktok, FaFacebook, FaYoutube, FaTwitter, FaLinkedin } from 'react-icons/fa';
 import { useBrand } from '../../contexts/BrandContext';
 import { getSocialMediaData, SocialMediaAccount } from '../../services/socialMediaService';
+import SeaWaveDivider from '../ui/SeaWaveDivider';
 
 const platformIcons: Record<string, React.ReactNode> = {
   instagram: <FaInstagram className="w-5 h-5" />,
@@ -28,7 +29,10 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="relative overflow-hidden border-t border-white/10 bg-[#04131D] py-16 text-slate-300">
+    <footer className="relative overflow-hidden border-t border-white/10 bg-[#04131D]/80 backdrop-blur-[6px] py-16 text-slate-300">
+      <div className="absolute top-0 left-0 right-0 z-0 opacity-40">
+        <SeaWaveDivider variant="swell" colorClass="text-teal-900/30" />
+      </div>
       <div className="section-shell relative z-10">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
