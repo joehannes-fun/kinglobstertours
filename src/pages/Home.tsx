@@ -154,6 +154,7 @@ const Home: React.FC = () => {
               <StorySection
                 key={section.id}
                 id={section.id}
+                index={index}
                 title={section.title}
                 emoji={section.emoji}
                 timeframe={section.timeframe}

@@ -14,7 +14,24 @@ interface StorySectionProps {
   mood?: string;
   isAlternate?: boolean;
   themeName?: string;
+  index?: number;
 }
+
+const headerCornerVariants = [
+  'rounded-[2.8rem] rounded-tr-md rounded-bl-2xl',
+  'rounded-[3rem] rounded-tl-sm rounded-br-3xl',
+  'rounded-[2.5rem] rounded-bl-md rounded-tr-3xl',
+  'rounded-[2.8rem] rounded-br-xs rounded-tl-2xl',
+  'rounded-[3.2rem] rounded-tr-2xl rounded-bl-xs',
+  'rounded-[2.6rem] rounded-tl-sm rounded-br-3xl',
+];
+
+const mediaCornerVariants = [
+  'rounded-[3.2rem] rounded-tr-sm rounded-bl-3xl rotate-1',
+  'rounded-[2.8rem] rounded-tl-xs rounded-br-3xl -rotate-1',
+  'rounded-[3.5rem] rounded-br-md rounded-tl-2xl rotate-1.5',
+  'rounded-[2.9rem] rounded-bl-sm rounded-tr-3xl -rotate-1.5',
+];
 
 const StorySection: React.FC<StorySectionProps> = ({
   id,
@@ -28,6 +45,7 @@ const StorySection: React.FC<StorySectionProps> = ({
   mood,
   isAlternate = false,
   themeName,
+  index = 0,
 }) => {
   const [isInView, setIsInView] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -35,6 +53,14 @@ const StorySection: React.FC<StorySectionProps> = ({
 
   const isTikTok = vimeoUrl?.includes('tiktok.com');
   const tiktokVideoId = isTikTok ? vimeoUrl?.match(/video\/(\d+)/)?.[1] || vimeoUrl?.split('/').pop()?.split('?')[0] : '';
+
+  const headerCorners = headerCornerVariants[index % headerCornerVariants.length];
+  const mediaCorners = mediaCornerVariants[index % mediaCornerVariants.length];
+
+  const swayHeader = `animate-wave-sway-${(index % 10) + 1}`;
+  const swayCard = `animate-wave-sway-${((index + 3) % 10) + 1}`;
+  const swayQuote = `animate-wave-sway-${((index + 6) % 10) + 1}`;
+  const swayMedia = `animate-wave-sway-${((index + 8) % 10) + 1}`;
 
   useEffect(() => {
     if (isTikTok && isInView && !document.getElementById('tiktok-embed-script')) {
@@ -115,7 +141,7 @@ const StorySection: React.FC<StorySectionProps> = ({
       }`}
     >
       <div className="section-shell relative z-10">
-        {/* Header with editorial artsy kicker */}
+        {/* Header with individual playful corner shapes & floating wave motion */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -133,7 +159,7 @@ const StorySection: React.FC<StorySectionProps> = ({
           </div>
 
           {title && (
-            <div className={`inline-block ${isAlternate ? 'artsy-title-card-light' : 'artsy-title-card'}`}>
+            <div className={`inline-block ${swayHeader} ${headerCorners} ${isAlternate ? 'artsy-title-card-light' : 'artsy-title-card'}`}>
               <h2 className="font-serif text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl drop-shadow-sm">
                 {title}
               </h2>
@@ -143,13 +169,13 @@ const StorySection: React.FC<StorySectionProps> = ({
           <div className={`mt-5 h-1.5 w-24 bg-gradient-to-r from-teal-500 via-cyan-400 to-amber-400 rounded-full shadow-md ${isAlternate ? 'md:ml-auto' : ''}`} />
         </motion.div>
 
-        {/* Main content grid */}
+        {/* Main content grid with individual floating wave motion */}
         <div className={`grid items-center gap-12 ${imageUrl || vimeoUrl ? 'md:grid-cols-2 lg:gap-16' : 'md:grid-cols-1'}`}>
-          {/* Text content */}
+          {/* Text content column */}
           <div className={(imageUrl || vimeoUrl) && isAlternate ? 'md:order-2' : 'md:order-1'}>
             {description && (
               <div
-                className={`mb-8 p-8 sm:p-9 border-2 border-white/80 backdrop-blur-[6px] shadow-[0_25px_60px_rgba(6,29,43,0.16),6px_6px_0px_rgba(4,19,29,0.85)] animate-wave-sway-5 transition-transform hover:-translate-y-1 ${
+                className={`mb-8 p-8 sm:p-9 border-2 border-white/80 backdrop-blur-[6px] shadow-[0_25px_60px_rgba(6,29,43,0.16),6px_6px_0px_rgba(4,19,29,0.85)] ${swayCard} transition-transform hover:-translate-y-1 ${
                   isAlternate
                     ? 'bg-gradient-to-br from-white/70 via-amber-50/50 to-teal-50/40 rounded-[2.8rem] rounded-tr-md'
                     : 'bg-gradient-to-br from-white/80 via-cyan-50/40 to-slate-50/60 rounded-[2.8rem] rounded-tl-md'
@@ -162,7 +188,7 @@ const StorySection: React.FC<StorySectionProps> = ({
             )}
 
             {narrative && (
-              <div className="relative overflow-hidden rounded-[2.2rem] border-2 border-amber-400/50 bg-[#04131D] p-7 text-white shadow-[6px_6px_0px_#0d9488,0_20px_45px_rgba(4,19,29,0.4)]">
+              <div className={`relative overflow-hidden rounded-[2.2rem] border-2 border-amber-400/50 bg-[#04131D] p-7 text-white shadow-[6px_6px_0px_#0d9488,0_20px_45px_rgba(4,19,29,0.4)] ${swayQuote}`}>
                 <div className="absolute top-0 right-0 h-16 w-16 bg-gradient-to-bl from-teal-400/20 to-transparent pointer-events-none" />
                 <p className="font-serif text-base italic leading-relaxed text-slate-100 sm:text-lg">
                   “{narrative}”
@@ -175,7 +201,7 @@ const StorySection: React.FC<StorySectionProps> = ({
                 {mood.split(', ').filter(Boolean).map((m, idx) => (
                   <span
                     key={idx}
-                    className="artsy-brick-badge-inverted"
+                    className={`artsy-brick-badge-inverted animate-wave-sway-${((idx + index) % 10) + 1}`}
                   >
                     ✦ {m}
                   </span>
@@ -184,7 +210,7 @@ const StorySection: React.FC<StorySectionProps> = ({
             )}
 
             {vimeoUrl && imageUrl && (
-              <div className="mt-8 story-media-frame flex justify-center w-full">
+              <div className={`mt-8 story-media-frame flex justify-center w-full ${swayMedia}`}>
                 {isTikTok ? (
                   hasLoaded ? (
                     <div className="relative z-10 w-full overflow-hidden rounded-3xl border-2 border-white/80 shadow-2xl">
@@ -212,12 +238,10 @@ const StorySection: React.FC<StorySectionProps> = ({
             )}
           </div>
 
-          {/* Media Column - Asymmetrical playful corners & thick contrast border */}
+          {/* Media Column - Individual playful corner shapes & floating wave motion */}
           {(imageUrl || (!imageUrl && vimeoUrl)) && (
             <div className={`${isAlternate ? 'md:order-1' : 'md:order-2'}`}>
-              <div className={`relative overflow-hidden p-3 border-2 border-white/90 bg-white/50 backdrop-blur-[6px] shadow-[0_30px_70px_rgba(4,19,29,0.25),8px_8px_0px_#04131D] transition-transform duration-500 hover:scale-[1.02] ${
-                isAlternate ? 'rounded-[3rem] rounded-tr-md rotate-1' : 'rounded-[3rem] rounded-tl-md -rotate-1'
-              }`}>
+              <div className={`relative overflow-hidden p-3 border-2 border-white/90 bg-white/50 backdrop-blur-[6px] shadow-[0_30px_70px_rgba(4,19,29,0.25),8px_8px_0px_#04131D] ${swayMedia} ${mediaCorners} transition-transform duration-500 hover:scale-[1.02]`}>
                 {imageUrl ? (
                   <img
                     src={imageUrl}
