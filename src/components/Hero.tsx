@@ -15,17 +15,17 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, backgroundVideo }) => {
   const { brandSettings } = useBrand();
 
-  // Use mobile WebP animated banner for both mobile and desktop per request
-  const heroImageSrc = backgroundImageMobile || backgroundImage || '/hero-mobile.webp';
+  const desktopImage = backgroundImage || '/hero-desktop.webp';
+  const mobileImage = backgroundImageMobile || '/hero-mobile.webp';
 
   return (
-    <section className="relative bg-[#04131D] text-white isolate z-0">
-      {/* Background Media - Overflows vertically 140% into next section with 25px drop shadow & fade to 0% transparency */}
+    <section className="relative bg-[#04131D] text-white isolate z-0 overflow-x-hidden w-full">
+      {/* Background Media - Overflows 130% vertically with 30% fade to 0% transparency, clipped horizontally (no scrollbars) */}
       <div
-        className="absolute inset-x-0 top-0 z-0 h-[145%] overflow-hidden pointer-events-none select-none drop-shadow-[0_25px_25px_rgba(0,0,0,0.45)]"
+        className="absolute inset-x-0 top-0 z-0 h-[130%] w-full overflow-hidden pointer-events-none select-none drop-shadow-[0_25px_25px_rgba(0,0,0,0.45)]"
         style={{
-          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 62%, rgba(0,0,0,0) 100%)',
-          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 62%, rgba(0,0,0,0) 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)',
+          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)',
         }}
       >
         <div className="absolute inset-0 bg-[#04131D]" aria-hidden="true" />
@@ -37,21 +37,26 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             muted
             loop
             playsInline
-            poster={heroImageSrc}
+            poster={desktopImage}
             aria-hidden="true"
-            style={{ objectFit: 'cover', objectPosition: 'center center' }}
+            style={{ objectFit: 'cover', objectPosition: 'center top' }}
           />
         ) : (
-          <img
-            src={heroImageSrc}
-            alt="Punta Cana Excursion"
-            className="absolute inset-0 h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
-            style={{ objectFit: 'cover', objectPosition: 'center center' }}
-          />
+          <picture className="absolute inset-0 block h-full w-full">
+            {mobileImage && (
+              <source media="(max-width: 767px)" srcSet={mobileImage} type="image/webp" />
+            )}
+            <img
+              src={desktopImage}
+              alt="Punta Cana Excursion"
+              className="h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
+              style={{ objectFit: 'cover', objectPosition: 'center top' }}
+            />
+          </picture>
         )}
       </div>
 
-      {/* Subtle bottom-only gradient for headline legibility while preserving vibrant bright WebP colors & shine */}
+      {/* Subtle bottom-only gradient for headline legibility while preserving vibrant WebP colors */}
       <div className="absolute inset-x-0 bottom-0 z-1 h-56 bg-gradient-to-t from-[#04131D]/90 via-[#04131D]/45 to-transparent pointer-events-none" />
 
       {/* Main Hero Content Container */}
