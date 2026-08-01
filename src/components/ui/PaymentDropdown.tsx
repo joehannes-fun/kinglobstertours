@@ -87,7 +87,7 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
   const openWhatsAppConfirmation = (paymentMethod: string) => {
     const details = selectedPrice ? ` (${selectedTier || 'Option'}: ${selectedPrice})` : '';
     const phone = brandSettings.phoneNumber || '+18095550123';
-    const message = `Hola! He iniciado la reserva/pago vía ${paymentMethod} por la excursión: ${excursionTitle}${details}.\n\nHello! I initiated my booking/payment via ${paymentMethod} for: ${excursionTitle}${details}.`;
+    const message = `Hola! Estoy comprando esto ahora mismo (${excursionTitle}${details}) vía ${paymentMethod}. Por favor confirma personalmente también.\n\nHello! I am buying this right now (${excursionTitle}${details}) via ${paymentMethod}. Please confirm personally as well.`;
     
     const waUrl = generateWhatsAppMessage(phone, message);
     if (waUrl) {
