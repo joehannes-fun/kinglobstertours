@@ -17,6 +17,7 @@ interface TourCardProps {
   enabled?: boolean;
   showPrice?: boolean;
   showDetailsLink?: boolean;
+  index?: number;
 }
 
 const buildPaymentHref = (baseLink: string, amount: number | null): string => {
@@ -41,9 +42,11 @@ const TourCard: React.FC<TourCardProps> = ({
   enabled = true,
   showPrice = true,
   showDetailsLink = true,
+  index = 0,
 }) => {
   const intl = useIntl();
   const { brandSettings } = useBrand();
+  const swayClass = `animate-wave-sway-${(index % 10) + 1}`;
   const resolvedPricingOptions = pricingOptions.length > 0
     ? pricingOptions
     : [{ tier: intl.locale === 'es' ? 'Personas' : 'People', price, amount: null }];
