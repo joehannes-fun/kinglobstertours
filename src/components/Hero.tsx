@@ -48,8 +48,7 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             <img
               src={desktopImage}
               alt="Punta Cana Excursion"
-              className="absolute inset-0 h-full w-full min-h-full min-w-full object-cover object-center opacity-100 pointer-events-none select-none"
-              style={{ objectFit: 'cover', objectPosition: 'center center' }}
+              className="h-full w-full object-cover md:object-contain object-center opacity-100 pointer-events-none select-none md:scale-90 lg:scale-85"
             />
           </picture>
         )}
