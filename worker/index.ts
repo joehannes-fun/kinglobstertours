@@ -4,11 +4,7 @@
  * This project began life as a Cloudflare Pages app, where everything under
  * functions/ was routed by filename. Workers use a single entry script, so this
  * module reproduces that routing table explicitly and hands anything it does not
- * recognise to the static assets in dist/ (SPA fallback handled by the ASSETS
- * binding's not_found_handling).
- *
- * The handlers themselves are still the Pages Functions, called with the same
- * { request, env } context shape they expect.
+ * recognise to the static assets in dist/ (SPA fallback handled by ASSETS binding).
  */
 
 import { onRequest as onData } from '../functions/api/data';
@@ -34,13 +30,26 @@ const ROUTES: Record<
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    const { pathname } = new URL(request.url);
+    const url = new URL(request.url);
+    const pathname = url.pathname.replace(/\/+$/, '') || '/';
 
-    const handler = ROUTES[pathname.replace(/\/+$/, '') || '/'];
+    const handler = ROUTES[pathname];
     if (handler) {
       return handler({ request, env });
     }
 
-    return env.ASSETS.fetch(request);
+    // Try serving requested asset from dist/
+    let response = await env.ASSETS.fetch(request);
+
+    // If 404 and no file extension in pathname, fallback to index.html for SPA routing
+    if ((response.status === 404 || response.status === 405) && !/\.[a-zA-Z0-9]+$/.test(pathname)) {
+      const indexRequest = new Request(new URL('/index.html', request.url).toString(), {
+        method: 'GET',
+        headers: request.headers,
+      });
+      response = await env.ASSETS.fetch(indexRequest);
+    }
+
+    return response;
   },
 };
