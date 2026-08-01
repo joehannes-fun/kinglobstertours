@@ -254,10 +254,12 @@ const Transport: React.FC = () => {
     <div className="min-h-screen bg-transparent pb-16 pt-6 md:py-16">
       <div className="section-shell max-w-5xl px-3 md:px-4">
         <div className="mb-6 text-center md:mb-10">
-          <h1 className="mb-3 text-3xl font-bold text-slate-900 md:text-5xl">
-            <FormattedMessage id="transport.title" defaultMessage="Airport Transfers" />
-          </h1>
-          <p className="mx-auto max-w-2xl text-base text-slate-600 md:text-lg">
+          <div className="artsy-title-card mb-4">
+            <h1 className="text-3xl font-bold text-[#FAF7F2] md:text-5xl">
+              <FormattedMessage id="transport.title" defaultMessage="Airport Transfers" />
+            </h1>
+          </div>
+          <p className="mx-auto max-w-2xl text-base text-slate-700 font-medium md:text-lg">
             <FormattedMessage
               id="transport.subtitle"
               defaultMessage="Private transfers from Punta Cana Airport (PUJ) to any destination. Reliable, comfortable, and affordable."

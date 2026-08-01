@@ -109,7 +109,7 @@ const TourCard: React.FC<TourCardProps> = ({
   };
 
   return (
-    <article className="group break-inside-avoid inline-block w-full mb-8 flex h-auto flex-col justify-between overflow-hidden rounded-3xl artsy-glass-card animate-wave-toss transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_70px_rgba(6,29,43,0.28)]">
+    <article className={`group break-inside-avoid inline-block w-full mb-8 flex h-auto flex-col justify-between overflow-hidden rounded-3xl artsy-glass-card ${swayClass} transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_70px_rgba(6,29,43,0.28)]`}>
       {/* Media Frame */}
       <div className="relative overflow-hidden aspect-[16/10]">
         <Link to={detailsPath} className="block h-full w-full" aria-label={title}>

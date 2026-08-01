@@ -22,14 +22,17 @@ interface Adventure {
 interface AdventureCardProps {
   adventure: Adventure;
   onBook?: (adventureId: string) => void;
+  index?: number;
 }
 
-const AdventureCard: React.FC<AdventureCardProps> = ({ adventure, onBook }) => {
+const AdventureCard: React.FC<AdventureCardProps> = ({ adventure, onBook, index = 0 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const navigate = useNavigate();
   const { brandSettings } = useBrand();
   const whatsappPhone = brandSettings.phoneNumber || '+18095553333';
+
+  const swayClass = `animate-wave-sway-${((index + 2) % 10) + 1}`;
 
   const handleWhatsAppClick = () => {
     const message = `Hola! Me gustaría más información sobre: ${adventure.title}`;
@@ -47,7 +50,7 @@ const AdventureCard: React.FC<AdventureCardProps> = ({ adventure, onBook }) => {
   };
 
   return (
-    <div className="group break-inside-avoid inline-block w-full mb-8 flex h-auto flex-col overflow-hidden rounded-[28px] artsy-glass-card animate-wave-toss-alt transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_36px_100px_rgba(8,42,62,.24)] sm:rounded-[32px]">
+    <div className={`group break-inside-avoid inline-block w-full mb-8 flex h-auto flex-col overflow-hidden rounded-[28px] artsy-glass-card ${swayClass} transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_36px_100px_rgba(8,42,62,.24)] sm:rounded-[32px]`}>
       {/* Image container with overlay */}
       <div className="relative h-60 overflow-hidden bg-slate-200 sm:h-64 md:h-80">
         <img

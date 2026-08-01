@@ -133,9 +133,11 @@ const StorySection: React.FC<StorySectionProps> = ({
           </div>
 
           {title && (
-            <h2 className="font-serif text-3xl font-extrabold leading-tight tracking-tight text-[#04131D] sm:text-4xl lg:text-5xl drop-shadow-sm">
-              {title}
-            </h2>
+            <div className={`inline-block ${isAlternate ? 'artsy-title-card-light' : 'artsy-title-card'}`}>
+              <h2 className="font-serif text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl lg:text-5xl drop-shadow-sm">
+                {title}
+              </h2>
+            </div>
           )}
 
           <div className={`mt-5 h-1.5 w-24 bg-gradient-to-r from-teal-500 via-cyan-400 to-amber-400 rounded-full shadow-md ${isAlternate ? 'md:ml-auto' : ''}`} />
@@ -147,7 +149,7 @@ const StorySection: React.FC<StorySectionProps> = ({
           <div className={(imageUrl || vimeoUrl) && isAlternate ? 'md:order-2' : 'md:order-1'}>
             {description && (
               <div
-                className={`mb-8 p-8 sm:p-9 border-2 border-white/80 backdrop-blur-[6px] shadow-[0_25px_60px_rgba(6,29,43,0.16),6px_6px_0px_rgba(4,19,29,0.85)] transition-transform hover:-translate-y-1 ${
+                className={`mb-8 p-8 sm:p-9 border-2 border-white/80 backdrop-blur-[6px] shadow-[0_25px_60px_rgba(6,29,43,0.16),6px_6px_0px_rgba(4,19,29,0.85)] animate-wave-sway-5 transition-transform hover:-translate-y-1 ${
                   isAlternate
                     ? 'bg-gradient-to-br from-white/70 via-amber-50/50 to-teal-50/40 rounded-[2.8rem] rounded-tr-md'
                     : 'bg-gradient-to-br from-white/80 via-cyan-50/40 to-slate-50/60 rounded-[2.8rem] rounded-tl-md'

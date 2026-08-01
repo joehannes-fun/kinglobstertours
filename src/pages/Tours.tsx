@@ -41,8 +41,12 @@ const Tours: React.FC = () => {
           <p className="site-eyebrow mb-4">Find your kind of day</p>
           <div className="grid items-end gap-8 lg:grid-cols-[1fr_25rem]">
             <div>
-              <h1 className="mb-3 max-w-3xl text-5xl font-bold leading-[.95] text-[#061d2b] md:text-6xl"><FormattedMessage id="tours.title" /></h1>
-              <p className="max-w-2xl text-lg leading-8 text-[#214250]"><FormattedMessage id="tours.dynamicSubtitle" values={{ brand: brandSettings.brandName }} /></p>
+              <div className="artsy-title-card mb-4">
+                <h1 className="text-4xl font-bold leading-[.95] text-[#FAF7F2] md:text-5xl">
+                  <FormattedMessage id="tours.title" />
+                </h1>
+              </div>
+              <p className="max-w-2xl text-lg leading-8 text-[#214250] font-medium"><FormattedMessage id="tours.dynamicSubtitle" values={{ brand: brandSettings.brandName }} /></p>
             </div>
             <label className="relative block">
               <span className="sr-only">Search experiences</span>
@@ -58,9 +62,10 @@ const Tours: React.FC = () => {
           {query && <button className="text-sm font-bold text-[#0a7280] underline underline-offset-4" onClick={() => setQuery('')}>{locale === 'es' ? 'Limpiar búsqueda' : 'Clear search'}</button>}
         </div>
         {visibleTours.length ? <div className="columns-1 gap-7 sm:columns-2 lg:columns-3">
-          {visibleTours.map((tour) => (
+          {visibleTours.map((tour, index) => (
             <TourCard
               key={tour.id}
+              index={index}
               image={tour.image}
               title={tour.title}
               description={tour.description}

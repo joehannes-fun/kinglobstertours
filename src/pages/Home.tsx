@@ -123,10 +123,12 @@ const Home: React.FC = () => {
                       <div className="section-icon mx-auto mb-5">
                         {section.emoji}
                       </div>
-                      <h2 className="mb-4 text-3xl font-bold leading-tight text-slate-950 sm:text-4xl md:text-5xl">
-                        {section.title}
-                      </h2>
-                      <p className="mx-auto max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">
+                      <div className="artsy-title-card mb-4">
+                        <h2 className="text-3xl font-bold leading-tight text-[#FAF7F2] sm:text-4xl md:text-5xl">
+                          {section.title}
+                        </h2>
+                      </div>
+                      <p className="mx-auto max-w-2xl text-lg leading-8 text-slate-700 font-medium sm:text-xl">
                         {section.description}
                       </p>
                     </div>
@@ -134,8 +136,8 @@ const Home: React.FC = () => {
                     {/* Adventure cards grid */}
                     {section.adventures && (
                       <div className="columns-1 gap-7 md:columns-3 lg:gap-8">
-                        {section.adventures.map((adventure) => (
-                          <AdventureCard key={adventure.id} adventure={adventure} />
+                        {section.adventures.map((adventure, i) => (
+                          <AdventureCard key={adventure.id} adventure={adventure} index={i} />
                         ))}
                       </div>
                     )}

@@ -970,59 +970,109 @@ a::after { display: none; }
   -webkit-backdrop-filter: blur(6px);
 }
 
-/* Organic ocean wave toss & sway keyframe animations */
+/* Organic ocean wave toss & sway keyframe animations (10 subtle variations) */
 @keyframes waveSway1 {
-  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
-  25% { transform: translateY(-6px) rotate(0.8deg) skewX(-0.6deg) skewY(0.4deg); }
-  55% { transform: translateY(5px) rotate(-0.7deg) skewX(0.7deg) skewY(-0.5deg); }
-  80% { transform: translateY(-4px) rotate(0.5deg) skewX(-0.4deg) skewY(0.3deg); }
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg); }
+  25% { transform: translateY(-4px) rotate(0.5deg) skewX(-0.4deg); }
+  55% { transform: translateY(3px) rotate(-0.4deg) skewX(0.5deg); }
+  80% { transform: translateY(-3px) rotate(0.3deg) skewX(-0.3deg); }
 }
-
 @keyframes waveSway2 {
-  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
-  30% { transform: translateY(6px) rotate(-0.9deg) skewX(0.8deg) skewY(-0.6deg); }
-  60% { transform: translateY(-7px) rotate(0.7deg) skewX(-0.5deg) skewY(0.5deg); }
-  85% { transform: translateY(3px) rotate(-0.4deg) skewX(0.4deg) skewY(-0.3deg); }
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg); }
+  30% { transform: translateY(4px) rotate(-0.6deg) skewX(0.5deg); }
+  60% { transform: translateY(-5px) rotate(0.5deg) skewX(-0.4deg); }
+  85% { transform: translateY(2px) rotate(-0.3deg) skewX(0.3deg); }
 }
-
 @keyframes waveSway3 {
-  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
-  22% { transform: translateY(-5px) rotate(-0.6deg) skewX(0.7deg) skewY(-0.4deg); }
-  52% { transform: translateY(7px) rotate(0.8deg) skewX(-0.8deg) skewY(0.6deg); }
-  78% { transform: translateY(-3px) rotate(-0.5deg) skewX(0.5deg) skewY(-0.3deg); }
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg); }
+  22% { transform: translateY(-4px) rotate(-0.5deg) skewX(0.5deg); }
+  52% { transform: translateY(5px) rotate(0.6deg) skewX(-0.6deg); }
+  78% { transform: translateY(-2px) rotate(-0.4deg) skewX(0.3deg); }
 }
-
 @keyframes waveSway4 {
-  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
-  35% { transform: translateY(5px) rotate(0.7deg) skewX(-0.5deg) skewY(0.5deg); }
-  68% { transform: translateY(-6px) rotate(-0.8deg) skewX(0.6deg) skewY(-0.4deg); }
-  90% { transform: translateY(4px) rotate(0.4deg) skewX(-0.3deg) skewY(0.2deg); }
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg); }
+  35% { transform: translateY(4px) rotate(0.5deg) skewX(-0.4deg); }
+  68% { transform: translateY(-4px) rotate(-0.5deg) skewX(0.4deg); }
+  90% { transform: translateY(3px) rotate(0.3deg) skewX(-0.2deg); }
 }
-
 @keyframes waveSway5 {
-  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
-  28% { transform: translateY(-7px) rotate(-1.0deg) skewX(0.6deg) skewY(-0.5deg); }
-  58% { transform: translateY(4px) rotate(0.6deg) skewX(-0.7deg) skewY(0.4deg); }
-  82% { transform: translateY(-4px) rotate(-0.4deg) skewX(0.3deg) skewY(-0.3deg); }
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg); }
+  28% { transform: translateY(-5px) rotate(-0.7deg) skewX(0.4deg); }
+  58% { transform: translateY(3px) rotate(0.4deg) skewX(-0.5deg); }
+  82% { transform: translateY(-3px) rotate(-0.3deg) skewX(0.2deg); }
 }
-
 @keyframes waveSway6 {
-  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
-  20% { transform: translateY(4px) rotate(0.9deg) skewX(-0.7deg) skewY(0.5deg); }
-  50% { transform: translateY(-5px) rotate(-0.8deg) skewX(0.8deg) skewY(-0.6deg); }
-  75% { transform: translateY(6px) rotate(0.5deg) skewX(-0.4deg) skewY(0.3deg); }
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg); }
+  20% { transform: translateY(3px) rotate(0.6deg) skewX(-0.5deg); }
+  50% { transform: translateY(-4px) rotate(-0.5deg) skewX(0.6deg); }
+  75% { transform: translateY(4px) rotate(0.4deg) skewX(-0.3deg); }
+}
+@keyframes waveSway7 {
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg); }
+  32% { transform: translateY(-4px) rotate(-0.4deg) skewX(0.5deg); }
+  62% { transform: translateY(5px) rotate(0.5deg) skewX(-0.4deg); }
+  84% { transform: translateY(-2px) rotate(-0.3deg) skewX(0.2deg); }
+}
+@keyframes waveSway8 {
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg); }
+  26% { transform: translateY(4px) rotate(0.5deg) skewX(-0.6deg); }
+  56% { transform: translateY(-4px) rotate(-0.6deg) skewX(0.4deg); }
+  88% { transform: translateY(3px) rotate(0.3deg) skewX(-0.3deg); }
+}
+@keyframes waveSway9 {
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg); }
+  24% { transform: translateY(-3px) rotate(-0.5deg) skewX(0.4deg); }
+  54% { transform: translateY(4px) rotate(0.6deg) skewX(-0.5deg); }
+  79% { transform: translateY(-2px) rotate(-0.2deg) skewX(0.3deg); }
+}
+@keyframes waveSway10 {
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg); }
+  34% { transform: translateY(3px) rotate(0.4deg) skewX(-0.3deg); }
+  66% { transform: translateY(-4px) rotate(-0.5deg) skewX(0.5deg); }
+  87% { transform: translateY(2px) rotate(0.3deg) skewX(-0.2deg); }
 }
 
-.animate-wave-sway-1 { animation: waveSway1 13s ease-in-out infinite; will-change: transform; }
-.animate-wave-sway-2 { animation: waveSway2 17s ease-in-out infinite; animation-delay: -4s; will-change: transform; }
-.animate-wave-sway-3 { animation: waveSway3 15s ease-in-out infinite; animation-delay: -8s; will-change: transform; }
-.animate-wave-sway-4 { animation: waveSway4 19s ease-in-out infinite; animation-delay: -2s; will-change: transform; }
-.animate-wave-sway-5 { animation: waveSway5 14s ease-in-out infinite; animation-delay: -10s; will-change: transform; }
-.animate-wave-sway-6 { animation: waveSway6 16s ease-in-out infinite; animation-delay: -6s; will-change: transform; }
+.animate-wave-sway-1 { animation: waveSway1 15s ease-in-out infinite; will-change: transform; }
+.animate-wave-sway-2 { animation: waveSway2 18s ease-in-out infinite; animation-delay: -3s; will-change: transform; }
+.animate-wave-sway-3 { animation: waveSway3 16s ease-in-out infinite; animation-delay: -7s; will-change: transform; }
+.animate-wave-sway-4 { animation: waveSway4 20s ease-in-out infinite; animation-delay: -2s; will-change: transform; }
+.animate-wave-sway-5 { animation: waveSway5 14s ease-in-out infinite; animation-delay: -9s; will-change: transform; }
+.animate-wave-sway-6 { animation: waveSway6 17s ease-in-out infinite; animation-delay: -5s; will-change: transform; }
+.animate-wave-sway-7 { animation: waveSway7 21s ease-in-out infinite; animation-delay: -11s; will-change: transform; }
+.animate-wave-sway-8 { animation: waveSway8 13s ease-in-out infinite; animation-delay: -1s; will-change: transform; }
+.animate-wave-sway-9 { animation: waveSway9 19s ease-in-out infinite; animation-delay: -13s; will-change: transform; }
+.animate-wave-sway-10 { animation: waveSway10 15s ease-in-out infinite; animation-delay: -8s; will-change: transform; }
 
-.animate-wave-toss { animation: waveSway1 13s ease-in-out infinite; will-change: transform; }
-.animate-wave-toss-alt { animation: waveSway2 17s ease-in-out infinite; will-change: transform; }
-.animate-wave-toss-delayed { animation: waveSway3 15s ease-in-out infinite; animation-delay: -6s; will-change: transform; }
+.animate-wave-toss { animation: waveSway1 15s ease-in-out infinite; will-change: transform; }
+.animate-wave-toss-alt { animation: waveSway2 18s ease-in-out infinite; will-change: transform; }
+.animate-wave-toss-delayed { animation: waveSway3 16s ease-in-out infinite; animation-delay: -6s; will-change: transform; }
+
+/* Stylishly bulky title cards with background & subtle wave sway animation */
+.artsy-title-card {
+  display: inline-block;
+  padding: 0.85rem 1.75rem;
+  background: #04131D;
+  color: #FAF7F2;
+  border-radius: 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 4px 4px 0px rgba(10, 114, 128, 0.85), 0 15px 35px rgba(4, 19, 29, 0.3);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: waveSway4 18s ease-in-out infinite;
+}
+
+.artsy-title-card-light {
+  display: inline-block;
+  padding: 0.85rem 1.75rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(240, 249, 255, 0.75));
+  color: #04131D;
+  border-radius: 1.5rem;
+  border: 2px solid #04131D;
+  box-shadow: 4px 4px 0px #0d9488, 0 15px 35px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: waveSway2 16s ease-in-out infinite;
+}
 
 /* Artsy brutalist-brick contrast elements & badges */
 .artsy-brick-badge {
@@ -1098,7 +1148,7 @@ a::after { display: none; }
 }
 
 .animate-fab-glow-wave {
-  animation: waveTossSlow 11s ease-in-out infinite, fabGlowPulse 4s ease-in-out infinite;
+  animation: waveSway1 12s ease-in-out infinite, fabGlowPulse 4s ease-in-out infinite;
   will-change: transform, box-shadow, background-color;
 }
 
