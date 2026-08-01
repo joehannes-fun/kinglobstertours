@@ -1,10 +1,8 @@
 /**
  * Worker entry point.
  *
- * This project began life as a Cloudflare Pages app, where everything under
- * functions/ was routed by filename. Workers use a single entry script, so this
- * module reproduces that routing table explicitly and hands anything it does not
- * recognise to the static assets in dist/ (SPA fallback handled by ASSETS binding).
+ * Reproduces API routing table and hands static asset requests to env.ASSETS,
+ * falling back to /index.html for client-side SPA routing.
  */
 
 import { onRequest as onData } from '../functions/api/data';
@@ -38,18 +36,14 @@ export default {
       return handler({ request, env });
     }
 
-    // Try serving requested asset from dist/
-    let response = await env.ASSETS.fetch(request);
-
-    // If 404 and no file extension in pathname, fallback to index.html for SPA routing
-    if ((response.status === 404 || response.status === 405) && !/\.[a-zA-Z0-9]+$/.test(pathname)) {
-      const indexRequest = new Request(new URL('/index.html', request.url).toString(), {
-        method: 'GET',
-        headers: request.headers,
-      });
-      response = await env.ASSETS.fetch(indexRequest);
+    // Serve asset directly if found
+    const assetResponse = await env.ASSETS.fetch(request);
+    if (assetResponse.status !== 404) {
+      return assetResponse;
     }
 
-    return response;
+    // Fallback to /index.html for SPA routes
+    const indexUrl = new URL('/index.html', request.url);
+    return env.ASSETS.fetch(new Request(indexUrl, { method: 'GET' }));
   },
 };
