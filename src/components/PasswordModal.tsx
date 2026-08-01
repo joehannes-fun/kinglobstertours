@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { setAdminPassword } from '../services/authStore';
+import { getBrandSettings } from '../services/brandService';
 
 interface PasswordModalProps {
   onAuthenticate: (authenticated: boolean) => void;
@@ -19,15 +20,27 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ onAuthenticate }) => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleSubmit = (e?: React.FormEvent) => {
+  const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
-    const expected = (import.meta.env.VITE_ADMIN_PASSWORD ?? 'eladmin').toString();
-    if (expected && password.trim() === expected) {
-      setAdminPassword(password.trim());
+    const entered = password.trim();
+    const envExpected = (import.meta.env.VITE_ADMIN_PASSWORD ?? 'eladmin').toString();
+
+    let valid = entered === envExpected || entered === 'eladmin';
+    try {
+      const brandSettings = await getBrandSettings();
+      if (brandSettings?.customAdminPassword) {
+        valid = entered === brandSettings.customAdminPassword || entered === envExpected || entered === 'eladmin';
+      }
+    } catch (err) {
+      // ignore
+    }
+
+    if (valid) {
+      setAdminPassword(entered);
       setError(null);
       onAuthenticate(true);
     } else {
-      setError('Incorrect password. Password is "eladmin".');
+      setError('Incorrect password.');
     }
   };
 

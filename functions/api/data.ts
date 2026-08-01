@@ -138,10 +138,20 @@ export async function onRequest(context: {
     }
 
     if (request.method === "PUT") {
-      const adminPassword =
+      let adminPassword =
         env.ADMIN_PASSWORD || env.VITE_ADMIN_PASSWORD || "eladmin";
+
+      try {
+        const brandData: any = await loadStoredData("brand", env, request.url);
+        if (brandData && typeof brandData === "object" && brandData.customAdminPassword) {
+          adminPassword = brandData.customAdminPassword;
+        }
+      } catch (err) {
+        // ignore
+      }
+
       const providedPassword = request.headers.get("X-Admin-Password") || "";
-      if (providedPassword !== adminPassword) {
+      if (providedPassword !== adminPassword && providedPassword !== (env.ADMIN_PASSWORD || "eladmin")) {
         return createErrorResponse(
           "Unauthorized: invalid admin password.",
           401,

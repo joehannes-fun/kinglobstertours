@@ -971,45 +971,58 @@ a::after { display: none; }
 }
 
 /* Organic ocean wave toss & sway keyframe animations */
-@keyframes waveTossSlow {
-  0% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
-  22% { transform: translateY(-7px) rotate(0.9deg) skewX(-0.7deg) skewY(0.4deg); }
-  48% { transform: translateY(4px) rotate(-0.8deg) skewX(0.8deg) skewY(-0.6deg); }
-  74% { transform: translateY(-5px) rotate(0.6deg) skewX(-0.5deg) skewY(0.3deg); }
-  100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+@keyframes waveSway1 {
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+  25% { transform: translateY(-6px) rotate(0.8deg) skewX(-0.6deg) skewY(0.4deg); }
+  55% { transform: translateY(5px) rotate(-0.7deg) skewX(0.7deg) skewY(-0.5deg); }
+  80% { transform: translateY(-4px) rotate(0.5deg) skewX(-0.4deg) skewY(0.3deg); }
 }
 
-@keyframes waveTossAlt {
-  0% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
-  28% { transform: translateY(5px) rotate(-1.1deg) skewX(0.9deg) skewY(-0.7deg); }
-  55% { transform: translateY(-8px) rotate(0.8deg) skewX(-0.6deg) skewY(0.5deg); }
-  82% { transform: translateY(3px) rotate(-0.5deg) skewX(0.4deg) skewY(-0.3deg); }
-  100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+@keyframes waveSway2 {
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+  30% { transform: translateY(6px) rotate(-0.9deg) skewX(0.8deg) skewY(-0.6deg); }
+  60% { transform: translateY(-7px) rotate(0.7deg) skewX(-0.5deg) skewY(0.5deg); }
+  85% { transform: translateY(3px) rotate(-0.4deg) skewX(0.4deg) skewY(-0.3deg); }
 }
 
-@keyframes waveTossDelayed {
-  0% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
-  33% { transform: translateY(-6px) rotate(0.7deg) skewX(-0.8deg) skewY(0.5deg); }
-  64% { transform: translateY(6px) rotate(-0.9deg) skewX(0.6deg) skewY(-0.4deg); }
-  88% { transform: translateY(-3px) rotate(0.4deg) skewX(-0.3deg) skewY(0.2deg); }
-  100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+@keyframes waveSway3 {
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+  22% { transform: translateY(-5px) rotate(-0.6deg) skewX(0.7deg) skewY(-0.4deg); }
+  52% { transform: translateY(7px) rotate(0.8deg) skewX(-0.8deg) skewY(0.6deg); }
+  78% { transform: translateY(-3px) rotate(-0.5deg) skewX(0.5deg) skewY(-0.3deg); }
 }
 
-.animate-wave-toss {
-  animation: waveTossSlow 14s ease-in-out infinite;
-  will-change: transform;
+@keyframes waveSway4 {
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+  35% { transform: translateY(5px) rotate(0.7deg) skewX(-0.5deg) skewY(0.5deg); }
+  68% { transform: translateY(-6px) rotate(-0.8deg) skewX(0.6deg) skewY(-0.4deg); }
+  90% { transform: translateY(4px) rotate(0.4deg) skewX(-0.3deg) skewY(0.2deg); }
 }
 
-.animate-wave-toss-alt {
-  animation: waveTossAlt 18s ease-in-out infinite;
-  will-change: transform;
+@keyframes waveSway5 {
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+  28% { transform: translateY(-7px) rotate(-1.0deg) skewX(0.6deg) skewY(-0.5deg); }
+  58% { transform: translateY(4px) rotate(0.6deg) skewX(-0.7deg) skewY(0.4deg); }
+  82% { transform: translateY(-4px) rotate(-0.4deg) skewX(0.3deg) skewY(-0.3deg); }
 }
 
-.animate-wave-toss-delayed {
-  animation: waveTossDelayed 16s ease-in-out infinite;
-  animation-delay: -6s;
-  will-change: transform;
+@keyframes waveSway6 {
+  0%, 100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+  20% { transform: translateY(4px) rotate(0.9deg) skewX(-0.7deg) skewY(0.5deg); }
+  50% { transform: translateY(-5px) rotate(-0.8deg) skewX(0.8deg) skewY(-0.6deg); }
+  75% { transform: translateY(6px) rotate(0.5deg) skewX(-0.4deg) skewY(0.3deg); }
 }
+
+.animate-wave-sway-1 { animation: waveSway1 13s ease-in-out infinite; will-change: transform; }
+.animate-wave-sway-2 { animation: waveSway2 17s ease-in-out infinite; animation-delay: -4s; will-change: transform; }
+.animate-wave-sway-3 { animation: waveSway3 15s ease-in-out infinite; animation-delay: -8s; will-change: transform; }
+.animate-wave-sway-4 { animation: waveSway4 19s ease-in-out infinite; animation-delay: -2s; will-change: transform; }
+.animate-wave-sway-5 { animation: waveSway5 14s ease-in-out infinite; animation-delay: -10s; will-change: transform; }
+.animate-wave-sway-6 { animation: waveSway6 16s ease-in-out infinite; animation-delay: -6s; will-change: transform; }
+
+.animate-wave-toss { animation: waveSway1 13s ease-in-out infinite; will-change: transform; }
+.animate-wave-toss-alt { animation: waveSway2 17s ease-in-out infinite; will-change: transform; }
+.animate-wave-toss-delayed { animation: waveSway3 15s ease-in-out infinite; animation-delay: -6s; will-change: transform; }
 
 /* Artsy brutalist-brick contrast elements & badges */
 .artsy-brick-badge {

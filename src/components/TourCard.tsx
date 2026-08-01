@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { generateWhatsAppMessage } from '../utils/whatsapp';
 import { useBrand } from '../contexts/BrandContext';
 import { PricingOption } from '../services/toursService';
-import MarkdownRenderer from './ui/MarkdownRenderer';
+import PaymentDropdown from './ui/PaymentDropdown';
 
 interface TourCardProps {
   image: string;
@@ -204,31 +204,16 @@ const TourCard: React.FC<TourCardProps> = ({
               </span>
             </div>
 
-            <div className="space-y-2.5">
+            <div className="space-y-3 pt-1">
               <button onClick={handleBookNow} className="tropical-button w-full justify-center">
                 <FormattedMessage id="tours.bookNow" />
               </button>
-              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                {paypalHref && (
-                  <a
-                    href={paypalHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-luxury-outline w-full text-center text-[0.7rem] text-slate-700 bg-slate-100 hover:bg-slate-200 border-slate-200"
-                  >
-                    <FormattedMessage id="payment.paypal" defaultMessage="PayPal" />
-                  </a>
-                )}
-                {verifoneHref && (
-                  <a
-                    href={verifoneHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-luxury-outline w-full text-center text-[0.7rem] text-slate-700 bg-slate-100 hover:bg-slate-200 border-slate-200"
-                  >
-                    <FormattedMessage id="payment.verifone" defaultMessage="Credit Card (Verifone)" />
-                  </a>
-                )}
+              <div className="flex justify-center w-full">
+                <PaymentDropdown
+                  excursionTitle={title}
+                  selectedPrice={totalAmount > 0 ? `$${totalAmount} USD` : price}
+                  className="w-full"
+                />
               </div>
             </div>
           </div>

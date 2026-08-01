@@ -6,6 +6,10 @@ export interface BrandSettings {
   paypalMeLink: string;
   verifoneLink: string;
   brandicon: string;
+  stripePublishableKey?: string;
+  stripeSecretKey?: string;
+  stripeEnabled?: boolean;
+  customAdminPassword?: string;
 }
 
 const defaultBrandSettings: BrandSettings = {
@@ -14,6 +18,10 @@ const defaultBrandSettings: BrandSettings = {
   paypalMeLink: 'https://www.paypal.com/paypalme/carlostours',
   verifoneLink: '',
   brandicon: '',
+  stripePublishableKey: '',
+  stripeSecretKey: '',
+  stripeEnabled: false,
+  customAdminPassword: '',
 };
 
 const normalizeBrandSettings = (input: Partial<BrandSettings> | null | undefined): BrandSettings => ({
@@ -37,6 +45,14 @@ const normalizeBrandSettings = (input: Partial<BrandSettings> | null | undefined
     typeof input?.brandicon === 'string' && input.brandicon.trim()
       ? input.brandicon
       : defaultBrandSettings.brandicon,
+  stripePublishableKey:
+    typeof input?.stripePublishableKey === 'string' ? input.stripePublishableKey : '',
+  stripeSecretKey:
+    typeof input?.stripeSecretKey === 'string' ? input.stripeSecretKey : '',
+  stripeEnabled:
+    typeof input?.stripeEnabled === 'boolean' ? input.stripeEnabled : false,
+  customAdminPassword:
+    typeof input?.customAdminPassword === 'string' ? input.customAdminPassword : '',
 });
 
 export const getBrandSettings = async (): Promise<BrandSettings> => {

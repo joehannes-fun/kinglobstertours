@@ -46,10 +46,13 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             {mobileImage && (
               <source media="(max-width: 767px)" srcSet={mobileImage} type="image/webp" />
             )}
+            {desktopImage && (
+              <source media="(min-width: 768px)" srcSet={desktopImage} type="image/webp" />
+            )}
             <img
               src={desktopImage}
               alt="Punta Cana Excursion"
-              className="h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
+              className="h-full w-full object-cover opacity-100 pointer-events-none select-none"
               style={{ objectFit: 'cover', objectPosition: 'center top' }}
             />
           </picture>

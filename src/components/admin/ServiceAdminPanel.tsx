@@ -344,7 +344,10 @@ const ServiceAdminPanel: React.FC<ServiceAdminPanelProps> = ({
 
         <div className="mt-6 rounded-3xl border border-slate-200 p-5">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-slate-900">Detail images</h3>
+            <div>
+              <h3 className="text-lg font-semibold text-slate-900">Detail images</h3>
+              <p className="text-xs text-slate-500">Preview & manage tour image gallery</p>
+            </div>
             <button
               onClick={() => setDraft((current) => ({
                 ...current,
@@ -352,13 +355,53 @@ const ServiceAdminPanel: React.FC<ServiceAdminPanelProps> = ({
               }))}
               className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white"
             >
-              Add image
+              + Add image
             </button>
           </div>
+
+          {/* Visual Image Thumbnail Preview Grid with Delete Buttons */}
+          {draft.details.images.filter(Boolean).length > 0 && (
+            <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4 md:grid-cols-6">
+              {draft.details.images.map((image, index) => {
+                if (!image) return null;
+                return (
+                  <div key={`thumb-${image}-${index}`} className="group relative h-24 w-full overflow-hidden rounded-2xl border-2 border-slate-200 bg-slate-100 shadow-sm">
+                    <img src={image} alt={`Preview ${index}`} className="h-full w-full object-cover" />
+                    <button
+                      onClick={() => setDraft((current) => ({
+                        ...current,
+                        details: {
+                          ...current.details,
+                          images: current.details.images.filter((_, imageIndex) => imageIndex !== index),
+                        },
+                      }))}
+                      className="absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white shadow-md transition hover:scale-110"
+                      title="Delete image"
+                    >
+                      ✕
+                    </button>
+                    <span className="absolute bottom-1 left-1.5 text-[0.65rem] font-bold text-white drop-shadow-md">
+                      #{index + 1}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
           <div className="space-y-4">
             {draft.details.images.map((image, index) => (
               <div key={`${image}-${index}`} className="rounded-2xl border border-slate-200 p-4">
-                <div className="grid grid-cols-1 gap-3 lg:grid-cols-[1fr,auto,auto]">
+                <div className="grid grid-cols-1 gap-3 lg:grid-cols-[80px,1fr,auto,auto]">
+                  {image ? (
+                    <div className="relative h-14 w-20 overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+                      <img src={image} alt={`Thumb ${index}`} className="h-full w-full object-cover" />
+                    </div>
+                  ) : (
+                    <div className="flex h-14 w-20 items-center justify-center rounded-xl border border-dashed border-slate-300 text-xs text-slate-400">
+                      No img
+                    </div>
+                  )}
                   <input
                     type="text"
                     value={image}
@@ -375,7 +418,7 @@ const ServiceAdminPanel: React.FC<ServiceAdminPanelProps> = ({
                         await handleImageUpload(index, file);
                       }
                     }}
-                    className="rounded-2xl border border-slate-200 px-4 py-3"
+                    className="rounded-2xl border border-slate-200 px-4 py-3 text-xs"
                   />
                   <button
                     onClick={() => setDraft((current) => ({
@@ -389,7 +432,7 @@ const ServiceAdminPanel: React.FC<ServiceAdminPanelProps> = ({
                     }))}
                     className="rounded-full bg-red-600 px-4 py-2 text-sm font-semibold text-white"
                   >
-                    Remove
+                    Delete
                   </button>
                 </div>
               </div>

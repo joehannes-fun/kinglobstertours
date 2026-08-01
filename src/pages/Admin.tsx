@@ -206,29 +206,88 @@ const Admin: React.FC = () => {
                   type="text"
                   value={brandSettings.paypalMeLink}
                   onChange={(event) => setBrandSettings({ ...brandSettings, paypalMeLink: event.target.value })}
-                  placeholder="PayPal link"
+                  placeholder="PayPal Me Link"
                   className="rounded-2xl border border-slate-200 px-4 py-3 md:col-span-2"
                 />
                 <input
                   type="text"
                   value={brandSettings.verifoneLink}
                   onChange={(event) => setBrandSettings({ ...brandSettings, verifoneLink: event.target.value })}
-                  placeholder="Verifone link"
+                  placeholder="Verifone / Additional Link"
                   className="rounded-2xl border border-slate-200 px-4 py-3 md:col-span-2"
                 />
-                <div className="flex gap-3">
+
+                {/* Stripe Payment Integration Section */}
+                <div className="md:col-span-2 rounded-2xl border border-teal-200 bg-teal-50/50 p-5 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-bold text-slate-900 flex items-center gap-2">
+                        <span>💳</span> Stripe Payment Gateway Configuration
+                      </h4>
+                      <p className="text-xs text-slate-600">Enable credit & debit card payments via Stripe</p>
+                    </div>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={brandSettings.stripeEnabled ?? false}
+                        onChange={(e) => setBrandSettings({ ...brandSettings, stripeEnabled: e.target.checked })}
+                        className="h-5 w-5 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
+                      />
+                      <span className="text-sm font-bold text-slate-800">Enable Stripe</span>
+                    </label>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">Stripe Publishable Key</label>
+                      <input
+                        type="text"
+                        value={brandSettings.stripePublishableKey ?? ''}
+                        onChange={(e) => setBrandSettings({ ...brandSettings, stripePublishableKey: e.target.value })}
+                        placeholder="pk_live_... or pk_test_..."
+                        className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">Stripe Secret Key</label>
+                      <input
+                        type="password"
+                        value={brandSettings.stripeSecretKey ?? ''}
+                        onChange={(e) => setBrandSettings({ ...brandSettings, stripeSecretKey: e.target.value })}
+                        placeholder="sk_live_... or sk_test_..."
+                        className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Change Admin Password Section */}
+                <div className="md:col-span-2 rounded-2xl border border-amber-200 bg-amber-50/60 p-5 space-y-3">
+                  <h4 className="font-bold text-slate-900 flex items-center gap-2">
+                    <span>🔒</span> Change Admin Password
+                  </h4>
+                  <p className="text-xs text-slate-600">Update the password required to unlock the Admin Dashboard (default: eladmin)</p>
+                  <input
+                    type="password"
+                    value={brandSettings.customAdminPassword ?? ''}
+                    onChange={(e) => setBrandSettings({ ...brandSettings, customAdminPassword: e.target.value })}
+                    placeholder="Enter new admin password (leave empty for default 'eladmin')"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm"
+                  />
+                </div>
+
+                <div className="flex gap-3 md:col-span-2">
                   <button
                     onClick={async () => {
                       await saveBrandSettings(brandSettings);
                       setEditingBrand(false);
                     }}
-                    className="rounded-full bg-teal-600 px-5 py-2 font-semibold text-white"
+                    className="rounded-full bg-teal-600 px-6 py-2.5 font-semibold text-white shadow-md hover:bg-teal-700"
                   >
-                    Save
+                    Save Brand & Security Settings
                   </button>
                   <button
                     onClick={() => setEditingBrand(false)}
-                    className="rounded-full bg-slate-200 px-5 py-2 font-semibold text-slate-800"
+                    className="rounded-full bg-slate-200 px-6 py-2.5 font-semibold text-slate-800 hover:bg-slate-300"
                   >
                     Cancel
                   </button>
