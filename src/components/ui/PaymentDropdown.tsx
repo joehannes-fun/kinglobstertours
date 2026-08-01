@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { FaPaypal, FaCreditCard, FaWhatsapp, FaChevronDown, FaShieldAlt } from 'react-icons/fa';
 import { useBrand } from '../../contexts/BrandContext';
 import { generateWhatsAppMessage } from '../../utils/whatsapp';
@@ -19,11 +20,45 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [stripeModalOpen, setStripeModalOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [dropdownCoords, setDropdownCoords] = useState<{ top: number; left: number } | null>(null);
   const { brandSettings } = useBrand();
+
+  const updateCoords = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      const width = 288; // w-72 = 18rem = 288px
+      let left = rect.right - width;
+      if (left < 16) left = 16;
+      if (left + width > window.innerWidth - 16) left = window.innerWidth - width - 16;
+      setDropdownCoords({
+        top: rect.bottom + 8,
+        left,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      updateCoords();
+      window.addEventListener('resize', updateCoords);
+      window.addEventListener('scroll', updateCoords, true);
+      return () => {
+        window.removeEventListener('resize', updateCoords);
+        window.removeEventListener('scroll', updateCoords, true);
+      };
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      const targetNode = event.target as Node;
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(targetNode) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(targetNode)
+      ) {
         setIsOpen(false);
       }
     };
@@ -51,8 +86,9 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
   };
 
   return (
-    <div ref={dropdownRef} className={`relative inline-block ${className}`}>
+    <div className={`relative inline-block ${className}`}>
       <button
+        ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className="inline-flex items-center justify-between gap-2.5 rounded-full bg-gradient-to-r from-teal-700 via-teal-600 to-cyan-600 px-6 py-3 font-semibold text-white shadow-lg transition-all hover:scale-105 hover:shadow-cyan-500/25 active:scale-95"
       >
@@ -63,9 +99,13 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
         <FaChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
-      {/* Dropdown Menu */}
-      {isOpen && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-2xl border border-white/60 bg-[#04131D]/95 p-2 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2">
+      {/* Dropdown Menu via Portal to document.body */}
+      {isOpen && dropdownCoords && createPortal(
+        <div
+          ref={dropdownRef}
+          style={{ top: `${dropdownCoords.top}px`, left: `${dropdownCoords.left}px` }}
+          className="fixed z-[99999] w-72 rounded-2xl border border-white/60 bg-[#04131D]/95 p-2 shadow-[0_25px_70px_rgba(0,0,0,0.85)] backdrop-blur-2xl animate-in fade-in slide-in-from-top-2 text-white"
+        >
           <div className="px-3 py-2 text-[0.65rem] font-bold uppercase tracking-[0.18em] text-teal-300 border-b border-white/10 mb-1">
             Choose Payment Method
           </div>
@@ -111,13 +151,14 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
               <div className="text-[0.65rem] text-slate-300">Reserve now, pay on arrival</div>
             </div>
           </button>
-        </div>
+        </div>,
+        document.body
       )}
 
-      {/* Stripe Modal */}
-      {stripeModalOpen && (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
-          <div className="w-full max-w-md rounded-3xl border border-white/20 bg-[#04131D] p-7 text-white shadow-2xl relative">
+      {/* Stripe Modal via Portal to document.body */}
+      {stripeModalOpen && createPortal(
+        <div className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
+          <div className="w-full max-w-md rounded-3xl border border-white/20 bg-[#04131D] p-7 text-white shadow-2xl relative animate-in zoom-in-95">
             <button
               onClick={() => setStripeModalOpen(false)}
               className="absolute right-4 top-4 text-slate-400 hover:text-white"
@@ -178,7 +219,8 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
               </div>
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
