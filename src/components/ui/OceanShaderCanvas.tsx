@@ -13,6 +13,7 @@ const FRAGMENT_SHADER_SOURCE = `
   uniform float uTime;
   uniform vec2 uMouse;
   uniform float uScrollY;
+  uniform vec3 uRipples[5]; // x, y (normalized), z (age in seconds)
 
   vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
   vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -56,16 +57,44 @@ const FRAGMENT_SHADER_SOURCE = `
     st.y = 1.0 - st.y;
 
     vec2 aspectSt = st;
-    aspectSt.x *= (uResolution.x / uResolution.y);
-
-    vec2 mouseOffset = (uMouse - 0.5) * 0.08;
-    float scrollOffset = uScrollY * 0.0003;
-    vec2 uv = aspectSt + mouseOffset + vec2(0.0, scrollOffset);
+    float aspect = uResolution.x / uResolution.y;
+    aspectSt.x *= aspect;
 
     float t = uTime * 0.35;
 
-    float c1 = causticPattern(uv, t);
-    float c2 = causticPattern(uv * 1.4 + vec2(0.3, 0.15), t * 1.15);
+    // General ambient water wave ripples expanding across ocean surface
+    vec2 center1 = vec2(0.35 * aspect + sin(t * 0.4) * 0.15, 0.45 + cos(t * 0.3) * 0.15);
+    vec2 center2 = vec2(0.70 * aspect + cos(t * 0.35) * 0.18, 0.60 + sin(t * 0.45) * 0.18);
+    float d1 = length(aspectSt - center1);
+    float d2 = length(aspectSt - center2);
+    float ambientRipple1 = sin(d1 * 26.0 - t * 3.5) * exp(-d1 * 2.8) * 0.015;
+    float ambientRipple2 = sin(d2 * 22.0 - t * 3.0) * exp(-d2 * 2.5) * 0.015;
+
+    // Interactive user pointer & click ripple waves
+    vec2 rippleDistort = vec2(0.0);
+    float rippleHighlight = 0.0;
+
+    for (int i = 0; i < 5; i++) {
+      vec3 r = uRipples[i];
+      if (r.z >= 0.0 && r.z < 3.5) {
+        vec2 rPos = r.xy;
+        rPos.x *= aspect;
+        vec2 diff = aspectSt - rPos;
+        float dist = length(diff);
+        float wave = sin(dist * 36.0 - r.z * 11.0);
+        float atten = exp(-dist * 3.2) * exp(-r.z * 1.1);
+        rippleDistort += (diff / (dist + 0.001)) * wave * atten * 0.028;
+        rippleHighlight += max(0.0, wave) * atten * 0.55;
+      }
+    }
+
+    vec2 mouseOffset = (uMouse - 0.5) * 0.08;
+    float scrollOffset = uScrollY * 0.0003;
+    vec2 baseUv = aspectSt + mouseOffset + vec2(0.0, scrollOffset);
+    vec2 distortedUv = baseUv + rippleDistort + vec2(ambientRipple1, ambientRipple2);
+
+    float c1 = causticPattern(distortedUv, t);
+    float c2 = causticPattern(distortedUv * 1.4 + vec2(0.3, 0.15), t * 1.15);
     float caustics = clamp(c1 * 0.6 + c2 * 0.4, 0.0, 1.0);
 
     // Deep vibrant Caribbean ocean blue palette
@@ -83,6 +112,7 @@ const FRAGMENT_SHADER_SOURCE = `
     finalColor += electricAzure * caustics * 0.65;
     finalColor += biolumCyan * beam * 0.45;
     finalColor += biolumCyan * particles;
+    finalColor += biolumCyan * rippleHighlight; // Glowing cyan edge highlight on expanding ripples
 
     // Solid 1.0 opacity output to prevent WebGL GPU blending flicker
     gl_FragColor = vec4(finalColor, 1.0);
@@ -141,6 +171,7 @@ export const OceanShaderCanvas: React.FC = () => {
     const uTimeLoc = gl.getUniformLocation(program, 'uTime');
     const uMouseLoc = gl.getUniformLocation(program, 'uMouse');
     const uScrollYLoc = gl.getUniformLocation(program, 'uScrollY');
+    const uRipplesLoc = gl.getUniformLocation(program, 'uRipples');
 
     let animationFrameId: number;
     let startTime = performance.now();
@@ -148,6 +179,18 @@ export const OceanShaderCanvas: React.FC = () => {
     let mouseY = 0.5;
     let targetMouseX = 0.5;
     let targetMouseY = 0.5;
+
+    // Active interactive ripples array: [x, y, ageInSeconds]
+    const ripples: Array<{ x: number; y: number; startTime: number }> = [];
+
+    const spawnRipple = (x: number, y: number) => {
+      const now = performance.now();
+      // Keep up to 5 ripples
+      if (ripples.length >= 5) {
+        ripples.shift();
+      }
+      ripples.push({ x, y, startTime: now });
+    };
 
     const handleResize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -157,13 +200,27 @@ export const OceanShaderCanvas: React.FC = () => {
       gl.uniform2f(uResolutionLoc, canvas.width, canvas.height);
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
+    let lastMoveTime = 0;
+    const handlePointerMove = (e: PointerEvent) => {
       targetMouseX = e.clientX / window.innerWidth;
       targetMouseY = e.clientY / window.innerHeight;
+
+      const now = performance.now();
+      if (now - lastMoveTime > 180) { // Throttle movement ripples
+        spawnRipple(targetMouseX, targetMouseY);
+        lastMoveTime = now;
+      }
+    };
+
+    const handlePointerDown = (e: PointerEvent) => {
+      const normX = e.clientX / window.innerWidth;
+      const normY = e.clientY / window.innerHeight;
+      spawnRipple(normX, normY);
     };
 
     window.addEventListener('resize', handleResize);
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('pointerdown', handlePointerDown, { passive: true });
     handleResize();
 
     const render = () => {
@@ -177,6 +234,23 @@ export const OceanShaderCanvas: React.FC = () => {
       gl.uniform2f(uMouseLoc, mouseX, mouseY);
       gl.uniform1f(uScrollYLoc, window.scrollY || 0);
 
+      // Pack 5 ripples into Float32Array for uniform3fv
+      const rippleData = new Float32Array(15);
+      for (let i = 0; i < 5; i++) {
+        if (i < ripples.length) {
+          const r = ripples[i];
+          const age = (now - r.startTime) * 0.001;
+          rippleData[i * 3 + 0] = r.x;
+          rippleData[i * 3 + 1] = r.y;
+          rippleData[i * 3 + 2] = age;
+        } else {
+          rippleData[i * 3 + 0] = 0.0;
+          rippleData[i * 3 + 1] = 0.0;
+          rippleData[i * 3 + 2] = -1.0;
+        }
+      }
+      gl.uniform3fv(uRipplesLoc, rippleData);
+
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       animationFrameId = requestAnimationFrame(render);
     };
@@ -185,7 +259,8 @@ export const OceanShaderCanvas: React.FC = () => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerdown', handlePointerDown);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
