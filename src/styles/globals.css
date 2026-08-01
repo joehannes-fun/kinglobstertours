@@ -970,6 +970,106 @@ a::after { display: none; }
   -webkit-backdrop-filter: blur(6px);
 }
 
+/* Organic ocean wave toss & sway keyframe animations */
+@keyframes waveTossSlow {
+  0% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+  22% { transform: translateY(-7px) rotate(0.9deg) skewX(-0.7deg) skewY(0.4deg); }
+  48% { transform: translateY(4px) rotate(-0.8deg) skewX(0.8deg) skewY(-0.6deg); }
+  74% { transform: translateY(-5px) rotate(0.6deg) skewX(-0.5deg) skewY(0.3deg); }
+  100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+}
+
+@keyframes waveTossAlt {
+  0% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+  28% { transform: translateY(5px) rotate(-1.1deg) skewX(0.9deg) skewY(-0.7deg); }
+  55% { transform: translateY(-8px) rotate(0.8deg) skewX(-0.6deg) skewY(0.5deg); }
+  82% { transform: translateY(3px) rotate(-0.5deg) skewX(0.4deg) skewY(-0.3deg); }
+  100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+}
+
+@keyframes waveTossDelayed {
+  0% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+  33% { transform: translateY(-6px) rotate(0.7deg) skewX(-0.8deg) skewY(0.5deg); }
+  64% { transform: translateY(6px) rotate(-0.9deg) skewX(0.6deg) skewY(-0.4deg); }
+  88% { transform: translateY(-3px) rotate(0.4deg) skewX(-0.3deg) skewY(0.2deg); }
+  100% { transform: translateY(0px) rotate(0deg) skewX(0deg) skewY(0deg); }
+}
+
+.animate-wave-toss {
+  animation: waveTossSlow 14s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-wave-toss-alt {
+  animation: waveTossAlt 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-wave-toss-delayed {
+  animation: waveTossDelayed 16s ease-in-out infinite;
+  animation-delay: -6s;
+  will-change: transform;
+}
+
+/* Artsy brutalist-brick contrast elements & badges */
+.artsy-brick-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background: #04131D;
+  color: #fbbf24;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.725rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 2px solid #ffffff;
+  box-shadow: 4px 4px 0px rgba(10, 114, 128, 0.85), 0 10px 25px rgba(4, 19, 29, 0.3);
+  transform: rotate(-1.5deg);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.artsy-brick-badge:hover {
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 6px 6px 0px #04131D;
+}
+
+.artsy-brick-badge-inverted {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background: #ffffff;
+  color: #04131D;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.725rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 2px solid #04131D;
+  box-shadow: 4px 4px 0px #0d9488, 0 10px 25px rgba(0, 0, 0, 0.15);
+  transform: rotate(1.2deg);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.artsy-brick-badge-inverted:hover {
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 6px 6px 0px #0f766e;
+}
+
+/* Enhanced multi-tone gradient glass card */
+.artsy-glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.48), rgba(240, 249, 255, 0.28) 60%, rgba(224, 242, 254, 0.38));
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 20px 50px rgba(6, 29, 43, 0.16), 0 0 30px rgba(10, 114, 128, 0.14);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.artsy-glass-card:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.58), rgba(240, 249, 255, 0.38) 60%, rgba(224, 242, 254, 0.48));
+  box-shadow: 0 30px 70px rgba(6, 29, 43, 0.22), 0 0 45px rgba(10, 114, 128, 0.22);
+}
+
 .lobster-topbar {
   background: rgba(6,29,43,0.92);
   color: rgba(255,255,255,.82);

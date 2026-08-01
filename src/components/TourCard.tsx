@@ -109,7 +109,7 @@ const TourCard: React.FC<TourCardProps> = ({
   };
 
   return (
-    <article className="group break-inside-avoid inline-block w-full mb-7 flex h-auto flex-col justify-between overflow-hidden rounded-3xl border border-white/60 bg-white/40 backdrop-blur-[5px] shadow-luxury transition-all duration-300 hover:-translate-y-1 hover:shadow-luxury-hover">
+    <article className="group break-inside-avoid inline-block w-full mb-8 flex h-auto flex-col justify-between overflow-hidden rounded-3xl artsy-glass-card animate-wave-toss transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_30px_70px_rgba(6,29,43,0.28)]">
       {/* Media Frame */}
       <div className="relative overflow-hidden aspect-[16/10]">
         <Link to={detailsPath} className="block h-full w-full" aria-label={title}>
@@ -119,8 +119,8 @@ const TourCard: React.FC<TourCardProps> = ({
             className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
         </Link>
-        <div className="absolute left-4 top-4 rounded-full bg-[#04131D]/80 px-3.5 py-1.5 text-[0.65rem] font-bold uppercase tracking-[0.18em] text-amber-300 backdrop-blur-md border border-white/10 shadow-sm">
-          Curated Excursion
+        <div className="absolute left-4 top-4 artsy-brick-badge">
+          <span>✦ Excursion</span>
         </div>
       </div>
 
