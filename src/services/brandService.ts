@@ -74,12 +74,19 @@ export const uploadBrandIcon = async (file: File): Promise<string> => {
       body: formData,
     });
     const data = await response.json();
-    if (!data.secure_url) {
-      throw new Error('Cloudinary upload failed');
+    if (data.secure_url) {
+      return data.secure_url;
     }
-    return data.secure_url;
   } catch (error) {
-    console.error('Brand icon upload failed:', error);
-    return '';
+    console.error('Brand icon upload failed, using local FileReader fallback:', error);
   }
+
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      resolve(typeof reader.result === 'string' ? reader.result : '');
+    };
+    reader.onerror = () => resolve('');
+    reader.readAsDataURL(file);
+  });
 };

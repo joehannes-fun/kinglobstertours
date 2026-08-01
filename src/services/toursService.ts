@@ -257,15 +257,21 @@ export const uploadImage = async (file: File): Promise<string> => {
 
     const data = await response.json();
 
-    if (!data.secure_url) {
-      throw new Error('Cloudinary upload failed');
+    if (data.secure_url) {
+      return data.secure_url;
     }
-
-    return data.secure_url;
   } catch (error) {
-    console.error('Image upload failed:', error);
-    return 'https://dummyimage.com/600x600/cccccc/000000&text=Upload+Failed';
+    console.error('Image upload failed, using local FileReader fallback:', error);
   }
+
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      resolve(typeof reader.result === 'string' ? reader.result : '');
+    };
+    reader.onerror = () => resolve('');
+    reader.readAsDataURL(file);
+  });
 };
 
 export const getServiceSlug = (service: Pick<Tour, 'title' | 'id'>): string => {

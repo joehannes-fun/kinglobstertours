@@ -117,25 +117,41 @@ export const uploadImage = async (file: File, onProgress?: (percent: number) => 
     return await new Promise((resolve, reject) => {
       xhr.onload = () => {
         if (xhr.status === 200) {
-          const data = JSON.parse(xhr.responseText);
-          if (data.secure_url) {
-            resolve(data.secure_url);
-          } else {
-            reject(new Error('No secure_url in response'));
+          try {
+            const data = JSON.parse(xhr.responseText);
+            if (data.secure_url) {
+              resolve(data.secure_url);
+              return;
+            }
+          } catch (e) {
+            // ignore json parse error
           }
-        } else {
-          reject(new Error(`Upload failed with status ${xhr.status}`));
         }
+        // Fallback to FileReader
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(typeof reader.result === 'string' ? reader.result : '');
+        reader.onerror = () => reject(new Error('FileReader failed'));
+        reader.readAsDataURL(file);
       };
 
-      xhr.onerror = () => reject(new Error('Upload request failed'));
+      xhr.onerror = () => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(typeof reader.result === 'string' ? reader.result : '');
+        reader.onerror = () => reject(new Error('FileReader failed'));
+        reader.readAsDataURL(file);
+      };
 
       xhr.open('POST', '/api/upload');
       xhr.setRequestHeader('X-Admin-Password', adminPassword);
       xhr.send(formData);
     });
   } catch (error) {
-    console.error('Image upload failed:', error);
-    throw error;
+    console.error('Image upload failed, falling back to local file reader:', error);
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(typeof reader.result === 'string' ? reader.result : '');
+      reader.onerror = () => reject(error);
+      reader.readAsDataURL(file);
+    });
   }
 };
