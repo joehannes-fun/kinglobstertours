@@ -251,7 +251,7 @@ const Transport: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-cyan-50 via-white to-amber-50 pb-16 pt-6 md:py-16">
+    <div className="min-h-screen bg-transparent pb-16 pt-6 md:py-16">
       <div className="section-shell max-w-5xl px-3 md:px-4">
         <div className="mb-6 text-center md:mb-10">
           <h1 className="mb-3 text-3xl font-bold text-slate-900 md:text-5xl">
@@ -266,19 +266,19 @@ const Transport: React.FC = () => {
         </div>
 
         {!mapsAvailable && (
-          <div className="mb-4 rounded-2xl bg-amber-50 px-4 py-3 text-sm text-amber-700">
+          <div className="mb-4 rounded-2xl bg-amber-50/80 backdrop-blur-md px-4 py-3 text-sm text-amber-700">
             ⚠️ Map services unavailable. Enter your pickup/drop-off manually below.
           </div>
         )}
 
         {!config ? (
-          <div className="rounded-3xl bg-red-50 p-8 text-center text-red-700">
+          <div className="rounded-3xl bg-red-50/80 backdrop-blur-md p-8 text-center text-red-700">
             <FormattedMessage id="transport.configError" defaultMessage="Unable to load transfer configuration. Please try again later." />
           </div>
         ) : (
           <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
             <div className="flex-1 space-y-5 md:space-y-6">
-              <div className="rounded-2xl bg-white p-4 shadow-lg md:p-6">
+              <div className="rounded-2xl bg-white/75 backdrop-blur-md border border-white/60 p-4 shadow-lg md:p-6">
                 <h2 className="mb-4 text-lg font-semibold text-slate-800">
                   📍 <FormattedMessage id="transport.pickupDropoff" defaultMessage="Pickup & Drop-off" />
                 </h2>
@@ -364,7 +364,7 @@ const Transport: React.FC = () => {
                 </div>
               </div>
 
-              <div className="rounded-2xl bg-white p-4 shadow-lg md:p-6">
+              <div className="rounded-2xl bg-white/75 backdrop-blur-md border border-white/60 p-4 shadow-lg md:p-6">
                 <label className="mb-3 block text-sm font-semibold text-slate-700">
                   <FormattedMessage id="transport.tripType" defaultMessage="Trip Type" />
                 </label>
@@ -392,7 +392,7 @@ const Transport: React.FC = () => {
                 </div>
               </div>
 
-              <div className="rounded-2xl bg-white p-4 shadow-lg md:p-6">
+              <div className="rounded-2xl bg-white/75 backdrop-blur-md border border-white/60 p-4 shadow-lg md:p-6">
                 <h3 className="mb-4 text-lg font-semibold text-slate-800">
                   📅 <FormattedMessage id="transport.dateTime" defaultMessage="Date & Time" />
                 </h3>
@@ -428,7 +428,7 @@ const Transport: React.FC = () => {
                 </div>
               </div>
 
-              <div className="rounded-2xl bg-white p-4 shadow-lg md:p-6">
+              <div className="rounded-2xl bg-white/75 backdrop-blur-md border border-white/60 p-4 shadow-lg md:p-6">
                 <h3 className="mb-4 text-lg font-semibold text-slate-800">
                   🚗 <FormattedMessage id="transport.vehicleAndPassengers" defaultMessage="Vehicle & Passengers" />
                 </h3>
@@ -487,7 +487,7 @@ const Transport: React.FC = () => {
                 )}
               </div>
 
-              <div className="rounded-2xl bg-white p-4 shadow-lg md:p-6">
+              <div className="rounded-2xl bg-white/75 backdrop-blur-md border border-white/60 p-4 shadow-lg md:p-6">
                 <h3 className="mb-4 text-lg font-semibold text-slate-800">
                   ⚙️ <FormattedMessage id="transport.extras" defaultMessage="Extras" />
                 </h3>
@@ -527,7 +527,7 @@ const Transport: React.FC = () => {
                 )}
               </div>
 
-              <div className="rounded-2xl bg-white p-4 shadow-lg md:p-6">
+              <div className="rounded-2xl bg-white/75 backdrop-blur-md border border-white/60 p-4 shadow-lg md:p-6">
                 <h3 className="mb-4 text-lg font-semibold text-slate-800">
                   📋 <FormattedMessage id="transport.locationInfo" defaultMessage="Location Details" />
                 </h3>
@@ -576,7 +576,7 @@ const Transport: React.FC = () => {
 
             <div className="w-full lg:w-80 xl:w-96">
               <div className="sticky top-24 space-y-5 md:space-y-6">
-                <div className="rounded-2xl bg-white p-5 shadow-lg md:p-6">
+                <div className="rounded-2xl bg-white/75 backdrop-blur-md border border-white/60 p-5 shadow-lg md:p-6">
                   <h2 className="mb-4 text-lg font-semibold text-slate-800">
                     💰 <FormattedMessage id="transport.priceSummary" defaultMessage="Price Summary" />
                   </h2>

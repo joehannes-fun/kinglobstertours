@@ -913,9 +913,9 @@ a::after { display: none; }
 .glass-card:hover { border-color: rgba(10,114,128,.24); box-shadow: 0 22px 55px rgba(6,29,43,.14); transform: translateY(-5px); }
 
 .shore-section, .cove-section, .lagoon-section, .bay-section {
-  background: rgba(248, 245, 239, 0.45);
-  backdrop-filter: blur(12px) saturate(120%);
-  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  background: rgba(248, 245, 239, 0.15);
+  backdrop-filter: blur(10px) saturate(110%);
+  -webkit-backdrop-filter: blur(10px) saturate(110%);
 }
 .home-section::after { background: none; }
 .parallax-wash { opacity: .16; filter: blur(120px); background: radial-gradient(circle, var(--sun), transparent 68%); }
