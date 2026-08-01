@@ -7,6 +7,7 @@ import TikTokAdmin from '../components/admin/TikTokAdmin';
 import SocialMediaAdmin from '../components/admin/SocialMediaAdmin';
 import StoryAdmin from '../components/admin/StoryAdmin';
 import { FaVideo, FaShareAlt, FaBook } from 'react-icons/fa';
+import { setAdminPassword } from '../services/authStore';
 
 const Admin: React.FC = () => {
   const { locale } = useI18n();
@@ -279,7 +280,14 @@ const Admin: React.FC = () => {
                   <button
                     onClick={async () => {
                       await saveBrandSettings(brandSettings);
+                      const newPass = brandSettings.customAdminPassword?.trim();
+                      if (newPass) {
+                        setAdminPassword(newPass);
+                      } else {
+                        setAdminPassword('eladmin');
+                      }
                       setEditingBrand(false);
+                      alert('Brand & Security Settings saved! New admin password is now active.');
                     }}
                     className="rounded-full bg-teal-600 px-6 py-2.5 font-semibold text-white shadow-md hover:bg-teal-700"
                   >

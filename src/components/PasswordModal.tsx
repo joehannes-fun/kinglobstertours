@@ -25,14 +25,16 @@ const PasswordModal: React.FC<PasswordModalProps> = ({ onAuthenticate }) => {
     const entered = password.trim();
     const envExpected = (import.meta.env.VITE_ADMIN_PASSWORD ?? 'eladmin').toString();
 
-    let valid = entered === envExpected || entered === 'eladmin';
+    let valid = false;
     try {
       const brandSettings = await getBrandSettings();
-      if (brandSettings?.customAdminPassword) {
-        valid = entered === brandSettings.customAdminPassword || entered === envExpected || entered === 'eladmin';
+      if (brandSettings?.customAdminPassword && brandSettings.customAdminPassword.trim()) {
+        valid = entered === brandSettings.customAdminPassword.trim();
+      } else {
+        valid = entered === envExpected || entered === 'eladmin';
       }
     } catch (err) {
-      // ignore
+      valid = entered === envExpected || entered === 'eladmin';
     }
 
     if (valid) {

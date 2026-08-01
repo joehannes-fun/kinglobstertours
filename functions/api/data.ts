@@ -138,20 +138,37 @@ export async function onRequest(context: {
     }
 
     if (request.method === "PUT") {
-      let adminPassword =
+      let expectedAdminPassword =
         env.ADMIN_PASSWORD || env.VITE_ADMIN_PASSWORD || "eladmin";
+      let hasCustomPassword = false;
 
       try {
         const brandData: any = await loadStoredData("brand", env, request.url);
-        if (brandData && typeof brandData === "object" && brandData.customAdminPassword) {
-          adminPassword = brandData.customAdminPassword;
+        if (
+          brandData &&
+          typeof brandData === "object" &&
+          typeof brandData.customAdminPassword === "string" &&
+          brandData.customAdminPassword.trim()
+        ) {
+          expectedAdminPassword = brandData.customAdminPassword.trim();
+          hasCustomPassword = true;
         }
       } catch (err) {
         // ignore
       }
 
-      const providedPassword = request.headers.get("X-Admin-Password") || "";
-      if (providedPassword !== adminPassword && providedPassword !== (env.ADMIN_PASSWORD || "eladmin")) {
+      const providedPassword = (request.headers.get("X-Admin-Password") || "").trim();
+      let isAuthorized = false;
+
+      if (hasCustomPassword) {
+        // When custom admin password is set, ONLY that password is accepted
+        isAuthorized = providedPassword === expectedAdminPassword;
+      } else {
+        // Default fallback before custom password configuration
+        isAuthorized = providedPassword === expectedAdminPassword || providedPassword === "eladmin";
+      }
+
+      if (!isAuthorized) {
         return createErrorResponse(
           "Unauthorized: invalid admin password.",
           401,
