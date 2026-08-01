@@ -19,13 +19,13 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
   const mobileImage = backgroundImageMobile || '/hero-mobile.webp';
 
   return (
-    <section className="relative bg-[#04131D] text-white isolate z-0 overflow-x-hidden w-full">
-      {/* Background Media - Overflows 130% vertically with 30% fade to 0% transparency, clipped horizontally (no scrollbars) */}
+    <section className="relative bg-[#04131D] text-white isolate z-0 overflow-hidden w-full">
+      {/* Background Media - Fits container 100% with object-cover proportional scaling, zero distortion, zero scrollbars */}
       <div
-        className="absolute inset-x-0 top-0 z-0 h-[130%] w-full overflow-hidden pointer-events-none select-none drop-shadow-[0_25px_25px_rgba(0,0,0,0.45)]"
+        className="absolute inset-0 z-0 h-full w-full overflow-hidden pointer-events-none select-none"
         style={{
-          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)',
-          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)',
+          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)',
         }}
       >
         <div className="absolute inset-0 bg-[#04131D]" aria-hidden="true" />
@@ -39,21 +39,16 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             playsInline
             poster={desktopImage}
             aria-hidden="true"
-            style={{ objectFit: 'cover', objectPosition: 'center top' }}
           />
         ) : (
           <picture className="absolute inset-0 block h-full w-full">
             {mobileImage && (
-              <source media="(max-width: 767px)" srcSet={mobileImage} type="image/webp" />
-            )}
-            {desktopImage && (
-              <source media="(min-width: 768px)" srcSet={desktopImage} type="image/webp" />
+              <source media="(max-width: 767px)" srcSet={mobileImage} />
             )}
             <img
               src={desktopImage}
               alt="Punta Cana Excursion"
-              className="h-full w-full object-cover opacity-100 pointer-events-none select-none"
-              style={{ objectFit: 'cover', objectPosition: 'center top' }}
+              className="h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
             />
           </picture>
         )}
