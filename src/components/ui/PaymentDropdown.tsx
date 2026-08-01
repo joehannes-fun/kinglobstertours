@@ -11,6 +11,24 @@ interface PaymentDropdownProps {
   className?: string;
 }
 
+const extractAmountNumber = (priceStr?: string): number | null => {
+  if (!priceStr) return null;
+  const cleaned = priceStr.replace(/,/g, '');
+  const match = cleaned.match(/(\d+(?:\.\d+)?)/);
+  return match ? parseFloat(match[1]) : null;
+};
+
+const buildDynamicPayPalUrl = (baseUrl: string, priceStr?: string): string => {
+  const amount = extractAmountNumber(priceStr);
+  const fallback = 'https://www.paypal.com/paypalme/carlostours';
+  const targetBase = (baseUrl && baseUrl.trim()) ? baseUrl.trim() : fallback;
+  
+  if (!amount || amount <= 0) return targetBase;
+
+  const cleanBase = targetBase.replace(/\/+$/, '').replace(/\/\d+(?:\.\d+)?(?:USD)?$/i, '');
+  return `${cleanBase}/${amount}USD`;
+};
+
 export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
   excursionTitle = 'Punta Cana Adventure',
   selectedPrice,
@@ -66,23 +84,52 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const openWhatsAppConfirmation = (paymentMethod: string) => {
+    const details = selectedPrice ? ` (${selectedTier || 'Option'}: ${selectedPrice})` : '';
+    const phone = brandSettings.phoneNumber || '+18095550123';
+    const message = `Hola! He iniciado la reserva/pago vía ${paymentMethod} por la excursión: ${excursionTitle}${details}.\n\nHello! I initiated my booking/payment via ${paymentMethod} for: ${excursionTitle}${details}.`;
+    
+    const waUrl = generateWhatsAppMessage(phone, message);
+    if (waUrl) {
+      setTimeout(() => {
+        window.open(waUrl, '_blank');
+      }, 350);
+    }
+  };
+
   const handlePayPal = () => {
     setIsOpen(false);
-    const link = brandSettings.paypalMeLink || 'https://www.paypal.com';
-    window.open(link, '_blank');
+    const targetUrl = buildDynamicPayPalUrl(brandSettings.paypalMeLink, selectedPrice);
+    
+    // 1. Open PayPal Direct link with dynamic pre-filled dollar amount
+    window.open(targetUrl, '_blank');
+
+    // 2. Also open WhatsApp message to confirm reservation details
+    openWhatsAppConfirmation('PayPal Direct');
   };
 
   const handleWhatsApp = () => {
     setIsOpen(false);
-    const details = selectedPrice ? ` (${selectedTier || 'Option'}: ${selectedPrice})` : '';
-    const message = `Hola! Me gustaría reservar la excursión: ${excursionTitle}${details}`;
-    const phone = brandSettings.phoneNumber || '+18095553333';
-    window.open(generateWhatsAppMessage(phone, message), '_blank');
+    openWhatsAppConfirmation('VIP Concierge / Cash');
   };
 
   const handleStripe = () => {
     setIsOpen(false);
     setStripeModalOpen(true);
+  };
+
+  const handleStripeProceed = () => {
+    setStripeModalOpen(false);
+    const amount = extractAmountNumber(selectedPrice);
+    const targetStripeUrl = brandSettings.verifoneLink || brandSettings.stripePublishableKey
+      ? (brandSettings.verifoneLink || `https://buy.stripe.com/pay?amount=${amount || ''}`)
+      : 'https://stripe.com';
+
+    if (brandSettings.verifoneLink || brandSettings.stripePublishableKey) {
+      window.open(targetStripeUrl, '_blank');
+    }
+
+    openWhatsAppConfirmation('Tarjeta (Stripe)');
   };
 
   return (
@@ -190,31 +237,28 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
               </div>
             </div>
 
-            {brandSettings.stripePublishableKey ? (
+            {brandSettings.verifoneLink || brandSettings.stripePublishableKey ? (
               <div className="mt-5 space-y-3">
                 <p className="text-xs text-slate-300">
                   Click below to proceed to Stripe encrypted card payment portal.
                 </p>
                 <button
-                  onClick={() => {
-                    alert('Redirecting to Stripe secure checkout...');
-                    handleWhatsApp();
-                  }}
+                  onClick={handleStripeProceed}
                   className="w-full rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 py-3 text-xs font-bold uppercase tracking-wider text-slate-950 shadow-lg hover:brightness-110"
                 >
-                  Pay with Card via Stripe
+                  Pay {selectedPrice ? selectedPrice : ''} with Card via Stripe
                 </button>
               </div>
             ) : (
               <div className="mt-5 space-y-3">
                 <div className="rounded-xl bg-amber-500/20 p-3 text-xs text-amber-200 border border-amber-500/30">
-                  Stripe card gateway is processing. You can also confirm instantly via WhatsApp Concierge or PayPal.
+                  Stripe publishable API key or Payment Link is pending in Admin Settings. You can confirm instantly via WhatsApp Concierge or PayPal.
                 </div>
                 <button
-                  onClick={handleWhatsApp}
+                  onClick={handleStripeProceed}
                   className="w-full rounded-full bg-emerald-600 py-3 text-xs font-bold uppercase tracking-wider text-white shadow-lg hover:bg-emerald-500"
                 >
-                  Confirm Reservation on WhatsApp
+                  Confirm Reservation & Open WhatsApp
                 </button>
               </div>
             )}
