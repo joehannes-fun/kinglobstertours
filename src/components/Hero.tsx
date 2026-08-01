@@ -17,10 +17,10 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
   return (
     <section className="relative isolate overflow-hidden bg-[#04131D] text-white">
       {/* Background Media */}
-      <div className="absolute inset-0 -z-30 h-full w-full overflow-hidden">
+      <div className="absolute inset-0 -z-30 h-full w-full overflow-hidden bg-[#04131D]">
         {backgroundVideo ? (
           <video
-            className="h-full w-full object-cover opacity-60 transition-opacity duration-1000"
+            className="absolute inset-0 h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
             src={backgroundVideo}
             autoPlay
             muted
@@ -28,17 +28,18 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             playsInline
             poster={backgroundImage}
             aria-hidden="true"
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
         ) : (
-          <picture className="absolute inset-0 block h-full w-full overflow-hidden select-none">
+          <picture className="contents">
             {backgroundImageMobile && (
               <source media="(max-width: 767px)" srcSet={backgroundImageMobile} type="image/webp" />
             )}
             <img
               src={backgroundImage}
               alt="Punta Cana Excursion"
-              className="h-full w-full min-h-full min-w-full object-cover object-center opacity-70 transition-opacity duration-700 pointer-events-none"
-              style={{ objectFit: 'cover', objectPosition: 'center' }}
+              className="absolute inset-0 h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
+              style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }}
             />
           </picture>
         )}
