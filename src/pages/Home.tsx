@@ -132,7 +132,7 @@ const Home: React.FC = () => {
 
                     {/* Adventure cards grid */}
                     {section.adventures && (
-                      <div className="grid gap-7 items-start md:grid-cols-3 lg:gap-8">
+                      <div className="columns-1 gap-7 md:columns-3 lg:gap-8">
                         {section.adventures.map((adventure) => (
                           <AdventureCard key={adventure.id} adventure={adventure} />
                         ))}

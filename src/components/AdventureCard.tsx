@@ -47,7 +47,7 @@ const AdventureCard: React.FC<AdventureCardProps> = ({ adventure, onBook }) => {
   };
 
   return (
-    <div className="group flex h-auto flex-col overflow-hidden rounded-[28px] border border-white/60 bg-white/80 shadow-[0_24_64px_rgba(8,42,62,.18),0_8px_16px_rgba(23,182,168,.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_36px_100px_rgba(8,42,62,.24),0_12px_24px_rgba(23,182,168,.14)] sm:rounded-[32px]">
+    <div className="group break-inside-avoid inline-block w-full mb-7 flex h-auto flex-col overflow-hidden rounded-[28px] border border-white/60 bg-white/80 shadow-[0_24_64px_rgba(8,42,62,.18),0_8px_16px_rgba(23,182,168,.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_36px_100px_rgba(8,42,62,.24),0_12px_24px_rgba(23,182,168,.14)] sm:rounded-[32px]">
       {/* Image container with overlay */}
       <div className="relative h-60 overflow-hidden bg-slate-200 sm:h-64 md:h-80">
         <img

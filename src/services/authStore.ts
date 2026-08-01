@@ -1,18 +1,37 @@
 /**
- * Simple in-memory auth store for the admin password.
- * Set after successful password authentication and used
- * by apiClient to attach the X-Admin-Password header to PUT requests.
+ * In-memory & SessionStorage auth store for the admin password.
+ * Used by apiClient to attach the X-Admin-Password header to requests.
  */
-let adminPassword: string | null = null;
+let memoryAdminPassword: string | null = null;
 
 export const setAdminPassword = (password: string) => {
-  adminPassword = password;
+  memoryAdminPassword = password;
+  try {
+    sessionStorage.setItem('admin_password_auth', password);
+  } catch {
+    // ignore
+  }
 };
 
 export const getAdminPassword = (): string | null => {
-  return adminPassword;
+  if (memoryAdminPassword) return memoryAdminPassword;
+  try {
+    const stored = sessionStorage.getItem('admin_password_auth');
+    if (stored) {
+      memoryAdminPassword = stored;
+      return stored;
+    }
+  } catch {
+    // ignore
+  }
+  return null;
 };
 
 export const clearAdminPassword = () => {
-  adminPassword = null;
+  memoryAdminPassword = null;
+  try {
+    sessionStorage.removeItem('admin_password_auth');
+  } catch {
+    // ignore
+  }
 };
