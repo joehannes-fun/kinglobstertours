@@ -22,7 +22,7 @@ const FABWhatsApp: React.FC<FABWhatsAppProps> = ({
   return (
     <button
       onClick={handleClick}
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-full border border-emerald-400/30 bg-[#04131D] px-5 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:bg-[#061D2B] hover:shadow-emerald-500/20"
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-full border border-emerald-400/40 bg-[#04131D] px-5 py-3.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-xl animate-fab-glow-wave transition-transform duration-300 hover:scale-110"
       aria-label="Contact VIP Concierge via WhatsApp"
       title="Chat directly with our VIP Concierge"
     >
