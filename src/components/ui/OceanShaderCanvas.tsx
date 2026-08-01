@@ -193,7 +193,7 @@ export const OceanShaderCanvas: React.FC = () => {
     };
 
     const handleResize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -224,6 +224,11 @@ export const OceanShaderCanvas: React.FC = () => {
     handleResize();
 
     const render = () => {
+      if (document.hidden) {
+        animId = requestAnimationFrame(render);
+        return;
+      }
+
       const now = performance.now();
       const elapsed = (now - startTime) * 0.001;
 
