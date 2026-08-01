@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface SeaWaveDividerProps {
-  variant?: 'crest' | 'swell' | 'tide' | 'foam';
+  variant?: 'crest' | 'deep-crest' | 'swell' | 'tide' | 'foam';
   colorClass?: string;
   className?: string;
   flip?: boolean;
@@ -14,6 +14,23 @@ export const SeaWaveDivider: React.FC<SeaWaveDividerProps> = ({
   flip = false,
 }) => {
   const transformClass = flip ? 'rotate-180' : '';
+
+  if (variant === 'deep-crest') {
+    return (
+      <div className={`w-full overflow-hidden leading-none pointer-events-none select-none ${className}`}>
+        <svg
+          className={`relative block w-full h-14 sm:h-20 md:h-28 lg:h-36 ${colorClass} ${transformClass}`}
+          viewBox="0 0 1200 140"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,15 C220,65 480,-10 720,50 C920,115 1060,135 1200,5 L1200,140 L0,140 Z"
+            fill="currentColor"
+          />
+        </svg>
+      </div>
+    );
+  }
 
   if (variant === 'swell') {
     return (
@@ -66,16 +83,16 @@ export const SeaWaveDivider: React.FC<SeaWaveDividerProps> = ({
     );
   }
 
-  // Default 'crest' wave pattern
+  // Default 'crest' wave pattern with right-side wave inset
   return (
     <div className={`w-full overflow-hidden leading-none pointer-events-none select-none ${className}`}>
       <svg
-        className={`relative block w-full h-10 sm:h-14 md:h-16 lg:h-20 ${colorClass} ${transformClass}`}
-        viewBox="0 0 1200 120"
+        className={`relative block w-full h-12 sm:h-16 md:h-24 lg:h-28 ${colorClass} ${transformClass}`}
+        viewBox="0 0 1200 130"
         preserveAspectRatio="none"
       >
         <path
-          d="M0,0 C300,90 600,10 900,80 C1050,115 1150,55 1200,30 L1200,120 L0,120 Z"
+          d="M0,10 C250,75 520,5 780,65 C950,115 1100,125 1200,15 L1200,130 L0,130 Z"
           fill="currentColor"
         />
       </svg>

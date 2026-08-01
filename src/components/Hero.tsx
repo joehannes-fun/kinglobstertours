@@ -48,7 +48,7 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             <img
               src={desktopImage}
               alt="Punta Cana Excursion"
-              className="h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
+              className="h-full w-full object-cover md:object-contain object-center opacity-100 pointer-events-none select-none"
             />
           </picture>
         )}
@@ -152,18 +152,24 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
         </div>
       </div>
 
-      {/* Scroll Down Indicator */}
-      <a
-        href="#arrival"
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-white/60 transition hover:text-white md:flex z-10"
-      >
-        <span>Discover The Fleet</span>
-        <HiArrowDown className="h-4 w-4 animate-bounce text-teal-400" />
-      </a>
-
-      {/* Wavy Sea Waves Section Divider at Bottom of Hero */}
+      {/* Wavy Sea Waves Section Divider at Bottom of Hero with bigger right-side wave inset */}
       <div className="relative z-10 -mb-1">
-        <SeaWaveDivider variant="crest" colorClass="text-[#FAF7F2]/40" />
+        <SeaWaveDivider variant="deep-crest" colorClass="text-[#083b4c]" />
+      </div>
+
+      {/* Vibrant Ocean Blue Water Gradient Band with Wavy Lower Edge for "Discover The Fleet" */}
+      <div className="relative z-10 bg-gradient-to-r from-[#04131D] via-[#0a526d] to-[#04131D] py-4 text-center border-t border-cyan-400/20 shadow-2xl">
+        <a
+          href="#arrival"
+          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-cyan-200 transition hover:text-white"
+        >
+          <span>Discover The Fleet</span>
+          <HiArrowDown className="h-4 w-4 animate-bounce text-cyan-300" />
+        </a>
+      </div>
+
+      <div className="relative z-10 -mb-1">
+        <SeaWaveDivider variant="swell" colorClass="text-[#FAF7F2]" />
       </div>
     </section>
   );
