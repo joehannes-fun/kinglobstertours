@@ -23,29 +23,18 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
       {/* Background Media - Fits container 100% with object-cover proportional scaling, zero distortion, zero scrollbars */}
       <div className="absolute inset-0 z-0 h-full w-full overflow-hidden pointer-events-none select-none">
         <div className="absolute inset-0 bg-[#04131D]" aria-hidden="true" />
-        {backgroundVideo ? (
-          <video
-            className="absolute inset-0 h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
-            src={backgroundVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={desktopImage}
-            aria-hidden="true"
-          />
-        ) : (
-          <picture className="absolute inset-0 flex items-center justify-center w-full h-full overflow-hidden pointer-events-none select-none">
-            {mobileImage && (
-              <source media="(max-width: 767px)" srcSet={mobileImage} />
-            )}
-            <img
-              src={desktopImage}
-              alt="Punta Cana Excursion"
-              className="absolute inset-0 h-full w-full min-h-full min-w-full object-cover object-center opacity-100 pointer-events-none select-none"
-            />
-          </picture>
-        )}
+        {/* Mobile Background Image */}
+        <div
+          className="absolute inset-0 h-full w-full bg-cover bg-center bg-no-repeat pointer-events-none select-none md:hidden"
+          style={{ backgroundImage: `url(${mobileImage || desktopImage})` }}
+          aria-hidden="true"
+        />
+        {/* Desktop Widescreen Background Image */}
+        <div
+          className="absolute inset-0 h-full w-full bg-cover bg-center bg-no-repeat pointer-events-none select-none hidden md:block"
+          style={{ backgroundImage: `url(${desktopImage})` }}
+          aria-hidden="true"
+        />
       </div>
 
       {/* Subtle bottom-only gradient for headline legibility while preserving vibrant WebP colors */}
