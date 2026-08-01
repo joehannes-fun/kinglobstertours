@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface SeaWaveDividerProps {
-  variant?: 'crest' | 'deep-crest' | 'swell' | 'tide' | 'foam';
+  variant?: 'crest' | 'deep-crest' | 'swell' | 'tall-swell' | 'tide' | 'foam';
   colorClass?: string;
   className?: string;
   flip?: boolean;
@@ -25,6 +25,23 @@ export const SeaWaveDivider: React.FC<SeaWaveDividerProps> = ({
         >
           <path
             d="M0,15 C220,65 480,-10 720,50 C920,115 1060,135 1200,5 L1200,140 L0,140 Z"
+            fill="currentColor"
+          />
+        </svg>
+      </div>
+    );
+  }
+
+  if (variant === 'tall-swell') {
+    return (
+      <div className={`w-full overflow-hidden leading-none pointer-events-none select-none ${className}`}>
+        <svg
+          className={`relative block w-full h-24 sm:h-36 md:h-48 lg:h-56 ${colorClass} ${transformClass}`}
+          viewBox="0 0 1200 190"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,15 C200,130 450,-20 720,100 C960,190 1100,30 1200,65 L1200,190 L0,190 Z"
             fill="currentColor"
           />
         </svg>
