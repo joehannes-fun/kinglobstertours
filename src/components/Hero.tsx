@@ -21,13 +21,7 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
   return (
     <section className="relative bg-[#04131D] text-white isolate z-0 overflow-hidden w-full">
       {/* Background Media - Fits container 100% with object-cover proportional scaling, zero distortion, zero scrollbars */}
-      <div
-        className="absolute inset-0 z-0 h-full w-full overflow-hidden pointer-events-none select-none"
-        style={{
-          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)',
-          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%)',
-        }}
-      >
+      <div className="absolute inset-0 z-0 h-full w-full overflow-hidden pointer-events-none select-none">
         <div className="absolute inset-0 bg-[#04131D]" aria-hidden="true" />
         {backgroundVideo ? (
           <video
@@ -48,7 +42,7 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             <img
               src={desktopImage}
               alt="Punta Cana Excursion"
-              className="h-full w-full object-cover md:object-contain object-center opacity-100 pointer-events-none select-none md:scale-90 lg:scale-85"
+              className="h-full w-full object-cover md:object-contain object-center opacity-100 pointer-events-none select-none"
             />
           </picture>
         )}
