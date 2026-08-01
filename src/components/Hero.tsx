@@ -169,7 +169,7 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
       </div>
 
       <div className="relative z-10 -mb-1">
-        <SeaWaveDivider variant="tall-swell" colorClass="text-[#FAF7F2]" />
+        <SeaWaveDivider variant="tall-swell" colorClass="text-[#04131D]/40 backdrop-blur-sm" />
       </div>
     </section>
   );
