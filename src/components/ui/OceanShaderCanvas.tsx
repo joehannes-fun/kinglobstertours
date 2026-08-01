@@ -46,11 +46,11 @@ const FRAGMENT_SHADER_SOURCE = `
   }
 
   float causticPattern(vec2 uv, float t) {
-    vec2 p = uv * 4.0;
-    float n1 = snoise(p + vec2(t * 0.15, t * 0.1));
-    float n2 = snoise(p * 2.0 - vec2(t * 0.2, t * 0.25));
-    float c = sin(p.x * 6.0 + n1 * 3.0) * cos(p.y * 6.0 + n2 * 3.0);
-    return pow(abs(c), 1.8);
+    vec2 p = uv * 4.5;
+    float n1 = snoise(p + vec2(t * 0.18, t * 0.12));
+    float n2 = snoise(p * 2.2 - vec2(t * 0.22, t * 0.28));
+    float c = sin(p.x * 6.5 + n1 * 3.2) * cos(p.y * 6.5 + n2 * 3.2);
+    return pow(abs(c), 1.6);
   }
 
   void main() {
@@ -60,32 +60,33 @@ const FRAGMENT_SHADER_SOURCE = `
     vec2 aspectSt = st;
     aspectSt.x *= (uResolution.x / uResolution.y);
 
-    vec2 mouseOffset = (uMouse - 0.5) * 0.08;
-    float scrollOffset = uScrollY * 0.0003;
+    vec2 mouseOffset = (uMouse - 0.5) * 0.09;
+    float scrollOffset = uScrollY * 0.00035;
     vec2 uv = aspectSt + mouseOffset + vec2(0.0, scrollOffset);
 
-    float t = uTime * 0.6;
+    float t = uTime * 0.65;
 
     float c1 = causticPattern(uv, t);
-    float c2 = causticPattern(uv * 1.5 + vec2(0.5, 0.3), t * 1.2);
-    float caustics = clamp(c1 * 0.6 + c2 * 0.4, 0.0, 1.0);
+    float c2 = causticPattern(uv * 1.6 + vec2(0.4, 0.2), t * 1.25);
+    float caustics = clamp(c1 * 0.65 + c2 * 0.45, 0.0, 1.0);
 
-    vec3 deepNavy = vec3(0.015, 0.074, 0.114);
-    vec3 tealGlow = vec3(0.051, 0.580, 0.533);
-    vec3 goldLight = vec3(0.850, 0.466, 0.024);
+    // Intense vibrant Caribbean blue palette
+    vec3 deepOceanBlue = vec3(0.01, 0.12, 0.45);    // Deep intense cobalt blue
+    vec3 electricAzure = vec3(0.0, 0.62, 0.98);     // Glowing azure cyan blue
+    vec3 biolumCyan   = vec3(0.15, 0.88, 1.0);      // Bright sparkling caustics
 
-    float beam = sin(st.x * 3.1415 + st.y * 2.0 + t * 0.4) * 0.5 + 0.5;
-    beam = pow(beam, 3.0) * 0.25;
+    float beam = sin(st.x * 3.1415 + st.y * 2.2 + t * 0.45) * 0.5 + 0.5;
+    beam = pow(beam, 2.5) * 0.4;
 
-    float particleNoise = snoise(aspectSt * 15.0 + vec2(0.0, t * 0.4));
-    float particles = step(0.92, particleNoise) * 0.25;
+    float particleNoise = snoise(aspectSt * 16.0 + vec2(0.0, t * 0.45));
+    float particles = step(0.91, particleNoise) * 0.35;
 
-    vec3 finalColor = deepNavy;
-    finalColor += tealGlow * caustics * 0.22;
-    finalColor += goldLight * beam * 0.15;
-    finalColor += goldLight * particles;
+    vec3 finalColor = deepOceanBlue;
+    finalColor += electricAzure * caustics * 0.65;
+    finalColor += biolumCyan * beam * 0.5;
+    finalColor += biolumCyan * particles;
 
-    float alpha = clamp(caustics * 0.28 + beam * 0.18 + 0.08, 0.0, 0.55);
+    float alpha = clamp(caustics * 0.55 + beam * 0.35 + 0.35, 0.35, 0.95);
 
     gl_FragColor = vec4(finalColor, alpha);
   }
@@ -195,7 +196,7 @@ export const OceanShaderCanvas: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 h-full w-full opacity-65 transition-opacity duration-1000"
+      className="fixed inset-0 pointer-events-none z-0 h-full w-full opacity-90 transition-opacity duration-1000"
       aria-hidden="true"
     />
   );
