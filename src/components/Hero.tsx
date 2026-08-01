@@ -15,12 +15,12 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
   const { brandSettings } = useBrand();
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#04131D] text-white">
-      {/* Background Media */}
-      <div className="absolute inset-0 -z-30 h-full w-full overflow-hidden bg-[#04131D]">
+    <section className="relative overflow-hidden bg-[#04131D] text-white">
+      {/* Background Media - Positive z-0 Layering to prevent WebGL canvas flickering */}
+      <div className="absolute inset-0 z-0 h-full w-full overflow-hidden bg-[#04131D]">
         {backgroundVideo ? (
           <video
-            className="absolute inset-0 h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
+            className="h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
             src={backgroundVideo}
             autoPlay
             muted
@@ -28,28 +28,25 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             playsInline
             poster={backgroundImage}
             aria-hidden="true"
-            style={{ objectFit: 'cover', objectPosition: 'center' }}
           />
         ) : (
-          <picture className="contents">
+          <picture className="block h-full w-full">
             {backgroundImageMobile && (
               <source media="(max-width: 767px)" srcSet={backgroundImageMobile} type="image/webp" />
             )}
             <img
               src={backgroundImage}
               alt="Punta Cana Excursion"
-              className="absolute inset-0 h-full w-full object-cover object-center opacity-100 pointer-events-none select-none"
-              style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%' }}
+              className="h-full w-full object-cover object-center md:object-[center_20%] opacity-100 pointer-events-none select-none"
             />
           </picture>
         )}
       </div>
 
-      {/* Editorial Luxury Gradient Overlay */}
-      <div className="absolute inset-0 -z-20 bg-gradient-to-t from-[#04131D] via-[#04131D]/60 to-[#04131D]/40" />
-      <div className="absolute inset-0 -z-10 bg-radial-vignette opacity-80" />
+      {/* Subtle bottom-only gradient for headline legibility while preserving vibrant bright WebP colors & shine */}
+      <div className="absolute inset-x-0 bottom-0 z-1 h-56 bg-gradient-to-t from-[#04131D]/90 via-[#04131D]/45 to-transparent pointer-events-none" />
 
-      {/* Main Hero Container */}
+      {/* Main Hero Content Container */}
       <div className="section-shell relative z-10 flex min-h-[calc(100vh-5rem)] items-center py-20 lg:py-28">
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
           
@@ -147,7 +144,7 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
       {/* Scroll Down Indicator */}
       <a
         href="#arrival"
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-white/60 transition hover:text-white md:flex"
+        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.25em] text-white/60 transition hover:text-white md:flex z-10"
       >
         <span>Discover The Fleet</span>
         <HiArrowDown className="h-4 w-4 animate-bounce text-teal-400" />
