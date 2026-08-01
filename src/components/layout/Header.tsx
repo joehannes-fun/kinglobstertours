@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { HiMenu, HiX } from 'react-icons/hi';
-import { MdHome, MdTour, MdLocalTaxi, MdEmail, MdLibraryBooks } from 'react-icons/md';
+import { MdHome, MdTour, MdLocalTaxi, MdEmail, MdLibraryBooks, MdDirectionsBoat, MdMusicNote } from 'react-icons/md';
 import LanguageSwitcher from '../LanguageSwitcher';
 import { useBrand } from '../../contexts/BrandContext';
 
@@ -100,6 +100,22 @@ const Header: React.FC = () => {
             >
               <MdLocalTaxi className="text-lg opacity-75" />
               <FormattedMessage id="nav.transport" defaultMessage="Transport" />
+            </Link>
+            <Link
+              to="/aboard#top"
+              onClick={() => setIsMenuOpen(false)}
+              className={`nav-link-pill ${location.pathname.startsWith('/aboard') ? 'text-teal-700 bg-teal-500/10 font-bold' : ''}`}
+            >
+              <MdDirectionsBoat className="text-lg opacity-75" />
+              <FormattedMessage id="nav.aboard" defaultMessage="Aboard" />
+            </Link>
+            <Link
+              to="/sound#top"
+              onClick={() => setIsMenuOpen(false)}
+              className={`nav-link-pill ${location.pathname.startsWith('/sound') ? 'text-teal-700 bg-teal-500/10 font-bold' : ''}`}
+            >
+              <MdMusicNote className="text-lg opacity-75" />
+              <FormattedMessage id="nav.sound" defaultMessage="DJ Sound" />
             </Link>
             <Link
               to="/blog#top"

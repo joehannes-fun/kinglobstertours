@@ -8,6 +8,8 @@ import Transport from './pages/Transport';
 import Blog from './pages/Blog';
 import ServiceDetails from './pages/ServiceDetails';
 import AdminTransport from './pages/AdminTransport';
+import Aboard from './pages/Aboard';
+import Sound from './pages/Sound';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -26,6 +28,8 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/tours" element={<Tours />} />
             <Route path="/transport" element={<Transport />} />
+            <Route path="/aboard" element={<Aboard />} />
+            <Route path="/sound" element={<Sound />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/details/:category/:id" element={<ServiceDetails />} />
             <Route path="/contact" element={<Contact />} />

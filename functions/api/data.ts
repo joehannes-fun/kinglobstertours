@@ -139,7 +139,7 @@ export async function onRequest(context: {
 
     if (request.method === "PUT") {
       const adminPassword =
-        env.ADMIN_PASSWORD || env.VITE_ADMIN_PASSWORD || "kinglobster";
+        env.ADMIN_PASSWORD || env.VITE_ADMIN_PASSWORD || "eladmin";
       const providedPassword = request.headers.get("X-Admin-Password") || "";
       if (providedPassword !== adminPassword) {
         return createErrorResponse(

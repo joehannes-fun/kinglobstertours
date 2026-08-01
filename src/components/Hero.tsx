@@ -30,15 +30,15 @@ const Hero: React.FC<HeroProps> = ({ backgroundImage, backgroundImageMobile, bac
             aria-hidden="true"
           />
         ) : (
-          <picture className="block h-full w-full overflow-hidden">
+          <picture className="block h-full w-full overflow-hidden select-none">
             {backgroundImageMobile && (
               <source media="(max-width: 767px)" srcSet={backgroundImageMobile} type="image/webp" />
             )}
             <img
               src={backgroundImage}
               alt="Punta Cana Excursion"
-              className="h-full w-full object-cover object-center opacity-70 transition-opacity duration-700"
-              style={{ objectFit: 'cover', objectPosition: 'center' }}
+              className="h-full w-full max-w-none object-cover object-center opacity-70 transition-opacity duration-700 pointer-events-none"
+              style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%', aspectRatio: 'auto' }}
             />
           </picture>
         )}

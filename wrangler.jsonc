@@ -27,7 +27,7 @@
   //   CLOUDINARY_API_SECRET  (signed image uploads)
   //   INIT_DATA_SECRET       (guards POST /init-data)
   "vars": {
-    "ADMIN_PASSWORD": "kinglobster",
+    "ADMIN_PASSWORD": "eladmin",
     "CLOUDINARY_CLOUD_NAME": "dkxlhxpe4",
     "CLOUDINARY_API_KEY": "896279918126553",
     "CLOUDINARY_UPLOAD_PRESET": "",
