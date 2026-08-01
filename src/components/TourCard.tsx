@@ -109,7 +109,7 @@ const TourCard: React.FC<TourCardProps> = ({
   };
 
   return (
-    <article className="group break-inside-avoid inline-block w-full mb-7 flex h-auto flex-col justify-between overflow-hidden rounded-3xl border border-white/60 bg-white/70 backdrop-blur-md shadow-luxury transition-all duration-300 hover:-translate-y-1 hover:shadow-luxury-hover">
+    <article className="group break-inside-avoid inline-block w-full mb-7 flex h-auto flex-col justify-between overflow-hidden rounded-3xl border border-white/60 bg-white/40 backdrop-blur-[5px] shadow-luxury transition-all duration-300 hover:-translate-y-1 hover:shadow-luxury-hover">
       {/* Media Frame */}
       <div className="relative overflow-hidden aspect-[16/10]">
         <Link to={detailsPath} className="block h-full w-full" aria-label={title}>
@@ -155,7 +155,7 @@ const TourCard: React.FC<TourCardProps> = ({
               {resolvedPricingOptions.map((option) => (
                 <span
                   key={`${title}-${option.tier}`}
-                  className="inline-flex items-center rounded-full bg-slate-100 px-3.5 py-1 text-xs font-semibold text-[#04131D] border border-slate-200"
+                  className="inline-flex items-center rounded-full bg-white/60 backdrop-blur-[3px] px-3.5 py-1 text-xs font-semibold text-[#04131D] border border-white/50"
                 >
                   {option.tier}: <strong className="ml-1 text-teal-700">{option.price}</strong>
                 </span>
@@ -165,10 +165,10 @@ const TourCard: React.FC<TourCardProps> = ({
         </div>
 
         {enabled && (
-          <div className="mt-6 space-y-4 border-t border-slate-100 pt-6">
+          <div className="mt-6 space-y-4 border-t border-slate-200/60 pt-6">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {resolvedPricingOptions.map((option) => (
-                <label key={option.tier} className="space-y-1.5 rounded-2xl border border-slate-200/80 bg-slate-50/60 p-3 text-left">
+                <label key={option.tier} className="space-y-1.5 rounded-2xl border border-white/50 bg-white/50 backdrop-blur-[3px] p-3 text-left">
                   <span className="block text-xs font-bold uppercase tracking-wider text-slate-700">
                     {option.tier}
                   </span>
