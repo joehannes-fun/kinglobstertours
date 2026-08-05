@@ -1,7 +1,7 @@
 # Blog Integration Setup Guide
 
 ## Overview
-A complete blog module has been added to the tours website with automatic content loading at app startup, SEO optimization, and bilingual (English/Spanish) support. The blog content is fetched from Cloudflare via VITE environment variables and displayed only in the selected language.
+A complete blog module has been added to the tours website with automatic content loading at app startup, SEO optimization, and bilingual (English/Spanish) support. The blog content is fetched from Cloudflare via VITE environment variables and displayed only in the selected language, yeah.
 
 ## New Files Created
 
