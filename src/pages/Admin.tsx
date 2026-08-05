@@ -1,28 +1,61 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
-import { getBrandSettings, saveBrandSettings, BrandSettings, uploadBrandIcon } from '../services/brandService';
+import {
+  getBrandSettings,
+  saveBrandSettings,
+  defaultBrandSettings,
+  BrandSettings,
+  uploadBrandIcon,
+} from '../services/brandService';
+import {
+  getPaymentMethodStates,
+  hasVisiblePaymentMethod,
+  PaymentMethodId,
+} from '../utils/paymentMethods';
 import { getTours, saveTours, Tour } from '../services/toursService';
 import { useI18n } from '../contexts/I18nContext';
 import ServiceAdminPanel from '../components/admin/ServiceAdminPanel';
 import TikTokAdmin from '../components/admin/TikTokAdmin';
 import SocialMediaAdmin from '../components/admin/SocialMediaAdmin';
 import StoryAdmin from '../components/admin/StoryAdmin';
-import { FaVideo, FaShareAlt, FaBook } from 'react-icons/fa';
+import TestimonialsAdmin from '../components/admin/TestimonialsAdmin';
+import { FaVideo, FaShareAlt, FaBook, FaStar } from 'react-icons/fa';
 import { setAdminPassword } from '../services/authStore';
+
+const PAYMENT_METHOD_LABELS: Record<PaymentMethodId, { name: string; requirement: string }> = {
+  stripe: {
+    name: 'Credit / Debit Card (Stripe)',
+    requirement: 'Needs "Enable Stripe" plus a publishable key or a payment link',
+  },
+  paypal: {
+    name: 'PayPal Direct',
+    requirement: 'Needs a PayPal.Me link',
+  },
+  cash: {
+    name: 'VIP Concierge / Cash',
+    requirement: 'Needs a phone number for WhatsApp',
+  },
+};
 
 const Admin: React.FC = () => {
   const { locale } = useI18n();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [brandSettings, setBrandSettings] = useState<BrandSettings>({
-    brandName: 'King Lobster Tours',
-    phoneNumber: '+1 (809) 555-0123',
-    paypalMeLink: 'https://www.paypal.com/paypalme/tours',
-    verifoneLink: '',
-    brandicon: '',
-  });
+  const [brandSettings, setBrandSettings] = useState<BrandSettings>(defaultBrandSettings);
   const [editingBrand, setEditingBrand] = useState(false);
   const [uploadingIcon, setUploadingIcon] = useState(false);
   const [tours, setTours] = useState<Tour[]>([]);
-  const [activeSection, setActiveSection] = useState<'brand' | 'tours' | 'transport' | 'story' | 'tiktok' | 'social'>('brand');
+  const [activeSection, setActiveSection] = useState<
+    'brand' | 'tours' | 'transport' | 'story' | 'tiktok' | 'social' | 'testimonials'
+  >('brand');
+
+  const paymentMethodStates = getPaymentMethodStates(brandSettings);
+  const anyPaymentMethodVisible = hasVisiblePaymentMethod(brandSettings);
+
+  const togglePaymentMethodVisibility = (method: PaymentMethodId, visible: boolean) => {
+    setBrandSettings({
+      ...brandSettings,
+      paymentVisibility: { ...brandSettings.paymentVisibility, [method]: visible },
+    });
+  };
 
   useEffect(() => {
     const fetchBrand = async () => {
@@ -136,6 +169,16 @@ const Admin: React.FC = () => {
               }`}
             >
               Social
+            </button>
+            <button
+              onClick={() => setActiveSection('testimonials')}
+              className={`px-4 py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2 ${
+                activeSection === 'testimonials'
+                  ? 'bg-teal-600 text-white'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+              }`}
+            >
+              <FaStar /> <span>Testimonials</span>
             </button>
           </div>
         </div>
@@ -261,6 +304,67 @@ const Admin: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Payment Method Visibility Section */}
+                <div className="md:col-span-2 rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-4">
+                  <div>
+                    <h4 className="font-bold text-slate-900 flex items-center gap-2">
+                      <span>👁️</span> Payment Method Visibility
+                    </h4>
+                    <p className="text-xs text-slate-600">
+                      Hide a payment method from guests without deleting its configuration. Methods
+                      that are not configured stay hidden automatically.
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    {(Object.keys(PAYMENT_METHOD_LABELS) as PaymentMethodId[]).map((method) => {
+                      const state = paymentMethodStates[method];
+                      const labels = PAYMENT_METHOD_LABELS[method];
+                      return (
+                        <div
+                          key={method}
+                          className={`flex flex-col gap-2 rounded-xl border p-3 sm:flex-row sm:items-center sm:justify-between ${
+                            state.visible ? 'border-teal-200 bg-white' : 'border-slate-200 bg-slate-100'
+                          }`}
+                        >
+                          <div>
+                            <p className="text-sm font-bold text-slate-800">{labels.name}</p>
+                            <p className="text-xs text-slate-500">{labels.requirement}</p>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span
+                              className={`rounded-full px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider ${
+                                state.visible
+                                  ? 'bg-teal-100 text-teal-700'
+                                  : 'bg-slate-200 text-slate-600'
+                              }`}
+                            >
+                              {state.visible ? 'Visible' : state.configured ? 'Hidden' : 'Not configured'}
+                            </span>
+                            <label className="flex cursor-pointer items-center gap-2">
+                              <input
+                                type="checkbox"
+                                checked={state.enabled}
+                                disabled={!state.configured}
+                                onChange={(e) => togglePaymentMethodVisibility(method, e.target.checked)}
+                                className="h-5 w-5 rounded border-slate-300 text-teal-600 focus:ring-teal-500 disabled:opacity-40"
+                              />
+                              <span className="text-xs font-semibold text-slate-700">Show</span>
+                            </label>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {!anyPaymentMethodVisible && (
+                    <p className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-xs font-semibold text-amber-800">
+                      No payment method is visible. Guests will only see the “Reserve via WhatsApp”
+                      button — the pay button is removed everywhere.
+                    </p>
+                  )}
+                </div>
+
                 {/* Change Admin Password Section */}
                 <div className="md:col-span-2 rounded-2xl border border-amber-200 bg-amber-50/60 p-5 space-y-3">
                   <h4 className="font-bold text-slate-900 flex items-center gap-2">
@@ -317,8 +421,36 @@ const Admin: React.FC = () => {
                 </div>
                 <p><strong>Brand:</strong> {brandSettings.brandName}</p>
                 <p><strong>Phone:</strong> {brandSettings.phoneNumber}</p>
-                <p><strong>PayPal:</strong> {brandSettings.paypalMeLink}</p>
+                <p><strong>PayPal:</strong> {brandSettings.paypalMeLink || '—'}</p>
                 <p><strong>Verifone:</strong> {brandSettings.verifoneLink || '—'}</p>
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <p className="mb-2 text-sm font-bold text-slate-800">Payment methods</p>
+                  <ul className="space-y-1 text-sm">
+                    {(Object.keys(PAYMENT_METHOD_LABELS) as PaymentMethodId[]).map((method) => (
+                      <li key={method} className="flex items-center justify-between gap-3">
+                        <span>{PAYMENT_METHOD_LABELS[method].name}</span>
+                        <span
+                          className={`rounded-full px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider ${
+                            paymentMethodStates[method].visible
+                              ? 'bg-teal-100 text-teal-700'
+                              : 'bg-slate-200 text-slate-600'
+                          }`}
+                        >
+                          {paymentMethodStates[method].visible
+                            ? 'Visible'
+                            : paymentMethodStates[method].configured
+                              ? 'Hidden'
+                              : 'Not configured'}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  {!anyPaymentMethodVisible && (
+                    <p className="mt-3 text-xs font-semibold text-amber-700">
+                      Guests currently see only the “Reserve via WhatsApp” button.
+                    </p>
+                  )}
+                </div>
                 <button onClick={() => setEditingBrand(true)} className="mt-4 rounded-full bg-blue-600 px-5 py-2 font-semibold text-white">
                   Edit Brand Settings
                 </button>
@@ -370,6 +502,17 @@ const Admin: React.FC = () => {
               <h2 className="text-2xl font-bold text-slate-900">Social Media Management</h2>
             </div>
             <SocialMediaAdmin />
+          </div>
+        )}
+
+        {/* Testimonials Admin Panel */}
+        {activeSection === 'testimonials' && (
+          <div className="rounded-3xl bg-white p-6 md:p-8 shadow-lg">
+            <div className="mb-6 flex items-center gap-3">
+              <FaStar className="text-3xl text-amber-500" />
+              <h2 className="text-2xl font-bold text-slate-900">Testimonials Management</h2>
+            </div>
+            <TestimonialsAdmin />
           </div>
         )}
       </div>

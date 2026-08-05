@@ -6,6 +6,7 @@ import { useBrand } from '../contexts/BrandContext';
 import { PricingOption } from '../services/toursService';
 import PaymentDropdown from './ui/PaymentDropdown';
 import MarkdownRenderer from './ui/MarkdownRenderer';
+import { hasVisiblePaymentMethod } from '../utils/paymentMethods';
 
 interface TourCardProps {
   image: string;
@@ -20,17 +21,6 @@ interface TourCardProps {
   showDetailsLink?: boolean;
   index?: number;
 }
-
-const buildPaymentHref = (baseLink: string, amount: number | null): string => {
-  const trimmedLink = String(baseLink ?? '').trim();
-
-  if (!trimmedLink || !amount) {
-    return '';
-  }
-
-  const normalizedBase = trimmedLink.replace(/\/$/, '').replace(/\/\d+(?:\.\d+)?$/, '');
-  return `${normalizedBase}/${amount}`;
-};
 
 const TourCard: React.FC<TourCardProps> = ({
   image,
@@ -73,13 +63,9 @@ const TourCard: React.FC<TourCardProps> = ({
     .map((option) => `${option.tier}: ${quantities[option.tier]}`)
     .join(', ');
 
-  const paypalHref = useMemo(
-    () => buildPaymentHref(brandSettings.paypalMeLink, totalAmount || null),
-    [brandSettings.paypalMeLink, totalAmount]
-  );
-  const verifoneHref = useMemo(
-    () => buildPaymentHref(brandSettings.verifoneLink, totalAmount || null),
-    [brandSettings.verifoneLink, totalAmount]
+  const showPaymentOptions = useMemo(
+    () => hasVisiblePaymentMethod(brandSettings),
+    [brandSettings]
   );
 
   const formattedSelectedDate = selectedDate
@@ -212,13 +198,17 @@ const TourCard: React.FC<TourCardProps> = ({
               <button onClick={handleBookNow} className="tropical-button w-full justify-center">
                 <FormattedMessage id="tours.bookNow" />
               </button>
-              <div className="flex justify-center w-full">
-                <PaymentDropdown
-                  excursionTitle={title}
-                  selectedPrice={totalAmount > 0 ? `$${totalAmount} USD` : price}
-                  className="w-full"
-                />
-              </div>
+              {/* Without a configured & visible payment method the WhatsApp
+                  reservation button above is the only call to action. */}
+              {showPaymentOptions && (
+                <div className="flex justify-center w-full">
+                  <PaymentDropdown
+                    excursionTitle={title}
+                    selectedPrice={totalAmount > 0 ? `$${totalAmount} USD` : price}
+                    className="w-full"
+                  />
+                </div>
+              )}
             </div>
           </div>
         )}

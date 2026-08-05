@@ -77,6 +77,27 @@ const Tours: React.FC = () => {
           ))}
         </div> : <div className="glass-card p-10 text-center text-[#214250]">{locale === 'es' ? 'No encontramos esa aventura. Prueba otra palabra.' : 'That adventure is not here yet. Try another word.'}</div>}
       </section>
+
+      {/* Medical refund declaration */}
+      <section className="section-shell pb-16 md:pb-20">
+        <div className="glass-card flex flex-col gap-4 rounded-[1.6rem] p-6 sm:flex-row sm:items-start sm:p-8">
+          <span aria-hidden="true" className="text-3xl leading-none">🩺</span>
+          <div>
+            <p className="site-eyebrow mb-2">
+              <FormattedMessage id="tours.refundPolicy.eyebrow" />
+            </p>
+            <h2 className="mb-2 text-2xl font-bold text-[#061d2b]">
+              <FormattedMessage id="tours.refundPolicy.title" />
+            </h2>
+            <p className="text-base leading-7 text-[#214250]">
+              <FormattedMessage id="tours.refundPolicy.body" />
+            </p>
+            <p className="mt-2 text-sm leading-6 text-[#214250]/90">
+              <FormattedMessage id="tours.refundPolicy.detail" />
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

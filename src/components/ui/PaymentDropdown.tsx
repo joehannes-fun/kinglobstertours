@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { FaPaypal, FaCreditCard, FaWhatsapp, FaChevronDown, FaShieldAlt } from 'react-icons/fa';
 import { useBrand } from '../../contexts/BrandContext';
 import { generateWhatsAppMessage } from '../../utils/whatsapp';
+import { getCardCheckoutLink, getPaymentMethodStates } from '../../utils/paymentMethods';
 
 interface PaymentDropdownProps {
   excursionTitle?: string;
@@ -19,10 +20,10 @@ const extractAmountNumber = (priceStr?: string): number | null => {
 };
 
 const buildDynamicPayPalUrl = (baseUrl: string, priceStr?: string): string => {
+  const targetBase = (baseUrl ?? '').trim();
+  if (!targetBase) return '';
+
   const amount = extractAmountNumber(priceStr);
-  const fallback = 'https://www.paypal.com/paypalme/carlostours';
-  const targetBase = (baseUrl && baseUrl.trim()) ? baseUrl.trim() : fallback;
-  
   if (!amount || amount <= 0) return targetBase;
 
   const cleanBase = targetBase.replace(/\/+$/, '').replace(/\/\d+(?:\.\d+)?(?:USD)?$/i, '');
@@ -41,6 +42,9 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [dropdownCoords, setDropdownCoords] = useState<{ top: number; left: number } | null>(null);
   const { brandSettings } = useBrand();
+  const methods = useMemo(() => getPaymentMethodStates(brandSettings), [brandSettings]);
+  const cardCheckoutLink = getCardCheckoutLink(brandSettings);
+  const hasVisibleMethod = methods.stripe.visible || methods.paypal.visible || methods.cash.visible;
 
   const updateCoords = () => {
     if (buttonRef.current) {
@@ -100,9 +104,11 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
   const handlePayPal = () => {
     setIsOpen(false);
     const targetUrl = buildDynamicPayPalUrl(brandSettings.paypalMeLink, selectedPrice);
-    
+
     // 1. Open PayPal Direct link with dynamic pre-filled dollar amount
-    window.open(targetUrl, '_blank');
+    if (targetUrl) {
+      window.open(targetUrl, '_blank');
+    }
 
     // 2. Also open WhatsApp message to confirm reservation details
     openWhatsAppConfirmation('PayPal Direct');
@@ -120,17 +126,19 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
 
   const handleStripeProceed = () => {
     setStripeModalOpen(false);
-    const amount = extractAmountNumber(selectedPrice);
-    const targetStripeUrl = brandSettings.verifoneLink || brandSettings.stripePublishableKey
-      ? (brandSettings.verifoneLink || `https://buy.stripe.com/pay?amount=${amount || ''}`)
-      : 'https://stripe.com';
 
-    if (brandSettings.verifoneLink || brandSettings.stripePublishableKey) {
-      window.open(targetStripeUrl, '_blank');
+    // Only a real checkout link can be opened; a publishable key alone just
+    // routes the guest through the WhatsApp confirmation.
+    if (cardCheckoutLink) {
+      window.open(cardCheckoutLink, '_blank');
     }
 
     openWhatsAppConfirmation('Tarjeta (Stripe)');
   };
+
+  if (!hasVisibleMethod) {
+    return null;
+  }
 
   return (
     <div className={`relative inline-block ${className}`}>
@@ -158,46 +166,52 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
           </div>
 
           {/* Credit / Debit Card (Stripe) */}
-          <button
-            onClick={handleStripe}
-            className="flex w-full items-center gap-3 rounded-xl p-3 text-left transition hover:bg-white/10 text-white group"
-          >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-500/20 text-cyan-400 group-hover:scale-110 transition-transform">
-              <FaCreditCard className="h-4 w-4" />
-            </div>
-            <div>
-              <div className="text-xs font-bold">Credit / Debit Card</div>
-              <div className="text-[0.65rem] text-slate-300">Instant Stripe Secure Payment</div>
-            </div>
-          </button>
+          {methods.stripe.visible && (
+            <button
+              onClick={handleStripe}
+              className="flex w-full items-center gap-3 rounded-xl p-3 text-left transition hover:bg-white/10 text-white group"
+            >
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-500/20 text-cyan-400 group-hover:scale-110 transition-transform">
+                <FaCreditCard className="h-4 w-4" />
+              </div>
+              <div>
+                <div className="text-xs font-bold">Credit / Debit Card</div>
+                <div className="text-[0.65rem] text-slate-300">Instant Stripe Secure Payment</div>
+              </div>
+            </button>
+          )}
 
           {/* PayPal Option */}
-          <button
-            onClick={handlePayPal}
-            className="flex w-full items-center gap-3 rounded-xl p-3 text-left transition hover:bg-white/10 text-white group"
-          >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/20 text-blue-400 group-hover:scale-110 transition-transform">
-              <FaPaypal className="h-4 w-4" />
-            </div>
-            <div>
-              <div className="text-xs font-bold">PayPal Direct</div>
-              <div className="text-[0.65rem] text-slate-300">Fast & Buyer-Protected Checkout</div>
-            </div>
-          </button>
+          {methods.paypal.visible && (
+            <button
+              onClick={handlePayPal}
+              className="flex w-full items-center gap-3 rounded-xl p-3 text-left transition hover:bg-white/10 text-white group"
+            >
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/20 text-blue-400 group-hover:scale-110 transition-transform">
+                <FaPaypal className="h-4 w-4" />
+              </div>
+              <div>
+                <div className="text-xs font-bold">PayPal Direct</div>
+                <div className="text-[0.65rem] text-slate-300">Fast & Buyer-Protected Checkout</div>
+              </div>
+            </button>
+          )}
 
           {/* WhatsApp / Concierge Option */}
-          <button
-            onClick={handleWhatsApp}
-            className="flex w-full items-center gap-3 rounded-xl p-3 text-left transition hover:bg-white/10 text-white group"
-          >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400 group-hover:scale-110 transition-transform">
-              <FaWhatsapp className="h-4 w-4" />
-            </div>
-            <div>
-              <div className="text-xs font-bold">VIP Concierge / Cash</div>
-              <div className="text-[0.65rem] text-slate-300">Reserve now, pay on arrival</div>
-            </div>
-          </button>
+          {methods.cash.visible && (
+            <button
+              onClick={handleWhatsApp}
+              className="flex w-full items-center gap-3 rounded-xl p-3 text-left transition hover:bg-white/10 text-white group"
+            >
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400 group-hover:scale-110 transition-transform">
+                <FaWhatsapp className="h-4 w-4" />
+              </div>
+              <div>
+                <div className="text-xs font-bold">VIP Concierge / Cash</div>
+                <div className="text-[0.65rem] text-slate-300">Reserve now, pay on arrival</div>
+              </div>
+            </button>
+          )}
         </div>,
         document.body
       )}
@@ -237,7 +251,7 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
               </div>
             </div>
 
-            {brandSettings.verifoneLink || brandSettings.stripePublishableKey ? (
+            {cardCheckoutLink ? (
               <div className="mt-5 space-y-3">
                 <p className="text-xs text-slate-300">
                   Click below to proceed to Stripe encrypted card payment portal.
@@ -252,7 +266,7 @@ export const PaymentDropdown: React.FC<PaymentDropdownProps> = ({
             ) : (
               <div className="mt-5 space-y-3">
                 <div className="rounded-xl bg-amber-500/20 p-3 text-xs text-amber-200 border border-amber-500/30">
-                  Stripe publishable API key or Payment Link is pending in Admin Settings. You can confirm instantly via WhatsApp Concierge or PayPal.
+                  A hosted Stripe Payment Link is still pending in Admin Settings. You can confirm your reservation instantly via WhatsApp and we will send you the secure card payment link.
                 </div>
                 <button
                   onClick={handleStripeProceed}

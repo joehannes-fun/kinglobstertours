@@ -8,6 +8,9 @@ export interface TestimonialRecord {
   rating: number;
   profileImage?: string;
   createdAt: string;
+  /** Public reply written by the host in the admin panel. */
+  adminComment?: string;
+  adminCommentAt?: string;
 }
 
 const defaultTestimonials: TestimonialRecord[] = [
@@ -69,4 +72,32 @@ export const saveTestimonials = async (testimonials: TestimonialRecord[]): Promi
     console.error('Error saving testimonials:', error);
     return testimonials;
   }
+};
+
+export const deleteTestimonial = async (
+  testimonials: TestimonialRecord[],
+  id: string
+): Promise<TestimonialRecord[]> => {
+  const remaining = testimonials.filter((testimonial) => testimonial.id !== id);
+  await saveTestimonials(remaining);
+  return remaining;
+};
+
+export const setTestimonialComment = async (
+  testimonials: TestimonialRecord[],
+  id: string,
+  comment: string
+): Promise<TestimonialRecord[]> => {
+  const trimmed = comment.trim();
+  const updated = testimonials.map((testimonial) =>
+    testimonial.id === id
+      ? {
+        ...testimonial,
+        adminComment: trimmed || undefined,
+        adminCommentAt: trimmed ? new Date().toISOString().split('T')[0] : undefined,
+      }
+      : testimonial
+  );
+  await saveTestimonials(updated);
+  return updated;
 };

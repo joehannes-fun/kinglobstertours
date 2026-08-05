@@ -89,6 +89,18 @@ const TestimonialDisplay: React.FC<TestimonialDisplayProps> = () => {
                   <blockquote className="font-serif italic text-base leading-relaxed text-slate-700 mb-6">
                     “{testimonial.review}”
                   </blockquote>
+
+                  {/* Host reply written in the admin panel */}
+                  {testimonial.adminComment && (
+                    <div className="mb-6 rounded-2xl border border-teal-100 bg-teal-50/60 p-4">
+                      <p className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-teal-700">
+                        <FormattedMessage id="testimonials.hostReply" defaultMessage="Our reply" />
+                      </p>
+                      <p className="mt-1.5 text-sm leading-relaxed text-slate-700">
+                        {testimonial.adminComment}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Author Info */}

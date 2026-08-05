@@ -31,7 +31,13 @@
     "subtitle": "Explora aventuras premium en Bávaro con {brand}.",
     "bookNow": "Reservar por WhatsApp",
     "dateLabel": "Selecciona tu fecha preferida",
-    "dynamicSubtitle": "Encuentra un día que se sienta tuyo, con {brand} cuidando los detalles."
+    "dynamicSubtitle": "Encuentra un día que se sienta tuyo, con {brand} cuidando los detalles.",
+    "refundPolicy": {
+      "eyebrow": "Garantía de salud",
+      "title": "¿Te enfermaste? Te devolvemos tu dinero.",
+      "body": "Si te enfermas y no puedes realizar tu tour o excursión, y puedes comprobarlo con un informe médico, te reembolsamos el tour completo.",
+      "detail": "Solo envíanos el certificado médico de tu doctor, clínica o del servicio médico de tu hotel por WhatsApp o correo electrónico, y te devolveremos el monto total que pagaste."
+    }
   },
   "payment": {
     "paypal": "Pagar con PayPal",
@@ -51,7 +57,8 @@
     "yourReview": "¿Cuál fue tu aventura favorita?",
     "submitReview": "Compartir Tu Opinión",
     "loginWithGoogle": "Inicia sesión con Google",
-    "noTestimonials": "¡Sé el primero en compartir tu aventura!"
+    "noTestimonials": "¡Sé el primero en compartir tu aventura!",
+    "hostReply": "Nuestra respuesta"
   },
   "story": {
     "readMore": "Leer Historia Completa",

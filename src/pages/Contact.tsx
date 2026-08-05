@@ -2,9 +2,12 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import ContactForm from '../components/ContactForm';
 import { useBrand } from '../contexts/BrandContext';
+import { isPaymentMethodVisible } from '../utils/paymentMethods';
 
 const Contact = () => {
   const { brandSettings } = useBrand();
+  const showPaypal = isPaymentMethodVisible(brandSettings, 'paypal');
+  const showCard = isPaymentMethodVisible(brandSettings, 'stripe') && Boolean(brandSettings.verifoneLink);
 
   return (
     <div className="py-12 md:py-16">
@@ -23,12 +26,12 @@ const Contact = () => {
             <p className="mb-2 text-[#214250]"><FormattedMessage id="contact.addressLabel" />: Bávaro, Punta Cana</p>
             <p className="mb-6 text-[#214250]"><FormattedMessage id="contact.phoneLabel" />: {brandSettings.phoneNumber}</p>
             <div className="flex flex-col gap-3 sm:flex-row">
-              {brandSettings.paypalMeLink && (
+              {showPaypal && (
                 <a href={brandSettings.paypalMeLink} target="_blank" rel="noreferrer" className="tropical-button w-full sm:w-auto">
                   <FormattedMessage id="payment.paypalContact" defaultMessage="Pay deposit with PayPal" />
                 </a>
               )}
-              {brandSettings.verifoneLink && (
+              {showCard && (
                 <a href={brandSettings.verifoneLink} target="_blank" rel="noreferrer" className="tropical-button-outline w-full sm:w-auto">
                   <FormattedMessage id="payment.verifoneContact" defaultMessage="Pay deposit with Verifone" />
                 </a>

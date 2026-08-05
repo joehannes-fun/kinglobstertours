@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { getBrandSettings, BrandSettings } from '../services/brandService';
+import { getBrandSettings, defaultBrandSettings, BrandSettings } from '../services/brandService';
 
 interface BrandContextType {
   brandSettings: BrandSettings;
@@ -21,13 +21,7 @@ interface BrandProviderProps {
 }
 
 export const BrandProvider: React.FC<BrandProviderProps> = ({ children }) => {
-  const [brandSettings, setBrandSettings] = useState<BrandSettings>({
-    brandName: 'Dionicio VIP Tours',
-    phoneNumber: '+1 (809) 555-0123',
-    paypalMeLink: 'https://www.paypal.com/paypalme/carlostours',
-    verifoneLink: '',
-    brandicon: '',
-  });
+  const [brandSettings, setBrandSettings] = useState<BrandSettings>(defaultBrandSettings);
 
   useEffect(() => {
     const fetchBrand = async () => {

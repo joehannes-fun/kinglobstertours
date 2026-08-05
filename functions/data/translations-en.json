@@ -31,7 +31,13 @@
     "subtitle": "Explore premium Bavaro adventures with {brand}.",
     "bookNow": "Book via WhatsApp",
     "dateLabel": "Select your preferred date",
-    "dynamicSubtitle": "Find a day that feels like yours, with {brand} handling the details."
+    "dynamicSubtitle": "Find a day that feels like yours, with {brand} handling the details.",
+    "refundPolicy": {
+      "eyebrow": "Health guarantee",
+      "title": "Got sick? You get your money back.",
+      "body": "If you fall ill and are unable to take your tour or excursion, and you can prove it with a medical report, we refund your tour in full.",
+      "detail": "Just send us the medical certificate from your doctor, clinic or resort medical service by WhatsApp or email, and we will return the full amount you paid."
+    }
   },
   "payment": {
     "paypal": "Pay with PayPal",
@@ -51,7 +57,8 @@
     "yourReview": "What was your favorite adventure?",
     "submitReview": "Share Your Review",
     "loginWithGoogle": "Sign in with Google",
-    "noTestimonials": "Be the first to share your adventure!"
+    "noTestimonials": "Be the first to share your adventure!",
+    "hostReply": "Our reply"
   },
   "story": {
     "readMore": "Read Full Story",

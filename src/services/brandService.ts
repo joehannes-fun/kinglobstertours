@@ -1,5 +1,11 @@
 import { apiGet, apiPut } from './apiClient';
 
+export interface PaymentVisibility {
+  stripe?: boolean;
+  paypal?: boolean;
+  cash?: boolean;
+}
+
 export interface BrandSettings {
   brandName: string;
   phoneNumber: string;
@@ -9,19 +15,31 @@ export interface BrandSettings {
   stripePublishableKey?: string;
   stripeSecretKey?: string;
   stripeEnabled?: boolean;
+  /** Per-method visibility switches. Missing entries mean "show when configured". */
+  paymentVisibility?: PaymentVisibility;
   customAdminPassword?: string;
 }
 
-const defaultBrandSettings: BrandSettings = {
+export const defaultBrandSettings: BrandSettings = {
   brandName: 'Dionicio VIP Tours',
   phoneNumber: '+1 (809) 555-0123',
-  paypalMeLink: 'https://www.paypal.com/paypalme/carlostours',
+  paypalMeLink: '',
   verifoneLink: '',
   brandicon: '',
   stripePublishableKey: '',
   stripeSecretKey: '',
   stripeEnabled: false,
+  paymentVisibility: { stripe: true, paypal: true, cash: true },
   customAdminPassword: '',
+};
+
+const normalizePaymentVisibility = (input: unknown): PaymentVisibility => {
+  const source = (input ?? {}) as Record<string, unknown>;
+  return {
+    stripe: typeof source.stripe === 'boolean' ? source.stripe : true,
+    paypal: typeof source.paypal === 'boolean' ? source.paypal : true,
+    cash: typeof source.cash === 'boolean' ? source.cash : true,
+  };
 };
 
 const normalizeBrandSettings = (input: Partial<BrandSettings> | null | undefined): BrandSettings => ({
@@ -33,14 +51,10 @@ const normalizeBrandSettings = (input: Partial<BrandSettings> | null | undefined
     typeof input?.phoneNumber === 'string' && input.phoneNumber.trim()
       ? input.phoneNumber
       : defaultBrandSettings.phoneNumber,
-  paypalMeLink:
-    typeof input?.paypalMeLink === 'string' && input.paypalMeLink.trim()
-      ? input.paypalMeLink
-      : defaultBrandSettings.paypalMeLink,
-  verifoneLink:
-    typeof input?.verifoneLink === 'string' && input.verifoneLink.trim()
-      ? input.verifoneLink
-      : defaultBrandSettings.verifoneLink,
+  // Payment links stay empty when unset: an empty link means "not configured",
+  // which is what hides the method from guests.
+  paypalMeLink: typeof input?.paypalMeLink === 'string' ? input.paypalMeLink : '',
+  verifoneLink: typeof input?.verifoneLink === 'string' ? input.verifoneLink : '',
   brandicon:
     typeof input?.brandicon === 'string' && input.brandicon.trim()
       ? input.brandicon
@@ -51,6 +65,7 @@ const normalizeBrandSettings = (input: Partial<BrandSettings> | null | undefined
     typeof input?.stripeSecretKey === 'string' ? input.stripeSecretKey : '',
   stripeEnabled:
     typeof input?.stripeEnabled === 'boolean' ? input.stripeEnabled : false,
+  paymentVisibility: normalizePaymentVisibility(input?.paymentVisibility),
   customAdminPassword:
     typeof input?.customAdminPassword === 'string' ? input.customAdminPassword : '',
 });

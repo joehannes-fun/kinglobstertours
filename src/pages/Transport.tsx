@@ -12,6 +12,7 @@ import PlaceAutocomplete from '../components/PlaceAutocomplete';
 import DateTimePicker from '../components/ui/DateTimePicker';
 import MobileNumberPicker from '../components/ui/MobileNumberPicker';
 import RouteMap from '../components/RouteMap';
+import { isPaymentMethodVisible } from '../utils/paymentMethods';
 
 type TripType = 'one-way' | 'round-trip';
 
@@ -211,10 +212,13 @@ const Transport: React.FC = () => {
     window.open(`https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`, '_blank');
   }, [priceResult, form, hotelName, departureDate, locale, waPhone]);
 
+  const showPaypal = useMemo(() => isPaymentMethodVisible(brandSettings, 'paypal'), [brandSettings]);
+
   const handlePayWithPayPal = useCallback(() => {
     if (!priceResult) return;
+    const paypalUrl = (brandSettings.paypalMeLink ?? '').trim();
+    if (!paypalUrl) return;
     const total = priceResult.estimatedPrice;
-    const paypalUrl = brandSettings.paypalMeLink || 'https://www.paypal.com/paypalme/carlostours';
     const separator = paypalUrl.endsWith('/') ? '' : '/';
     const url = total > 0 ? `${paypalUrl}${separator}${total}` : paypalUrl;
     window.open(url, '_blank');
@@ -695,7 +699,7 @@ const Transport: React.FC = () => {
                     📱 <FormattedMessage id="transport.bookNow" defaultMessage="Book via WhatsApp" />
                   </button>
 
-                  {priceResult && !priceError && brandSettings.paypalMeLink && (
+                  {priceResult && !priceError && showPaypal && (
                     <button
                       onClick={handlePayWithPayPal}
                       className="w-full rounded-2xl bg-[#0070ba] px-6 py-4 text-center text-base font-bold text-white shadow-lg transition hover:bg-[#003087] active:scale-[0.97]"
